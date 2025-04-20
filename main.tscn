@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://hr2ctob0s43a"]
+
+[ext_resource type="Texture2D" uid="uid://3mhedkhayq2b" path="res://icon.svg" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dfwccqlnw48xd" path="res://test.gd" id="2_0xm2m"]
+
+[node name="Node2D" type="Node2D"]
+texture_filter = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(6, 6)
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("1_ig7tw")
+
+[node name="Test" type="Node" parent="."]
+script = ExtResource("2_0xm2m")
