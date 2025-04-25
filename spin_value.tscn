@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://cggs61onmn78m"]
+
+[ext_resource type="Script" uid="uid://l77eq4mp2tvy" path="res://spin_value.gd" id="1_oh460"]
+
+[node name="SpinValue" type="HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+offset_left = 81.0
+offset_right = 281.0
+offset_bottom = 31.0
+mouse_filter = 0
+script = ExtResource("1_oh460")
+title = "ValueTitle"
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+rounded = false
+allow_greater = true
+allow_lesser = true
+editable = true
+update_on_text_changed = false
+prefix = ""
+suffix = ""
+custom_arrow_step = 0.0
+select_all_on_focus = false
+script = ExtResource("1_oh460")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ValueTitle"
+
+[node name="SpinBox" type="SpinBox" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+allow_greater = true
+allow_lesser = true
+script = ExtResource("1_oh460")
+
+[connection signal="value_changed" from="SpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="value_changed" from="SpinBox" to="." method="_on_spin_box_value_changed"]

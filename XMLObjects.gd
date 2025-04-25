@@ -5,6 +5,9 @@ class Subattack:
 	var num_projectiles: int = 1
 	var rate_of_fire: float = 1
 	var pos_offset: Vector2i
+	var burst_count: int = 1
+	var burst_delay: float = 0.0
+	var burst_min_delay: float = 0.0
 	var arc_gap: int = 0
 
 	func to_xml() -> String:
@@ -82,6 +85,7 @@ class Projectile:
 	var face_dir: bool = false
 	var wavy: bool = false
 	var boomerang: bool = false
+	var parametric: bool = false
 	# Kinda Flag
 	var particle_trail: bool = false
 	const DEFAULT_PARTICLE_TRAIL_COLOR: int = 0xFF00FF

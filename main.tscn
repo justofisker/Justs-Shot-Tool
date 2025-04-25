@@ -1,16 +1,281 @@
-[gd_scene load_steps=3 format=3 uid="uid://hr2ctob0s43a"]
+[gd_scene load_steps=7 format=3 uid="uid://hr2ctob0s43a"]
 
-[ext_resource type="Texture2D" uid="uid://3mhedkhayq2b" path="res://icon.svg" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://dfwccqlnw48xd" path="res://test.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://bh845fxwp435h" path="res://circle.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://grid.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://btmjb2ug6mrem" path="res://shooter.gd" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://cggs61onmn78m" path="res://spin_value.tscn" id="3_h2yge"]
 
-[node name="Node2D" type="Node2D"]
-texture_filter = 1
+[sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
+font_size = 32
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(6, 6)
+[sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
+font_size = 32
 
-[node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("1_ig7tw")
+[node name="Main" type="Node"]
 
-[node name="Test" type="Node" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="BulletArea" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Grid" type="Control" parent="HBoxContainer/BulletArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_0xm2m")
+metadata/_edit_lock_ = true
+
+[node name="Center" type="Control" parent="HBoxContainer/BulletArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+circle_size = 16.0
+segment_count = 12
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Shooter" type="Node2D" parent="HBoxContainer/BulletArea/Center"]
+script = ExtResource("2_1bvp3")
+
+[node name="PropertiesPanel" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/PropertiesPanel"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="AttackProps" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps"]
+layout_mode = 2
+text = "Attack"
+label_settings = SubResource("LabelSettings_h2yge")
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps"]
+layout_mode = 2
+
+[node name="NumProjectiles" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps" instance=ExtResource("3_h2yge")]
+title = "NumProjectiles"
+value = 1.0
+rounded = true
+allow_lesser = false
+
+[node name="ArcGap" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps" instance=ExtResource("3_h2yge")]
+title = "ArcGap"
+max_value = 180.0
+rounded = true
+allow_greater = false
+allow_lesser = false
+suffix = "deg"
+custom_arrow_step = 15.0
+
+[node name="RateOfFire" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps" instance=ExtResource("3_h2yge")]
+title = "RateOfFire"
+step = 0.2
+allow_lesser = false
+custom_arrow_step = 0.25
+
+[node name="PosOffset" type="HBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PosOffset"
+
+[node name="PosOffsetX" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset" instance=ExtResource("3_h2yge")]
+title = "x"
+step = 0.001
+suffix = "tiles"
+custom_arrow_step = 0.25
+
+[node name="PosOffsetY" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset" instance=ExtResource("3_h2yge")]
+title = "y"
+step = 0.001
+suffix = "tiles"
+custom_arrow_step = 0.25
+
+[node name="BurstCount" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
+title = "BurstCount"
+
+[node name="BurstDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
+title = "BurstDelay"
+suffix = "ms"
+
+[node name="BurstMinDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
+title = "BurstMinDelay"
+suffix = "ms"
+
+[node name="ProjProps" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+text = "Projectile"
+label_settings = SubResource("LabelSettings_1bvp3")
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+
+[node name="LifetimeMS" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "LifetimeMS"
+value = 1000.0
+rounded = true
+suffix = "ms"
+
+[node name="Size" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Size"
+value = 100.0
+allow_lesser = false
+
+[node name="Speed" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Speed"
+value = 10.0
+suffix = "(0.1 tiles/sec)"
+
+[node name="SpeedClamp" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Speed Clamp"
+suffix = "(0.1 tiles/sec)"
+
+[node name="Acceleration" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Acceleration"
+suffix = "(0.1 tiles/sec^2)"
+
+[node name="AccelerationDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Acceleration Delay"
+suffix = "ms"
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+
+[node name="Amplitude" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Amplitude"
+
+[node name="Frequency" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "Frequency"
+
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+
+[node name="CircleTurnDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "CircleTurnDelay"
+suffix = "ms"
+
+[node name="CircleTurnAngle" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "CircleTurnAngle"
+suffix = "deg"
+
+[node name="HSeparator4" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+
+[node name="TurnRate" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnRate"
+suffix = "deg/sec"
+
+[node name="TurnRateDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnRateDelay"
+suffix = "ms"
+
+[node name="TurnRateStopTime" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnRateStopTime"
+suffix = "ms"
+
+[node name="TurnAcceleration" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnAcceleration"
+suffix = "(0.1 tiles/sec^2)"
+
+[node name="TurnRateAccelerationDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnRateAccelerationDelay"
+suffix = "ms"
+
+[node name="TurnClamp" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnClamp"
+suffix = "deg"
+
+[node name="HSeparator5" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+
+[node name="Flags" type="GridContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+layout_mode = 2
+columns = 3
+
+[node name="MultiHit" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "MultiHit"
+
+[node name="PassesCover" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "PassesCover"
+
+[node name="ArmorPiercing" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "ArmorPiercing"
+
+[node name="ProtectFromSink" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "ProtectFromSink"
+
+[node name="FaceDir" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "FaceDir"
+
+[node name="Wavy" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "Wavy"
+
+[node name="Boomerang" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "Boomerang"
+
+[node name="Parametric" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+text = "Parametric"
+
+[node name="ParticleTrial" type="HBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags"]
+layout_mode = 2
+
+[node name="ParticleTrialColor" type="ColorPickerButton" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags/ParticleTrial"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+edit_alpha = false
+
+[node name="ParticleTrailEnable" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags/ParticleTrial"]
+layout_mode = 2
+text = "ParticleTrail"
+
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/NumProjectiles" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_num_projectiles_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/ArcGap" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_arc_gap_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/RateOfFire" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_rate_of_fire_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset/PosOffsetX" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_pos_offset_x_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset/PosOffsetY" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_pos_offset_y_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/LifetimeMS" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_lifetime_ms_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Speed" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_speed_value_changed"]
