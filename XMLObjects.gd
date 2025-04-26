@@ -1,6 +1,6 @@
 class_name XMLObjects extends Resource
 
-class Subattack:
+class Subattack extends Resource:
 	var projectile_id: int = 0
 	var num_projectiles: int = 1
 	var rate_of_fire: float = 1
@@ -20,7 +20,7 @@ class Subattack:
 		
 		return out
 
-class ProjectileDescription:
+class ProjectileDescription extends Resource:
 	var id: String = ""
 	var type: int = 0
 	var texture_file: String = "invisible"
@@ -48,7 +48,7 @@ class ProjectileDescription:
 		
 		return out
 
-class Projectile:
+class Projectile extends Resource:
 	var id: int = 0
 	var object_id: String = ""
 	var min_damage: int = 0
@@ -60,11 +60,12 @@ class Projectile:
 	
 	# Speed
 	var speed: int = 0
+	var speed_clamp_enabled: bool = false
 	var speed_clamp: int = 0
 	var acceleration: int = 0
 	var acceleration_delay: int = 0
 	var amplitude: float = 0
-	var frequency: float = 1
+	var frequency: float = 0
 	
 	# Circle Turn
 	var circle_turn_delay = 0

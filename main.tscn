@@ -161,8 +161,24 @@ title = "Speed"
 value = 10.0
 suffix = "(0.1 tiles/sec)"
 
-[node name="SpeedClamp" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
-title = "Speed Clamp"
+[node name="SpeedClamp" type="HBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/SpeedClamp"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Speed Clamp"
+
+[node name="SpeedClampEnabled" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/SpeedClamp"]
+layout_mode = 2
+
+[node name="SpeedClampValue" type="SpinBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/SpeedClamp"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+allow_greater = true
+allow_lesser = true
 suffix = "(0.1 tiles/sec)"
 
 [node name="Acceleration" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
@@ -171,6 +187,8 @@ suffix = "(0.1 tiles/sec^2)"
 
 [node name="AccelerationDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "Acceleration Delay"
+rounded = true
+allow_lesser = false
 suffix = "ms"
 
 [node name="HSeparator2" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
@@ -178,9 +196,11 @@ layout_mode = 2
 
 [node name="Amplitude" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "Amplitude"
+step = 0.001
 
 [node name="Frequency" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "Frequency"
+step = 0.001
 
 [node name="HSeparator3" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
 layout_mode = 2
@@ -279,3 +299,9 @@ text = "ParticleTrail"
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset/PosOffsetY" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_pos_offset_y_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/LifetimeMS" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_lifetime_ms_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Speed" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_speed_value_changed"]
+[connection signal="toggled" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/SpeedClamp/SpeedClampEnabled" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_speed_clamp_enabled_toggled"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/SpeedClamp/SpeedClampValue" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_speed_clamp_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Acceleration" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_acceleration_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/AccelerationDelay" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_acceleration_delay_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Amplitude" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_amplitude_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Frequency" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_frequency_value_changed"]
