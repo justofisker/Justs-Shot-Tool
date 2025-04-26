@@ -15,6 +15,10 @@ run/main_scene="uid://hr2ctob0s43a"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+DpiScale="res://dpi_scale.gd"
+
 [display]
 
 window/size/viewport_width=1280
