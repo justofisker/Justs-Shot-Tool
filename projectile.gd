@@ -1,28 +1,34 @@
-extends Node2D
-
-const TILE_SIZE = 32
-
-@export var circle_size : float = 8.0 :
-	set(size):
-		circle_size = size
-		queue_redraw()
-@export var segment_count : int = 8 :
-	set(count):
-		segment_count = count
-		queue_redraw()
+extends Object
 
 var proj: XMLObjects.Projectile
 var direction: float = 0
 var y_offset: float = 0
 var inverted: bool = false
-@onready var speed := proj.speed
+var position: Vector2
+var speed : float
+var direction_init : float
 var time_alive : float = 0
+var turn_rate : float
+var turn_amount : float
 
 func _ready() -> void:
-	get_tree().create_timer(proj.lifetime_ms / 1000.0).timeout.connect(queue_free)
+	speed = proj.speed
+	direction_init = direction
+	if proj.turn_stop_time > 0:
+		turn_rate = proj.turn_rate / ((proj.turn_stop_time - proj.turn_rate_delay) / 1000.0)
+	else:
+		turn_rate = proj.turn_rate / ((proj.lifetime_ms - proj.turn_rate_delay) / 1000.0)
 
 func _physics_process(delta: float) -> void:
 	time_alive += delta
+	
+	if proj.circle_turn_angle != 0 && time_alive > proj.circle_turn_delay / 1000.0:
+		var distance = position.length()
+		var angle = position.angle()
+		angle += deg_to_rad(delta * proj.circle_turn_angle)
+		position = Vector2(distance, 0).rotated(angle)
+		return
+	
 	if time_alive > proj.acceleration_delay / 1000.0:
 		speed += proj.acceleration * delta
 	
@@ -32,29 +38,22 @@ func _physics_process(delta: float) -> void:
 		elif proj.acceleration < 0:
 			speed = max(speed, proj.speed_clamp)
 	
-	
 	if proj.wavy:
-		y_offset = sin(time_alive * PI * 6) * TILE_SIZE * time_alive / 2
+		y_offset = sin(time_alive * PI * 6) * time_alive / 2
 	elif !is_zero_approx(proj.amplitude):
-		y_offset = sin(time_alive * proj.frequency * 2 * PI * 1.75) * proj.amplitude * TILE_SIZE
+		y_offset = sin(time_alive * proj.frequency * 2 * PI * 1.75) * proj.amplitude
 	
 	if inverted:
 		y_offset = -y_offset
 	
-	position += Vector2(cos(direction), sin(direction)) * delta * TILE_SIZE * speed / 10.0 * 1.25
-
-func _process(delta: float) -> void:
-	queue_redraw()
-
-func _draw() -> void:
-	var points : PackedVector2Array = []
-	points.push_back(Vector2(1, 0) * circle_size)
-	for i in range(1, segment_count):
-		points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * circle_size)
-		points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * circle_size)
-	points.push_back(Vector2(1, 0) * circle_size)
+	if proj.turn_rate != 0:
+		if proj.turn_rate_delay / 1000.0 <= time_alive:
+			if proj.turn_accerlation_delay / 1000.0 <= time_alive:
+				turn_rate += proj.turn_accerlation_delay * delta
+			turn_amount += turn_rate * delta
+			if proj.turn_clamp_enabled:
+				turn_amount = clampf(turn_amount, -absf(proj.turn_clamp), absf(proj.turn_clamp))
 	
-	for i in points.size():
-		points[i] += Vector2(0, y_offset).rotated(direction)
+	direction = direction_init + deg_to_rad(turn_amount)
 	
-	draw_multiline(points, Color.DEEP_PINK)
+	position += Vector2(cos(direction), sin(direction)) * delta * speed / 10.0

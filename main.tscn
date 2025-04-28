@@ -134,6 +134,11 @@ suffix = "ms"
 title = "BurstMinDelay"
 suffix = "ms"
 
+[node name="DefaultAngle" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
+title = "DefaultAngle"
+rounded = true
+suffix = "deg"
+
 [node name="ProjProps" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -218,26 +223,50 @@ layout_mode = 2
 
 [node name="TurnRate" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "TurnRate"
+rounded = true
 suffix = "deg"
 
 [node name="TurnRateDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "TurnRateDelay"
+rounded = true
+allow_lesser = false
 suffix = "ms"
 
-[node name="TurnRateStopTime" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+[node name="TurnStopTime" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "TurnRateStopTime"
+rounded = true
+allow_lesser = false
 suffix = "ms"
 
 [node name="TurnAcceleration" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "TurnAcceleration"
-suffix = "(0.1 tiles/sec^2)"
+step = 0.001
+suffix = "(0.1 deg/sec^2)"
 
-[node name="TurnRateAccelerationDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
-title = "TurnRateAccelerationDelay"
+[node name="TurnAccelerationDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
+title = "TurnAccelerationDelay"
+rounded = true
+allow_lesser = false
 suffix = "ms"
 
-[node name="TurnClamp" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
-title = "TurnClamp"
+[node name="TurnClamp" type="HBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnClamp"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Turn Clamp"
+
+[node name="TurnClampEnabled" type="CheckBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnClamp"]
+layout_mode = 2
+
+[node name="TurnClampValue" type="SpinBox" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnClamp"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+allow_greater = true
+allow_lesser = true
 suffix = "deg"
 
 [node name="HSeparator5" type="HSeparator" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps"]
@@ -297,6 +326,7 @@ text = "ParticleTrail"
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/RateOfFire" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_rate_of_fire_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset/PosOffsetX" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_pos_offset_x_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/PosOffset/PosOffsetY" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_pos_offset_y_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/DefaultAngle" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_default_angle_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/LifetimeMS" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_lifetime_ms_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Speed" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_speed_value_changed"]
 [connection signal="toggled" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/SpeedClamp/SpeedClampEnabled" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_speed_clamp_enabled_toggled"]
@@ -305,4 +335,13 @@ text = "ParticleTrail"
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/AccelerationDelay" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_acceleration_delay_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Amplitude" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_amplitude_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Frequency" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_frequency_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/CircleTurnDelay" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_circle_turn_delay_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/CircleTurnAngle" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_circle_turn_angle_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnRate" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_rate_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnRateDelay" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_rate_delay_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnStopTime" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_stop_time_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnAcceleration" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_acceleration_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnAccelerationDelay" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_acceleration_delay_value_changed"]
+[connection signal="toggled" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnClamp/TurnClampEnabled" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_clamp_enabled_toggled"]
+[connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/TurnClamp/TurnClampValue" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_turn_clamp_value_changed"]
 [connection signal="toggled" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags/Wavy" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_wavy_toggled"]

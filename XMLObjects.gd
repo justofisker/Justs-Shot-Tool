@@ -9,6 +9,7 @@ class Subattack extends Resource:
 	var burst_delay: float = 0.0
 	var burst_min_delay: float = 0.0
 	var arc_gap: int = 0
+	var default_angle: int = 0
 
 	func to_xml() -> String:
 		var default = Subattack.new()
@@ -76,6 +77,7 @@ class Projectile extends Resource:
 	var turn_stop_time: int = 0
 	var turn_accerlation: float = 0
 	var turn_accerlation_delay: int = 0 # ms
+	var turn_clamp_enabled: bool = false
 	var turn_clamp: int = 0
 	
 	# Flags
