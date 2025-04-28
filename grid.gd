@@ -1,7 +1,7 @@
 @tool
 extends Control
 
-const TILE_SCALE : float = 64
+const TILE_SCALE : float = 32
 const COLOR := Color.DARK_GRAY
 
 func _ready() -> void:

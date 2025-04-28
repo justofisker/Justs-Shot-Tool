@@ -68,3 +68,6 @@ func _on_acceleration_value_changed(value: float) -> void:
 
 func _on_acceleration_delay_value_changed(value: float) -> void:
 	proj.acceleration_delay = value
+
+func _on_wavy_toggled(toggled_on: bool) -> void:
+	proj.wavy = toggled_on

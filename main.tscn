@@ -218,7 +218,7 @@ layout_mode = 2
 
 [node name="TurnRate" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "TurnRate"
-suffix = "deg/sec"
+suffix = "deg"
 
 [node name="TurnRateDelay" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps" instance=ExtResource("3_h2yge")]
 title = "TurnRateDelay"
@@ -305,3 +305,4 @@ text = "ParticleTrail"
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/AccelerationDelay" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_acceleration_delay_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Amplitude" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_amplitude_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Frequency" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_frequency_value_changed"]
+[connection signal="toggled" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjProps/Flags/Wavy" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_wavy_toggled"]
