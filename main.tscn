@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://hr2ctob0s43a"]
+[gd_scene load_steps=6 format=3 uid="uid://hr2ctob0s43a"]
 
-[ext_resource type="Script" uid="uid://bh845fxwp435h" path="res://circle.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://grid.gd" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://btmjb2ug6mrem" path="res://shooter.gd" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cggs61onmn78m" path="res://spin_value.tscn" id="3_h2yge"]
@@ -44,14 +43,40 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ig7tw")
-circle_size = 16.0
-segment_count = 12
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="Shooter" type="Node2D" parent="HBoxContainer/BulletArea/Center"]
 script = ExtResource("2_1bvp3")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/BulletArea"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/BulletArea/MarginContainer"]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="HBoxContainer/BulletArea/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "1x"
+
+[node name="Button2" type="Button" parent="HBoxContainer/BulletArea/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "2x"
+
+[node name="Button" type="Button" parent="HBoxContainer/BulletArea/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "4x"
 
 [node name="PropertiesPanel" type="PanelContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(400, 0)
@@ -321,6 +346,12 @@ edit_alpha = false
 layout_mode = 2
 text = "ParticleTrail"
 
+[connection signal="pressed" from="HBoxContainer/BulletArea/MarginContainer/HBoxContainer/Button3" to="HBoxContainer/BulletArea/Grid" method="set" binds= ["tile_scale", 16.0]]
+[connection signal="pressed" from="HBoxContainer/BulletArea/MarginContainer/HBoxContainer/Button3" to="HBoxContainer/BulletArea/Center/Shooter" method="set" binds= ["tile_scale", 16.0]]
+[connection signal="pressed" from="HBoxContainer/BulletArea/MarginContainer/HBoxContainer/Button2" to="HBoxContainer/BulletArea/Grid" method="set" binds= ["tile_scale", 32.0]]
+[connection signal="pressed" from="HBoxContainer/BulletArea/MarginContainer/HBoxContainer/Button2" to="HBoxContainer/BulletArea/Center/Shooter" method="set" binds= ["tile_scale", 32.0]]
+[connection signal="pressed" from="HBoxContainer/BulletArea/MarginContainer/HBoxContainer/Button" to="HBoxContainer/BulletArea/Grid" method="set" binds= ["tile_scale", 64.0]]
+[connection signal="pressed" from="HBoxContainer/BulletArea/MarginContainer/HBoxContainer/Button" to="HBoxContainer/BulletArea/Center/Shooter" method="set" binds= ["tile_scale", 64.0]]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/NumProjectiles" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_num_projectiles_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/ArcGap" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_arc_gap_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProps/RateOfFire" to="HBoxContainer/BulletArea/Center/Shooter" method="_on_rate_of_fire_value_changed"]

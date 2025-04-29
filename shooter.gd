@@ -31,22 +31,53 @@ func _shoot() -> void:
 func _process(delta: float) -> void:
 	queue_redraw()
 
-const circle_size : float= 8.0
-const segment_count : int = 8
-const TILE_SIZE: float = 32.0
+var radius : float = 8.0
+var segment_count : int = 11
+var tile_scale := 32.0 :
+	set(value):
+		tile_scale = value
+		radius = value / 4.0
+		segment_count = sqrt(radius) * 4
 func _draw() -> void:
+	if true:
+		var points : PackedVector2Array = []
+		points.push_back(Vector2(1, 0) * radius * 2)
+		for i in range(1, segment_count):
+			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius * 2)
+			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius * 2)
+		points.push_back(Vector2(1, 0) * radius * 2)
+		draw_multiline(points, Color.GREEN)
+	
 	for proj in projectiles:
 		var points : PackedVector2Array = []
-		points.push_back(Vector2(1, 0) * circle_size)
+		points.push_back(Vector2(1, 0) * radius)
 		for i in range(1, segment_count):
-			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * circle_size)
-			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * circle_size)
-		points.push_back(Vector2(1, 0) * circle_size)
+			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius)
+			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius)
+		points.push_back(Vector2(1, 0) * radius)
+		
+		var delta = sin(PI / 16) * radius
+		var arf = -cos(PI / 16) * radius
+		points.push_back(Vector2(arf, delta))
+		points.push_back(Vector2(radius / 3, delta))
+		points.push_back(Vector2(arf, -delta))
+		points.push_back(Vector2(radius / 3, -delta))
+		
+		# Head
+		points.push_back(Vector2(radius, 0))
+		points.push_back(Vector2(radius / 3, radius / 2))
+		points.push_back(Vector2(radius, 0))
+		points.push_back(Vector2(radius / 3, -radius / 2))
+		points.push_back(Vector2(radius / 3, -radius / 2))
+		points.push_back(Vector2(radius / 3, -delta))
+		points.push_back(Vector2(radius / 3, radius / 2))
+		points.push_back(Vector2(radius / 3, delta))
 		
 		for i in points.size():
-			points[i] += (Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction)) * TILE_SIZE
+			points[i] = points[i].rotated(proj.direction + proj.turn_amount)
+			points[i] += (Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction)) * tile_scale
 		
-		draw_multiline(points, Color.DEEP_PINK)
+		draw_multiline(points, Color.WHITE)
 
 func _physics_process(delta: float) -> void:
 	for proj in projectiles:

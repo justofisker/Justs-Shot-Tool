@@ -27,6 +27,7 @@ func _physics_process(delta: float) -> void:
 		var angle = position.angle()
 		angle -= deg_to_rad(delta * proj.circle_turn_angle)
 		position = Vector2(distance, 0).rotated(angle)
+		direction = fposmod(direction + deg_to_rad(-proj.circle_turn_angle) * delta, 2 * PI)
 		return
 	
 	if time_alive > proj.acceleration_delay / 1000.0:
