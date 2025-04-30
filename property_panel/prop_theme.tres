@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://cv017eo06bbcu"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cv017eo06bbcu"]
 
 [ext_resource type="FontFile" uid="uid://b33u7b5dflnec" path="res://font/Space_Mono/SpaceMono-Regular.ttf" id="1_7g21l"]
 [ext_resource type="Texture2D" uid="uid://xh8qqwwvgyel" path="res://gui/slider_grabber.png" id="1_ffsj7"]
 [ext_resource type="Texture2D" uid="uid://b35gr158a5u7i" path="res://gui/SliderGrabberHover.svg" id="1_yl11o"]
+[ext_resource type="FontFile" uid="uid://cq0bnr5675ve0" path="res://font/Roboto/Roboto-VariableFont_wdth,wght.ttf" id="3_10udq"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_yl11o"]
 color = Color(0.498039, 0.509804, 0.533333, 1)
@@ -33,10 +34,13 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [resource]
-default_font = ExtResource("1_7g21l")
+default_font = ExtResource("3_10udq")
 HSlider/icons/grabber = ExtResource("1_ffsj7")
 HSlider/icons/grabber_highlight = ExtResource("1_yl11o")
 HSlider/styles/grabber_area = SubResource("StyleBoxLine_yl11o")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_ffsj7")
 HSlider/styles/slider = SubResource("StyleBoxLine_7g21l")
+LineEdit/fonts/font = ExtResource("1_7g21l")
+SuffixLabel/base_type = &"Label"
+SuffixLabel/fonts/font = ExtResource("1_7g21l")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_ffsj7")

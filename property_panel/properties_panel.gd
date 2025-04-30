@@ -14,3 +14,8 @@ func _on_attack_property_updated() -> void:
 func _on_projectile_property_updated() -> void:
 	if bullet_area:
 		bullet_area.projectile = projectile_property.proj
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		grab_focus()
+		release_focus()

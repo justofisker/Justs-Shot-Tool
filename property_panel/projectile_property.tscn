@@ -22,129 +22,196 @@ label_settings = SubResource("LabelSettings_1bvp3")
 
 [node name="Collapse" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 texture_normal = ExtResource("2_xats3")
 stretch_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Properties" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="Properties"]
 layout_mode = 2
 
-[node name="objectId" parent="VBoxContainer" instance=ExtResource("3_15ut3")]
+[node name="objectId" parent="Properties" instance=ExtResource("3_15ut3")]
 layout_mode = 2
 title = "objectId"
 placeholder_text = "Doggy Dart"
 
-[node name="type" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="type" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "type"
 display_as_hex = true
 
-[node name="LifetimeMS" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="LifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "LifetimeMS"
 suffix = "ms"
 value = 1000.0
 
-[node name="Size" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="Size" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Size"
 suffix = "%"
 value = 100.0
 
-[node name="Speed" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="Speed" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Speed"
 suffix = "units/sec"
 value = 10.0
 
-[node name="Acceleration" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="Acceleration" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Acceleration"
 suffix = "units/sec^2"
 
-[node name="SpeedClamp" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="SpeedClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "SpeedClamp"
 suffix = "units/sec"
 toggleable = true
+enabled = false
 
-[node name="AccelerationDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="AccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "AccelerationDelay"
 suffix = "ms"
 
-[node name="Amplitude" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="Amplitude" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Amplitude"
 suffix = "units"
 
-[node name="Frequency" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="Frequency" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Frequency"
 suffix = "cycles/sec"
 
-[node name="CircleTurnDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="CircleTurnDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "CircleTurnDelay"
 suffix = "ms"
 
-[node name="CircleTurnAngle" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="CircleTurnAngle" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "CircleTurnAngle"
 suffix = "°/sec"
 
-[node name="TurnRate" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="TurnRate" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnRate"
 suffix = "°"
 tooltip = "Despite being named [code]TurnRate[/code], this actually refers
 to how much the projectile will turn over its lifetime."
 
-[node name="TurnRateDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="TurnRateDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnRateDelay"
 suffix = "ms"
 
-[node name="TurnStopTime" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="TurnStopTime" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnStopTime"
 suffix = "ms"
 tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 
-[node name="TurnAcceleration" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="TurnAcceleration" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnAcceleration"
 suffix = "°/sec^2"
 
-[node name="TurnAccelerationDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="TurnAccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnAccelerationDelay"
 suffix = "ms"
 
-[node name="TurnClamp" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+[node name="TurnClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnClamp"
 suffix = "°"
 toggleable = true
+enabled = false
 
-[connection signal="text_changed" from="VBoxContainer/objectId" to="." method="_on_object_id_text_changed"]
-[connection signal="value_changed" from="VBoxContainer/type" to="." method="_on_type_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/LifetimeMS" to="." method="_on_lifetime_ms_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Size" to="." method="_on_size_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Speed" to="." method="_on_speed_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Acceleration" to="." method="_on_acceleration_value_changed"]
-[connection signal="toggled" from="VBoxContainer/SpeedClamp" to="." method="_on_speed_clamp_toggled"]
-[connection signal="value_changed" from="VBoxContainer/SpeedClamp" to="." method="_on_speed_clamp_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/AccelerationDelay" to="." method="_on_acceleration_delay_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Amplitude" to="." method="_on_amplitude_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Frequency" to="." method="_on_frequency_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/CircleTurnDelay" to="." method="_on_circle_turn_delay_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/CircleTurnAngle" to="." method="_on_circle_turn_angle_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/TurnRate" to="." method="_on_turn_rate_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/TurnRateDelay" to="." method="_on_turn_rate_delay_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/TurnStopTime" to="." method="_on_turn_stop_time_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/TurnAcceleration" to="." method="_on_turn_acceleration_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/TurnAccelerationDelay" to="." method="_on_turn_acceleration_delay_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/TurnClamp" to="." method="_on_turn_clamp_value_changed"]
+[node name="GridContainer" type="GridContainer" parent="Properties"]
+layout_mode = 2
+columns = 3
+
+[node name="MultiHit" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+text = "MultiHit"
+
+[node name="PassesCover" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+text = "PassesCover"
+
+[node name="ArmorPiercing" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+text = "ArmorPiercing"
+
+[node name="ProtectFromSink" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+text = "ProtectFromSink"
+
+[node name="FaceDir" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+text = "FaceDir"
+
+[node name="Wavy" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+text = "Wavy"
+
+[node name="Boomerang" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+disabled = true
+text = "Boomerang"
+
+[node name="Parametric" type="CheckBox" parent="Properties/GridContainer"]
+layout_mode = 2
+disabled = true
+text = "Parametric"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Properties/GridContainer"]
+layout_mode = 2
+
+[node name="ParticleTrail" type="CheckBox" parent="Properties/GridContainer/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "ParticleTrail"
+
+[node name="ParticleTrailColor" type="ColorPickerButton" parent="Properties/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+disabled = true
+color = Color(1, 0, 1, 1)
+edit_alpha = false
+
+[connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]
+[connection signal="text_changed" from="Properties/objectId" to="." method="_on_object_id_text_changed"]
+[connection signal="value_changed" from="Properties/type" to="." method="_on_type_value_changed"]
+[connection signal="value_changed" from="Properties/LifetimeMS" to="." method="_on_lifetime_ms_value_changed"]
+[connection signal="value_changed" from="Properties/Size" to="." method="_on_size_value_changed"]
+[connection signal="value_changed" from="Properties/Speed" to="." method="_on_speed_value_changed"]
+[connection signal="value_changed" from="Properties/Acceleration" to="." method="_on_acceleration_value_changed"]
+[connection signal="toggled" from="Properties/SpeedClamp" to="." method="_on_speed_clamp_toggled"]
+[connection signal="value_changed" from="Properties/SpeedClamp" to="." method="_on_speed_clamp_value_changed"]
+[connection signal="value_changed" from="Properties/AccelerationDelay" to="." method="_on_acceleration_delay_value_changed"]
+[connection signal="value_changed" from="Properties/Amplitude" to="." method="_on_amplitude_value_changed"]
+[connection signal="value_changed" from="Properties/Frequency" to="." method="_on_frequency_value_changed"]
+[connection signal="value_changed" from="Properties/CircleTurnDelay" to="." method="_on_circle_turn_delay_value_changed"]
+[connection signal="value_changed" from="Properties/CircleTurnAngle" to="." method="_on_circle_turn_angle_value_changed"]
+[connection signal="value_changed" from="Properties/TurnRate" to="." method="_on_turn_rate_value_changed"]
+[connection signal="value_changed" from="Properties/TurnRateDelay" to="." method="_on_turn_rate_delay_value_changed"]
+[connection signal="value_changed" from="Properties/TurnStopTime" to="." method="_on_turn_stop_time_value_changed"]
+[connection signal="value_changed" from="Properties/TurnAcceleration" to="." method="_on_turn_acceleration_value_changed"]
+[connection signal="value_changed" from="Properties/TurnAccelerationDelay" to="." method="_on_turn_acceleration_delay_value_changed"]
+[connection signal="value_changed" from="Properties/TurnClamp" to="." method="_on_turn_clamp_value_changed"]
+[connection signal="toggled" from="Properties/GridContainer/MultiHit" to="." method="_on_multi_hit_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/PassesCover" to="." method="_on_passes_cover_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/ArmorPiercing" to="." method="_on_armor_piercing_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/ProtectFromSink" to="." method="_on_protect_from_sink_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/FaceDir" to="." method="_on_face_dir_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/Wavy" to="." method="_on_wavy_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/Boomerang" to="." method="_on_boomerang_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/Parametric" to="." method="_on_parametric_toggled"]
+[connection signal="toggled" from="Properties/GridContainer/HBoxContainer/ParticleTrail" to="." method="_on_particle_trail_toggled"]
+[connection signal="color_changed" from="Properties/GridContainer/HBoxContainer/ParticleTrailColor" to="." method="_on_particle_trail_color_changed"]

@@ -37,7 +37,9 @@ script = ExtResource("3_lquwl")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/PropertiesPanel"]
 layout_mode = 2
+follow_focus = true
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer"]
 layout_mode = 2

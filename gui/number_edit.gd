@@ -16,25 +16,26 @@ enum NumberType {INTEGER, FLOAT}
 @export var text : String = "NumberEdit" :
 	set(value):
 		text = value
-		if is_instance_valid(label):
+		if label:
 			label.text = value
 
 @export var suffix : String = "" :
 	set(value):
 		suffix = value
-		if is_instance_valid(label_suffix):
+		if label_suffix:
 			label_suffix.text = value
 
 @export var value : float = 0 :
 	set(new_value):
 		value = new_value
-		if is_instance_valid(line_edit):
+		if line_edit:
 			if number_type == NumberType.INTEGER:
 				if display_as_hex:
 					line_edit.text = "0x%x" % roundi(value)
 				else:
 					line_edit.text = str(roundi(value))
 			else:
+				# TODO: there has to be some fancy math way to do this
 				line_edit.text = ("%." + str(min(str(fmod(value, 1)).substr(2).length(), 3)) + "f") % value
 			if Engine.is_editor_hint():
 				line_edit.text_changed.emit(line_edit.text)
@@ -43,11 +44,21 @@ enum NumberType {INTEGER, FLOAT}
 @export var toggleable : bool = false :
 	set(value):
 		toggleable = value
-		if is_instance_valid(check_box):
+		if check_box:
 			check_box.visible = toggleable
-@export var enabled : bool = false :
+
+@export var enabled : bool = true :
 	set(value):
 		enabled = value
+		if line_edit:
+			if enabled:
+				line_edit.mouse_default_cursor_shape = Control.CURSOR_IBEAM
+				line_edit.selecting_enabled = true
+				line_edit.focus_mode = Control.FOCUS_ALL
+			else:
+				line_edit.mouse_default_cursor_shape = Control.CURSOR_ARROW
+				line_edit.selecting_enabled = false
+				line_edit.focus_mode = Control.FOCUS_NONE
 
 @export var display_as_hex : bool = false
 
@@ -70,8 +81,9 @@ func _ready() -> void:
 		label.text = text
 	if label_suffix:
 		label_suffix.text = suffix
+	self.enabled = enabled
 	self.value = value
-	line_edit.text_changed.emit(line_edit.text)
+	line_edit.text_changed.emit.bind(line_edit.text).call_deferred()
 	
 	line_edit.focus_entered.connect(_on_line_edit_focused_entered)
 	line_edit.focus_exited.connect(_on_line_edit_focus_exited)

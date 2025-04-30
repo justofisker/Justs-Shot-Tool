@@ -3,6 +3,10 @@ extends VBoxContainer
 signal updated()
 
 var proj := XMLObjects.Projectile.new()
+@onready var properties: VBoxContainer = $Properties
+
+func _on_collapse_pressed() -> void:
+	properties.visible = !properties.visible
 
 func _on_object_id_text_changed(value: String) -> void:
 	proj.object_id = value
@@ -79,3 +83,34 @@ func _on_turn_acceleration_delay_value_changed(value: float) -> void:
 func _on_turn_clamp_value_changed(value: float) -> void:
 	proj.turn_clamp = int(value)
 	updated.emit()
+
+
+func _on_multi_hit_toggled(toggled_on: bool) -> void:
+	proj.multihit = toggled_on
+
+func _on_passes_cover_toggled(toggled_on: bool) -> void:
+	proj.passes_cover = toggled_on
+
+func _on_armor_piercing_toggled(toggled_on: bool) -> void:
+	proj.armor_piercing = toggled_on
+
+func _on_protect_from_sink_toggled(toggled_on: bool) -> void:
+	proj.protect_from_sink = toggled_on
+
+func _on_face_dir_toggled(toggled_on: bool) -> void:
+	proj.face_dir = toggled_on
+
+func _on_wavy_toggled(toggled_on: bool) -> void:
+	proj.wavy = toggled_on
+
+func _on_boomerang_toggled(toggled_on: bool) -> void:
+	proj.boomerang = toggled_on
+
+func _on_parametric_toggled(toggled_on: bool) -> void:
+	proj.parametric = toggled_on
+
+func _on_particle_trail_toggled(toggled_on: bool) -> void:
+	proj.particle_trail = toggled_on
+
+func _on_particle_trail_color_changed(color: Color) -> void:
+	proj.particle_trail_color = color.b8

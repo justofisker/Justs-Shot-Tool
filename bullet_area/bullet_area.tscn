@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b75df6uegy10f"]
+[gd_scene load_steps=15 format=3 uid="uid://b75df6uegy10f"]
 
 [ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://grid.gd" id="1_al8gc"]
 [ext_resource type="Script" uid="uid://bg11enmtw15o4" path="res://bullet_area/bullet_area.gd" id="1_vbgui"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bcs0spjtqixln" path="res://gui/CenterView.svg" id="3_efyat"]
 [ext_resource type="Texture2D" uid="uid://srn1nec0ybgm" path="res://gui/ZoomLess.svg" id="4_15s0m"]
 [ext_resource type="Texture2D" uid="uid://br7epmvtri7xk" path="res://gui/ZoomMore.svg" id="5_0ci4i"]
+[ext_resource type="Script" uid="uid://bagf4r8wl5f15" path="res://bullet_area/camera_controller.gd" id="6_efyat"]
 
 [sub_resource type="FontVariation" id="FontVariation_7mycd"]
 variation_embolden = -0.25
@@ -45,6 +46,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 script = ExtResource("1_vbgui")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -64,21 +66,21 @@ size_flags_vertical = 0
 mouse_filter = 2
 theme = SubResource("Theme_272bh")
 
-[node name="TextureButton" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+[node name="CenterView" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("3_efyat")
 
-[node name="TextureButton2" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+[node name="ZoomOut" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("4_15s0m")
 
-[node name="Button" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+[node name="ResetZoom" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_vertical = 0
 text = "100.0 %"
 
-[node name="TextureButton3" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+[node name="ZoomIn" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("5_0ci4i")
 
@@ -88,8 +90,14 @@ metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(10, 10)
+script = ExtResource("6_efyat")
 
 [node name="Shooter" type="Node2D" parent="."]
 script = ExtResource("2_vbgui")
 
 [node name="Node2D" type="Node2D" parent="."]
+
+[connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/CenterView" to="Camera2D" method="_on_center_view_pressed"]
+[connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/ZoomOut" to="Camera2D" method="_on_zoom_out_pressed"]
+[connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/ResetZoom" to="Camera2D" method="_on_reset_zoom_pressed"]
+[connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/ZoomIn" to="Camera2D" method="_on_zoom_in_pressed"]

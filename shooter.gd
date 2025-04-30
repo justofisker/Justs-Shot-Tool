@@ -76,7 +76,7 @@ func _draw() -> void:
 		points.push_back(Vector2(radius / 3, delta))
 		
 		for i in points.size():
-			points[i] = points[i].rotated(proj.direction + proj.turn_amount)
+			points[i] = points[i].rotated(proj.direction) * proj.proj.size / 100.0
 			points[i] += (Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction))
 		
 		draw_multiline(points, Color.WHITE)

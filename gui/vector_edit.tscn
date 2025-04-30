@@ -32,7 +32,6 @@ script = ExtResource("1_6dyrf")
 number_type = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/FloatXEdit"]
-clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -57,14 +56,11 @@ flat = true
 select_all_on_focus = true
 
 [node name="Suffix" type="Label" parent="VBoxContainer/FloatXEdit/PanelContainer/HBoxContainer2/LineEdit"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_left = 33.0
-offset_right = 17.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 68.5625
+offset_bottom = 31.0
+theme_type_variation = &"SuffixLabel"
 label_settings = SubResource("LabelSettings_5vw27")
 vertical_alignment = 1
 text_overrun_behavior = 3
@@ -77,7 +73,6 @@ script = ExtResource("1_6dyrf")
 number_type = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/FloatYEdit"]
-clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -102,14 +97,11 @@ flat = true
 select_all_on_focus = true
 
 [node name="Suffix" type="Label" parent="VBoxContainer/FloatYEdit/PanelContainer/HBoxContainer2/LineEdit"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_left = 33.0
-offset_right = 17.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 68.5625
+offset_bottom = 31.0
+theme_type_variation = &"SuffixLabel"
 label_settings = SubResource("LabelSettings_5vw27")
 vertical_alignment = 1
 text_overrun_behavior = 3

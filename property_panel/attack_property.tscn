@@ -22,6 +22,7 @@ label_settings = SubResource("LabelSettings_1bvp3")
 
 [node name="Collapse" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 texture_normal = ExtResource("2_yda5i")
 stretch_mode = 3
 
