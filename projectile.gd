@@ -10,6 +10,7 @@ var direction_init : float
 var time_alive : float = 0
 var turn_rate : float
 var turn_amount : float
+var pos_offset : Vector2
 
 func _ready() -> void:
 	speed = proj.speed

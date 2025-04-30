@@ -29,6 +29,7 @@ func _shoot() -> void:
 		node.proj = projectile
 		node.direction = get_local_mouse_position().angle() - angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
 		node.inverted = inverted
+		node.pos_offset = attack.pos_offset
 		node._ready()
 		inverted = !inverted
 		projectiles.push_back(node)
@@ -78,6 +79,7 @@ func _draw() -> void:
 		for i in points.size():
 			points[i] = points[i].rotated(proj.direction) * proj.proj.size / 100.0
 			points[i] += (Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction))
+			points[i] += proj.pos_offset.rotated(proj.direction_init)
 		
 		draw_multiline(points, Color.WHITE)
 

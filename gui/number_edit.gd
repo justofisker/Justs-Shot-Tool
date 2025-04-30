@@ -93,7 +93,7 @@ func _on_toggled(toggled_on: bool) -> void:
 	enabled = toggled_on
 	line_edit.editable = enabled
 
-func _on_line_edit_text_submitted(new_text: String) -> void:
+func _on_line_edit_text_submitted(_new_text: String) -> void:
 	line_edit.release_focus()
 
 func _on_line_edit_focused_entered() -> void:
