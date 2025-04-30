@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 		y_offset = -y_offset
 	
 	if proj.turn_rate != 0:
-		if proj.turn_rate_delay / 1000.0 <= time_alive:
+		if proj.turn_rate_delay / 1000.0 <= time_alive && (proj.turn_stop_time == 0 || proj.turn_stop_time / 1000.0 >= time_alive):
 			if proj.turn_acceleration_delay / 1000.0 <= time_alive:
 				turn_rate += proj.turn_acceleration * delta
 			turn_amount += turn_rate * delta
