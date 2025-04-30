@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6y7xrt1ccj0g"]
+
+[ext_resource type="Script" uid="uid://bilmv1w2k08x2" path="res://gui/number_edit.gd" id="1_w2x4b"]
+[ext_resource type="Texture2D" uid="uid://cm6fxcjank5k2" path="res://gui/Info.svg" id="2_5ns1o"]
+[ext_resource type="Script" uid="uid://dvv1pnpu8nbq7" path="res://gui/suffix.gd" id="2_xkjgk"]
+[ext_resource type="Script" uid="uid://x0rvdp2g68hr" path="res://gui/tooltip_icon.gd" id="3_f7inr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_color = Color(0.529067, 0.529067, 0.529067, 1)
+
+[node name="NumberEdit" type="HBoxContainer"]
+script = ExtResource("1_w2x4b")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "NumberEdit"
+
+[node name="TooltipIcon" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_5ns1o")
+stretch_mode = 3
+script = ExtResource("3_f7inr")
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer"]
+layout_mode = 2
+focus_mode = 1
+text = "0"
+flat = true
+select_all_on_focus = true
+
+[node name="Suffix" type="Label" parent="PanelContainer/LineEdit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_5vw27")
+vertical_alignment = 1
+text_overrun_behavior = 3
+ellipsis_char = "."
+script = ExtResource("2_xkjgk")

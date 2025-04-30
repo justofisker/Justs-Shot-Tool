@@ -1,0 +1,117 @@
+[gd_scene load_steps=7 format=3 uid="uid://mj6uop2d0u5m"]
+
+[ext_resource type="Script" uid="uid://bilmv1w2k08x2" path="res://gui/number_edit.gd" id="1_6dyrf"]
+[ext_resource type="Script" uid="uid://b6lkbyukobuke" path="res://gui/vector_edit.gd" id="1_hrj13"]
+[ext_resource type="Script" uid="uid://dvv1pnpu8nbq7" path="res://gui/suffix.gd" id="2_hrj13"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_272bh"]
+font_color = Color(0.784314, 0.27451, 0.27451, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_color = Color(0.529067, 0.529067, 0.529067, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lquwl"]
+font_color = Color(0.27451, 0.784314, 0.27451, 1)
+
+[node name="VectorEdit" type="HBoxContainer"]
+script = ExtResource("1_hrj13")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "VectorEdit"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FloatXEdit" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("1_6dyrf")
+number_type = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/FloatXEdit"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/FloatXEdit/PanelContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/FloatXEdit/PanelContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="LabelX" type="Label" parent="VBoxContainer/FloatXEdit/PanelContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_272bh")
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/FloatXEdit/PanelContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0.0"
+flat = true
+select_all_on_focus = true
+
+[node name="Suffix" type="Label" parent="VBoxContainer/FloatXEdit/PanelContainer/HBoxContainer2/LineEdit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_right = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_5vw27")
+vertical_alignment = 1
+text_overrun_behavior = 3
+ellipsis_char = "."
+script = ExtResource("2_hrj13")
+
+[node name="FloatYEdit" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("1_6dyrf")
+number_type = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/FloatYEdit"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/FloatYEdit/PanelContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/FloatYEdit/PanelContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="LabelX" type="Label" parent="VBoxContainer/FloatYEdit/PanelContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+text = "y"
+label_settings = SubResource("LabelSettings_lquwl")
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/FloatYEdit/PanelContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0.0"
+flat = true
+select_all_on_focus = true
+
+[node name="Suffix" type="Label" parent="VBoxContainer/FloatYEdit/PanelContainer/HBoxContainer2/LineEdit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_right = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_5vw27")
+vertical_alignment = 1
+text_overrun_behavior = 3
+ellipsis_char = "."
+script = ExtResource("2_hrj13")

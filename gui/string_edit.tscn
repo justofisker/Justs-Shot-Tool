@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://0c2d251kgqay"]
+
+[ext_resource type="Script" uid="uid://bcrdhwlgayj4k" path="res://gui/string_edit.gd" id="1_2qugv"]
+
+[node name="StringEdit" type="HBoxContainer"]
+script = ExtResource("1_2qugv")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "StringEdit"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer"]
+layout_mode = 2
+flat = true

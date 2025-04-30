@@ -57,4 +57,4 @@ func _physics_process(delta: float) -> void:
 	
 	direction = direction_init - deg_to_rad(turn_amount)
 	
-	position += Vector2(cos(direction), sin(direction)) * delta * speed / 10.0
+	position += Vector2(cos(direction), sin(direction)) * delta * speed

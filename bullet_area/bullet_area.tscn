@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=3 uid="uid://b75df6uegy10f"]
+
+[ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://grid.gd" id="1_al8gc"]
+[ext_resource type="Script" uid="uid://bg11enmtw15o4" path="res://bullet_area/bullet_area.gd" id="1_vbgui"]
+[ext_resource type="Script" uid="uid://btmjb2ug6mrem" path="res://shooter.gd" id="2_vbgui"]
+[ext_resource type="Texture2D" uid="uid://bcs0spjtqixln" path="res://gui/CenterView.svg" id="3_efyat"]
+[ext_resource type="Texture2D" uid="uid://srn1nec0ybgm" path="res://gui/ZoomLess.svg" id="4_15s0m"]
+[ext_resource type="Texture2D" uid="uid://br7epmvtri7xk" path="res://gui/ZoomMore.svg" id="5_0ci4i"]
+
+[sub_resource type="FontVariation" id="FontVariation_7mycd"]
+variation_embolden = -0.25
+baseline_offset = -0.025
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7mycd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_272bh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vw27"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kek77"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4c57u"]
+
+[sub_resource type="Theme" id="Theme_272bh"]
+Button/colors/font_color = Color(0.878431, 0.878431, 0.878431, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0.54902, 0.694118, 0.996078, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(0.878431, 0.878431, 0.878431, 1)
+Button/colors/icon_pressed_color = Color(0.54902, 0.694118, 0.996078, 1)
+Button/constants/outline_size = 2
+Button/fonts/font = SubResource("FontVariation_7mycd")
+Button/styles/disabled = SubResource("StyleBoxEmpty_7mycd")
+Button/styles/focus = SubResource("StyleBoxEmpty_272bh")
+Button/styles/hover = SubResource("StyleBoxEmpty_5vw27")
+Button/styles/normal = SubResource("StyleBoxEmpty_kek77")
+Button/styles/pressed = SubResource("StyleBoxEmpty_4c57u")
+
+[node name="BulletArea" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_vbgui")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ViewControlls" type="MarginContainer" parent="CanvasLayer"]
+offset_right = 150.0
+offset_bottom = 51.0
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ViewControlls"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+theme = SubResource("Theme_272bh")
+
+[node name="TextureButton" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_efyat")
+
+[node name="TextureButton2" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_15s0m")
+
+[node name="Button" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "100.0 %"
+
+[node name="TextureButton3" type="Button" parent="CanvasLayer/ViewControlls/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("5_0ci4i")
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("1_al8gc")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(10, 10)
+
+[node name="Shooter" type="Node2D" parent="."]
+script = ExtResource("2_vbgui")
+
+[node name="Node2D" type="Node2D" parent="."]

@@ -12,7 +12,6 @@ class Subattack extends Resource:
 	var default_angle: int = 0
 
 	func to_xml() -> String:
-		var default = Subattack.new()
 		
 		var out = "<Subattack "
 		out += "projectileId=\"" + str(projectile_id) + "\">\n"
@@ -51,19 +50,20 @@ class ProjectileDescription extends Resource:
 
 class Projectile extends Resource:
 	var id: int = 0
+	var type: int = 0
 	var object_id: String = ""
 	var min_damage: int = 0
 	var max_damage: int = 0
-	var lifetime_ms: int = 0
+	var lifetime_ms: int = 1000
 	var size: int = 100 # base 100
 	var max_health_damage: float = 0
 	var current_health_damage: float = 0
 	
 	# Speed
-	var speed: int = 0
+	var speed: int = 100
 	var speed_clamp_enabled: bool = false
 	var speed_clamp: int = 0
-	var acceleration: int = 0
+	var acceleration: float = 0
 	var acceleration_delay: int = 0
 	var amplitude: float = 0
 	var frequency: float = 0

@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=3 uid="uid://na5avsr373e0"]
+
+[ext_resource type="Script" uid="uid://b7ufytjg8hwlk" path="res://property_panel/projectile_property.gd" id="1_vk4nb"]
+[ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/Collapse.svg" id="2_xats3"]
+[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/string_edit.tscn" id="3_15ut3"]
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/number_edit.tscn" id="4_5atu8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
+font_size = 24
+
+[node name="ProjectileProperty" type="VBoxContainer"]
+script = ExtResource("1_vk4nb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Projectile"
+label_settings = SubResource("LabelSettings_1bvp3")
+
+[node name="Collapse" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_xats3")
+stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="objectId" parent="VBoxContainer" instance=ExtResource("3_15ut3")]
+layout_mode = 2
+title = "objectId"
+placeholder_text = "Doggy Dart"
+
+[node name="type" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "type"
+display_as_hex = true
+
+[node name="LifetimeMS" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "LifetimeMS"
+suffix = "ms"
+value = 1000.0
+
+[node name="Size" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "Size"
+suffix = "%"
+value = 100.0
+
+[node name="Speed" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "Speed"
+suffix = "units/sec"
+value = 10.0
+
+[node name="Acceleration" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "Acceleration"
+suffix = "units/sec^2"
+
+[node name="SpeedClamp" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "SpeedClamp"
+suffix = "units/sec"
+toggleable = true
+
+[node name="AccelerationDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "AccelerationDelay"
+suffix = "ms"
+
+[node name="Amplitude" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "Amplitude"
+suffix = "units"
+
+[node name="Frequency" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "Frequency"
+suffix = "cycles/sec"
+
+[node name="CircleTurnDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "CircleTurnDelay"
+suffix = "ms"
+
+[node name="CircleTurnAngle" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "CircleTurnAngle"
+suffix = "°/sec"
+
+[node name="TurnRate" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "TurnRate"
+suffix = "°"
+tooltip = "Despite being named [code]TurnRate[/code], this actually refers
+to how much the projectile will turn over its lifetime."
+
+[node name="TurnRateDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "TurnRateDelay"
+suffix = "ms"
+
+[node name="TurnStopTime" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "TurnStopTime"
+suffix = "ms"
+tooltip = "Must be greater than [code]TurnRateDelay[/code]"
+
+[node name="TurnAcceleration" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "TurnAcceleration"
+suffix = "°/sec^2"
+
+[node name="TurnAccelerationDelay" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "TurnAccelerationDelay"
+suffix = "ms"
+
+[node name="TurnClamp" parent="VBoxContainer" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "TurnClamp"
+suffix = "°"
+toggleable = true
+
+[connection signal="text_changed" from="VBoxContainer/objectId" to="." method="_on_object_id_text_changed"]
+[connection signal="value_changed" from="VBoxContainer/type" to="." method="_on_type_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/LifetimeMS" to="." method="_on_lifetime_ms_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Size" to="." method="_on_size_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Speed" to="." method="_on_speed_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Acceleration" to="." method="_on_acceleration_value_changed"]
+[connection signal="toggled" from="VBoxContainer/SpeedClamp" to="." method="_on_speed_clamp_toggled"]
+[connection signal="value_changed" from="VBoxContainer/SpeedClamp" to="." method="_on_speed_clamp_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/AccelerationDelay" to="." method="_on_acceleration_delay_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Amplitude" to="." method="_on_amplitude_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Frequency" to="." method="_on_frequency_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/CircleTurnDelay" to="." method="_on_circle_turn_delay_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/CircleTurnAngle" to="." method="_on_circle_turn_angle_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TurnRate" to="." method="_on_turn_rate_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TurnRateDelay" to="." method="_on_turn_rate_delay_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TurnStopTime" to="." method="_on_turn_stop_time_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TurnAcceleration" to="." method="_on_turn_acceleration_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TurnAccelerationDelay" to="." method="_on_turn_acceleration_delay_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TurnClamp" to="." method="_on_turn_clamp_value_changed"]
