@@ -41,7 +41,8 @@ func _shoot() -> void:
 		var node = Projectile.new()
 		node.set_script(preload("res://projectile.gd"))
 		node.proj = projectile
-		node.direction = 0 if object_settings.ignore_mouse else get_local_mouse_position().angle() - angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
+		node.direction = 0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
+		node.direction += -angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) - deg_to_rad(attack.default_angle)
 		node.inverted = inverted
 		node.origin = to_global(Vector2(attack.pos_offset).rotated(node.direction))
 		node._ready()

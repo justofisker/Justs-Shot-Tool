@@ -63,6 +63,7 @@ grow_horizontal = 2
 theme_override_constants/separation = 0
 
 [node name="Control" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/Control"]
