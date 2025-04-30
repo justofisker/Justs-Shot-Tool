@@ -36,7 +36,7 @@ func _shoot() -> void:
 		node.proj = projectile
 		node.direction = get_local_mouse_position().angle() - angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
 		node.inverted = inverted
-		node.pos_offset = attack.pos_offset
+		node.origin = to_global(Vector2(attack.pos_offset).rotated(node.direction))
 		node._ready()
 		inverted = !inverted
 		projectiles.push_back(node)
@@ -50,8 +50,8 @@ func _draw() -> void:
 	draw_circle(Vector2(), radius * 2, Color.GREEN, false)
 	
 	for proj in projectiles:
-		var offset = Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction) + proj.pos_offset.rotated(proj.direction_init)
-		draw_circle(offset, radius, Color.WHITE, false)
+		var offset = Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction) + to_local(proj.origin)
+		draw_circle(offset, radius * proj.proj.size / 100.0, Color.WHITE, false)
 		var points : PackedVector2Array = []
 		
 		var delta = sin(PI / 16) * radius

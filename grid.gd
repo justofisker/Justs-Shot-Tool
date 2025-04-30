@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
-@onready var viewport: SubViewport = get_viewport()
+@onready var viewport : Viewport = get_viewport()
 @export var grid_size := Vector2(10, 10)
 @export var color := Color(0.8, 0.8, 0.8, 0.1)
 
@@ -16,7 +16,7 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var vp_size: = viewport.size
+	var vp_size : Vector2i = viewport.size
 	var cam_pos: = camera.position
 	var vp_right: = vp_size.x / camera.zoom.x
 	var vp_bottom: = vp_size.y / camera.zoom.y

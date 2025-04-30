@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://pipc3lr7swkx"]
+
+[ext_resource type="Script" uid="uid://btgxkaylyrpyv" path="res://gui/color_edit.gd" id="1_7a2ec"]
+
+[node name="ColorEdit" type="HBoxContainer"]
+script = ExtResource("1_7a2ec")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ColorEdit"
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+
+[connection signal="toggled" from="HBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]

@@ -3,10 +3,46 @@ extends Node2D
 func _process(_delta: float) -> void:
 	queue_redraw()
 
+@export var length := 70
+@export var triangle_size := Vector2(10, 15) 
+@export var thickness = 2
+
+func _ready() -> void:
+	scale *= 1.0 / get_viewport().get_camera_2d().zoom.x
+
+func draw_triangle(length : float, thickness : float, tip_size : Vector2, rotation: float, color: Color) -> void:
+	draw_line(Vector2(), Vector2(0, -length).rotated(rotation), color, thickness)
+	draw_polygon([Vector2(-triangle_size.x, -length).rotated(rotation), Vector2(0, -length - triangle_size.y).rotated(rotation), Vector2(triangle_size.x, -length).rotated(rotation)], [color])
+
 func _draw() -> void:
-	var length = 7
-	draw_circle(Vector2(), 3, Color.WHITE, false)
-	draw_line(Vector2(), Vector2(0, -length), Color.GREEN, 0.1)
-	draw_polygon([Vector2(-1.3, -length), Vector2(0, -length - 2), Vector2(1.3, -length),], [Color.GREEN])
-	draw_line(Vector2(), Vector2(length, 0), Color.RED)
-	draw_polygon([Vector2(length, 1.3), Vector2(length + 2, 0), Vector2(length, -1.3),], [Color.RED])
+	draw_triangle(length, thickness, triangle_size, PI / 2, Color.RED)
+	draw_triangle(length, thickness, triangle_size, 0, Color.GREEN)
+
+enum Grab {X, Y, XY, NONE}
+
+var grab := Grab.NONE
+var grab_offset : Vector2
+
+func _input(event: InputEvent) -> void:
+	var y_grab_rect := Rect2(-triangle_size.x, -length - triangle_size.y, triangle_size.x * 2, triangle_size.y + length - triangle_size.x)
+	var x_grab_rect := Rect2(triangle_size.x, -triangle_size.x, triangle_size.y + length - triangle_size.x, triangle_size.x * 2)
+	
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				grab_offset = get_canvas_transform().affine_inverse() * event.position - global_position
+				var pos = to_local(get_canvas_transform().affine_inverse() * event.position)
+				if y_grab_rect.has_point(pos):
+					grab = Grab.Y
+				elif x_grab_rect.has_point(pos):
+					grab = Grab.X
+				else:
+					grab = Grab.XY
+			else:
+				grab = Grab.NONE
+	elif event is InputEventMouseMotion && grab != Grab.NONE:
+		var pos : Vector2 = get_canvas_transform().affine_inverse() * event.position
+		if grab == Grab.X || grab == Grab.XY:
+			get_parent().global_position.x = snappedf(pos.x - grab_offset.x, 10)
+		if grab == Grab.Y || grab == Grab.XY:
+			get_parent().global_position.y = snappedf(pos.y - grab_offset.y, 10)

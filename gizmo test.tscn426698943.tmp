@@ -6,8 +6,11 @@
 [node name="Camera2D" type="Camera2D"]
 zoom = Vector2(10, 10)
 
-[node name="Gizmo" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(3, 9)
 script = ExtResource("1_5vfje")
 
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource("2_nfakx")
+grid_size = null
+color = null

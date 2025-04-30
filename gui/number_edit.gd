@@ -37,10 +37,8 @@ enum NumberType {INTEGER, FLOAT}
 			else:
 				# TODO: there has to be some fancy math way to do this
 				line_edit.text = ("%." + str(min(str(fmod(value, 1)).substr(2).length(), 3)) + "f") % value
-			if Engine.is_editor_hint():
-				line_edit.text_changed.emit(line_edit.text)
-		if !Engine.is_editor_hint():
-			value_changed.emit(value)
+			line_edit.text_changed.emit(line_edit.text)
+		value_changed.emit(value)
 
 @export var toggleable : bool = false :
 	set(value):
@@ -60,8 +58,7 @@ enum NumberType {INTEGER, FLOAT}
 				line_edit.mouse_default_cursor_shape = Control.CURSOR_ARROW
 				line_edit.selecting_enabled = false
 				line_edit.focus_mode = Control.FOCUS_NONE
-		if !Engine.is_editor_hint():
-			toggled.emit(enabled)
+		toggled.emit(enabled)
 
 @export var display_as_hex : bool = false
 

@@ -2,6 +2,7 @@
 extends HBoxContainer
 
 signal value_changed(value: Vector2)
+signal toggled(toggled_on: bool)
 
 @onready var x_edit: HBoxContainer = $VBoxContainer/FloatXEdit
 @onready var y_edit: HBoxContainer = $VBoxContainer/FloatYEdit

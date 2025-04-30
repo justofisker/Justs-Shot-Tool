@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b75df6uegy10f"]
+[gd_scene load_steps=16 format=3 uid="uid://b75df6uegy10f"]
 
 [ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://grid.gd" id="1_al8gc"]
 [ext_resource type="Script" uid="uid://bg11enmtw15o4" path="res://bullet_area/bullet_area.gd" id="1_vbgui"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://srn1nec0ybgm" path="res://gui/ZoomLess.svg" id="4_15s0m"]
 [ext_resource type="Texture2D" uid="uid://br7epmvtri7xk" path="res://gui/ZoomMore.svg" id="5_0ci4i"]
 [ext_resource type="Script" uid="uid://bagf4r8wl5f15" path="res://bullet_area/camera_controller.gd" id="6_efyat"]
+[ext_resource type="Script" uid="uid://bbcr7otblq70k" path="res://gizmo_test.gd" id="8_15s0m"]
 
 [sub_resource type="FontVariation" id="FontVariation_7mycd"]
 variation_embolden = -0.25
@@ -94,6 +95,9 @@ script = ExtResource("6_efyat")
 
 [node name="Shooter" type="Node2D" parent="."]
 script = ExtResource("2_vbgui")
+
+[node name="Node2D" type="Node2D" parent="Shooter"]
+script = ExtResource("8_15s0m")
 
 [node name="Node2D" type="Node2D" parent="."]
 

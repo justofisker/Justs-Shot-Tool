@@ -78,13 +78,13 @@ class Projectile extends Resource:
 	var turn_rate: int = 0
 	var turn_rate_delay: int = 0 # ms
 	var turn_stop_time: int = 0
-	var turn_accerlation: float = 0
-	var turn_accerlation_delay: int = 0 # ms
+	var turn_acceleration: float = 0
+	var turn_acceleration_delay: int = 0 # ms
 	var turn_clamp_enabled: bool = false
 	var turn_clamp: int = 0
 	
 	# Flags
-	var multihit: bool = false
+	var multi_hit: bool = false
 	var passes_cover: bool = false
 	var armor_piercing: bool = false
 	var protect_from_sink: bool = false
@@ -93,9 +93,9 @@ class Projectile extends Resource:
 	var boomerang: bool = false
 	var parametric: bool = false
 	# Kinda Flag
-	var particle_trail: bool = false
-	const DEFAULT_PARTICLE_TRAIL_COLOR: int = 0xFF00FF
-	var particle_trail_color: int = DEFAULT_PARTICLE_TRAIL_COLOR
+	var particle_trail: Color = DEFAULT_PARTICLE_TRAIL_COLOR
+	const DEFAULT_PARTICLE_TRAIL_COLOR := Color(0xFF00FF)
+	var particle_trail_enabled: bool = false
 	
 	func to_xml() -> String:
 		# General
@@ -134,7 +134,7 @@ class Projectile extends Resource:
 			out += "\t<CircleTurnAngle>" + str(circle_turn_angle) + "</CircleTurnAngle>\n"
 		
 		# Flags
-		if multihit:
+		if multi_hit:
 			out += "\t<MultiHit />\n"
 		if passes_cover:
 			out += "\t<PassesCover />\n"
@@ -148,11 +148,11 @@ class Projectile extends Resource:
 			out += "\t<Wavy />\n"
 		if boomerang:
 			out += "\t<Boomerang />\n"
-		if particle_trail:
-			out += "\t<ParticleTrail "
-			if particle_trail_color != DEFAULT_PARTICLE_TRAIL_COLOR:
-				out += "color=\"" + ("%06x" % particle_trail_color) + "\" "
-			out += "/>\n"
+		#if particle_trail:
+			#out += "\t<ParticleTrail "
+			#if particle_trail_color != DEFAULT_PARTICLE_TRAIL_COLOR:
+				#out += "color=\"" + ("%06x" % particle_trail_color) + "\" "
+			#out += "/>\n"
 		
 		out += "</Projectile>\n"
 		

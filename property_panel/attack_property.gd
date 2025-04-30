@@ -2,51 +2,32 @@ extends VBoxContainer
 
 signal updated()
 
+var attack := XMLObjects.Subattack.new() :
+	set(value):
+		attack = value
+		for child in properties.get_children():
+			var v = attack.get(child.name.to_snake_case())
+			if v != null:
+				child.value = v
+			else:
+				push_error("Unable to set value for " + child.name)
+		updated.emit()
+
 @onready var collapse: TextureButton = $HBoxContainer/Collapse
 @onready var properties: VBoxContainer = $Properties
 
-var attack := XMLObjects.Subattack.new()
-
 func _ready() -> void:
-	collapse.pressed.connect(_on_collapse_pressed)
-	updated.emit()
+	for child in properties.get_children():
+		child.value_changed.connect(_set_property.bind(child.name.to_snake_case()))
+		_set_property(child.value, child.name.to_snake_case())
+		child.toggled.connect(_set_enabled.bind(child.name.to_snake_case()))
+
+func _set_property(value, property: String) -> void:
+	attack.set(property, value)
+
+func _set_enabled(toggled_on: bool, property: String) -> void:
+	attack.set(property + "_enabled", toggled_on)
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
-	updated.emit()
-
-func _on_projectile_id_value_changed(value: float) -> void:
-	attack.projectile_id = int(value)
-	updated.emit()
-
-func _on_num_projectiles_value_changed(value: float) -> void:
-	attack.num_projectiles = int(value)
-	updated.emit()
-
-func _on_rate_of_fire_value_changed(value: float) -> void:
-	attack.rate_of_fire = value
-	updated.emit()
-
-func _on_pos_offset_value_changed(value: Vector2) -> void:
-	attack.pos_offset = value
-	updated.emit()
-	
-func _on_arc_gap_value_changed(value: float) -> void:
-	attack.arc_gap = int(value)
-	updated.emit()
-
-func _on_default_angle_value_changed(value: float) -> void:
-	attack.default_angle = int(value)
-	updated.emit()
-
-func _on_default_angle_incr_value_changed(value: float) -> void:
-	attack.default_angle_incr = int(value)
-	updated.emit()
-
-func _on_default_angle_incr_max_value_changed(value: float) -> void:
-	attack.default_angle_incr_max = int(value)
-	updated.emit()
-
-func _on_default_angle_incr_min_value_changed(value: float) -> void:
-	attack.default_angle_incr_min = int(value)
 	updated.emit()

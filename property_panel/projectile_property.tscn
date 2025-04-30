@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://na5avsr373e0"]
+[gd_scene load_steps=8 format=3 uid="uid://na5avsr373e0"]
 
 [ext_resource type="Script" uid="uid://b7ufytjg8hwlk" path="res://property_panel/projectile_property.gd" id="1_vk4nb"]
 [ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/Collapse.svg" id="2_xats3"]
 [ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/string_edit.tscn" id="3_15ut3"]
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/number_edit.tscn" id="4_5atu8"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/bool_edit.tscn" id="5_xats3"]
+[ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/color_edit.tscn" id="6_15ut3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 font_size = 24
@@ -26,10 +28,10 @@ focus_mode = 0
 texture_normal = ExtResource("2_xats3")
 stretch_mode = 3
 
-[node name="Properties" type="VBoxContainer" parent="."]
+[node name="HSeparator2" type="HSeparator" parent="."]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="Properties"]
+[node name="Properties" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="objectId" parent="Properties" instance=ExtResource("3_15ut3")]
@@ -119,6 +121,7 @@ tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 
 [node name="TurnAcceleration" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "TurnAcceleration"
 suffix = "°/sec^2"
 
@@ -134,87 +137,41 @@ suffix = "°"
 toggleable = true
 enabled = false
 
-[node name="GridContainer" type="GridContainer" parent="Properties"]
-layout_mode = 2
-columns = 3
-
-[node name="MultiHit" type="CheckBox" parent="Properties/GridContainer"]
+[node name="MultiHit" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "MultiHit"
 
-[node name="PassesCover" type="CheckBox" parent="Properties/GridContainer"]
+[node name="PassesCover" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "PassesCover"
 
-[node name="ArmorPiercing" type="CheckBox" parent="Properties/GridContainer"]
+[node name="ArmorPiercing" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "ArmorPiercing"
 
-[node name="ProtectFromSink" type="CheckBox" parent="Properties/GridContainer"]
+[node name="ProtectFromSink" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "ProtectFromSink"
 
-[node name="FaceDir" type="CheckBox" parent="Properties/GridContainer"]
+[node name="FaceDir" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "FaceDir"
 
-[node name="Wavy" type="CheckBox" parent="Properties/GridContainer"]
+[node name="Wavy" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "Wavy"
 
-[node name="Boomerang" type="CheckBox" parent="Properties/GridContainer"]
+[node name="Boomerang" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-disabled = true
 text = "Boomerang"
 
-[node name="Parametric" type="CheckBox" parent="Properties/GridContainer"]
+[node name="Parametric" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-disabled = true
 text = "Parametric"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Properties/GridContainer"]
+[node name="ParticleTrail" parent="Properties" instance=ExtResource("6_15ut3")]
 layout_mode = 2
-
-[node name="ParticleTrail" type="CheckBox" parent="Properties/GridContainer/HBoxContainer"]
-layout_mode = 2
-disabled = true
+value = Color(1, 0, 1, 1)
 text = "ParticleTrail"
 
-[node name="ParticleTrailColor" type="ColorPickerButton" parent="Properties/GridContainer/HBoxContainer"]
-custom_minimum_size = Vector2(28, 0)
-layout_mode = 2
-disabled = true
-color = Color(1, 0, 1, 1)
-edit_alpha = false
-
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]
-[connection signal="text_changed" from="Properties/objectId" to="." method="_on_object_id_text_changed"]
-[connection signal="value_changed" from="Properties/type" to="." method="_on_type_value_changed"]
-[connection signal="value_changed" from="Properties/LifetimeMS" to="." method="_on_lifetime_ms_value_changed"]
-[connection signal="value_changed" from="Properties/Size" to="." method="_on_size_value_changed"]
-[connection signal="value_changed" from="Properties/Speed" to="." method="_on_speed_value_changed"]
-[connection signal="value_changed" from="Properties/Acceleration" to="." method="_on_acceleration_value_changed"]
-[connection signal="toggled" from="Properties/SpeedClamp" to="." method="_on_speed_clamp_toggled"]
-[connection signal="value_changed" from="Properties/SpeedClamp" to="." method="_on_speed_clamp_value_changed"]
-[connection signal="value_changed" from="Properties/AccelerationDelay" to="." method="_on_acceleration_delay_value_changed"]
-[connection signal="value_changed" from="Properties/Amplitude" to="." method="_on_amplitude_value_changed"]
-[connection signal="value_changed" from="Properties/Frequency" to="." method="_on_frequency_value_changed"]
-[connection signal="value_changed" from="Properties/CircleTurnDelay" to="." method="_on_circle_turn_delay_value_changed"]
-[connection signal="value_changed" from="Properties/CircleTurnAngle" to="." method="_on_circle_turn_angle_value_changed"]
-[connection signal="value_changed" from="Properties/TurnRate" to="." method="_on_turn_rate_value_changed"]
-[connection signal="value_changed" from="Properties/TurnRateDelay" to="." method="_on_turn_rate_delay_value_changed"]
-[connection signal="value_changed" from="Properties/TurnStopTime" to="." method="_on_turn_stop_time_value_changed"]
-[connection signal="value_changed" from="Properties/TurnAcceleration" to="." method="_on_turn_acceleration_value_changed"]
-[connection signal="value_changed" from="Properties/TurnAccelerationDelay" to="." method="_on_turn_acceleration_delay_value_changed"]
-[connection signal="toggled" from="Properties/TurnClamp" to="." method="_on_turn_clamp_toggled"]
-[connection signal="value_changed" from="Properties/TurnClamp" to="." method="_on_turn_clamp_value_changed"]
-[connection signal="toggled" from="Properties/GridContainer/MultiHit" to="." method="_on_multi_hit_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/PassesCover" to="." method="_on_passes_cover_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/ArmorPiercing" to="." method="_on_armor_piercing_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/ProtectFromSink" to="." method="_on_protect_from_sink_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/FaceDir" to="." method="_on_face_dir_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/Wavy" to="." method="_on_wavy_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/Boomerang" to="." method="_on_boomerang_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/Parametric" to="." method="_on_parametric_toggled"]
-[connection signal="toggled" from="Properties/GridContainer/HBoxContainer/ParticleTrail" to="." method="_on_particle_trail_toggled"]
-[connection signal="color_changed" from="Properties/GridContainer/HBoxContainer/ParticleTrailColor" to="." method="_on_particle_trail_color_changed"]

@@ -17,7 +17,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:
-				MOUSE_BUTTON_LEFT:
+				MOUSE_BUTTON_RIGHT:
 					pressed = true
 					Input.set_default_cursor_shape(Input.CURSOR_DRAG)
 				MOUSE_BUTTON_WHEEL_DOWN:
@@ -41,7 +41,7 @@ func _input(event: InputEvent) -> void:
 				mouse_position.y = posmod(int(mouse_position.y), viewport_size.y)
 				Input.warp_mouse(mouse_position)
 				ignore_next_mouse = true
-		elif event is InputEventMouseButton && !event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+		elif event is InputEventMouseButton && !event.pressed && event.button_index == MOUSE_BUTTON_RIGHT:
 			pressed = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			Input.set_default_cursor_shape(Input.CURSOR_ARROW)

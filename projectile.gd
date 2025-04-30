@@ -10,7 +10,7 @@ var direction_init : float
 var time_alive : float = 0
 var turn_rate : float
 var turn_amount : float
-var pos_offset : Vector2
+var origin : Vector2
 
 func _ready() -> void:
 	speed = proj.speed
@@ -50,8 +50,8 @@ func _physics_process(delta: float) -> void:
 	
 	if proj.turn_rate != 0:
 		if proj.turn_rate_delay / 1000.0 <= time_alive:
-			if proj.turn_accerlation_delay / 1000.0 <= time_alive:
-				turn_rate += proj.turn_accerlation_delay * delta
+			if proj.turn_acceleration_delay / 1000.0 <= time_alive:
+				turn_rate += proj.turn_acceleration * delta
 			turn_amount += turn_rate * delta
 			if proj.turn_clamp_enabled:
 				turn_amount = clampf(turn_amount, -absf(proj.turn_clamp), absf(proj.turn_clamp))

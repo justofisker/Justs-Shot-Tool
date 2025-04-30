@@ -26,10 +26,10 @@ focus_mode = 0
 texture_normal = ExtResource("2_yda5i")
 stretch_mode = 3
 
-[node name="HSeparator" type="HSeparator" parent="."]
+[node name="Properties" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Properties" type="VBoxContainer" parent="."]
+[node name="HSeparator" type="HSeparator" parent="Properties"]
 layout_mode = 2
 
 [node name="ProjectileId" parent="Properties" instance=ExtResource("3_uyim1")]
@@ -79,3 +79,13 @@ layout_mode = 2
 text = "      minAngle"
 suffix = "°"
 value = -180.0
+
+[connection signal="value_changed" from="Properties/ProjectileId" to="." method="_on_projectile_id_value_changed"]
+[connection signal="value_changed" from="Properties/NumProjectiles" to="." method="_on_num_projectiles_value_changed"]
+[connection signal="value_changed" from="Properties/RateOfFire" to="." method="_on_rate_of_fire_value_changed"]
+[connection signal="value_changed" from="Properties/PosOffset" to="." method="_on_pos_offset_value_changed"]
+[connection signal="value_changed" from="Properties/ArcGap" to="." method="_on_arc_gap_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngle" to="." method="_on_default_angle_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngleIncr" to="." method="_on_default_angle_incr_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngleIncrMax" to="." method="_on_default_angle_incr_max_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngleIncrMin" to="." method="_on_default_angle_incr_min_value_changed"]
