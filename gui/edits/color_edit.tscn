@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://pipc3lr7swkx"]
 
-[ext_resource type="Script" uid="uid://btgxkaylyrpyv" path="res://gui/color_edit.gd" id="1_7a2ec"]
+[ext_resource type="Script" uid="uid://btgxkaylyrpyv" path="res://gui/color_edit.gd" id="1_p3vip"]
 
 [node name="ColorEdit" type="HBoxContainer"]
-script = ExtResource("1_7a2ec")
+script = ExtResource("1_p3vip")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

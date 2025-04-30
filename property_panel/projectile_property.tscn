@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b7ufytjg8hwlk" path="res://property_panel/projectile_property.gd" id="1_vk4nb"]
 [ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/Collapse.svg" id="2_xats3"]
-[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/string_edit.tscn" id="3_15ut3"]
-[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/number_edit.tscn" id="4_5atu8"]
-[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/bool_edit.tscn" id="5_xats3"]
-[ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/color_edit.tscn" id="6_15ut3"]
+[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="3_15ut3"]
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="4_5atu8"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="5_xats3"]
+[ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/edits/color_edit.tscn" id="6_15ut3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 font_size = 24

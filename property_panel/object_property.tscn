@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://bajtw35qg8jt4"]
+
+[ext_resource type="Script" uid="uid://bswgm3t88n1ri" path="res://property_panel/object_property.gd" id="1_k7ys7"]
+[ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/Collapse.svg" id="1_yvnv3"]
+[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="3_0de27"]
+[ext_resource type="PackedScene" uid="uid://mj6uop2d0u5m" path="res://gui/edits/vector_edit.tscn" id="3_pr4qe"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_a7n1m"]
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="4_tgbvj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
+font_size = 24
+
+[node name="ObjectProperty" type="VBoxContainer"]
+script = ExtResource("1_k7ys7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Object"
+label_settings = SubResource("LabelSettings_1bvp3")
+
+[node name="Collapse" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("1_yvnv3")
+stretch_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="Properties" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="id" parent="Properties" instance=ExtResource("3_0de27")]
+layout_mode = 2
+title = "id"
+placeholder_text = "Big Dog"
+
+[node name="type" parent="Properties" instance=ExtResource("4_tgbvj")]
+layout_mode = 2
+text = "Type"
+display_as_hex = true
+
+[node name="Position" parent="Properties" instance=ExtResource("3_pr4qe")]
+layout_mode = 2
+text = "Position"
+suffix = "units"
+
+[node name="IgnoreMouse" parent="Properties" instance=ExtResource("4_a7n1m")]
+layout_mode = 2
+text = "Ignore Mouse"
+
+[connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

@@ -2,20 +2,32 @@ extends VBoxContainer
 
 signal updated()
 
-var attack := XMLObjects.Subattack.new() :
+var object_settings := XMLObjects.ObjectSettings.new() :
 	set(value):
-		attack = value
+		object_settings = value
 		if properties:
 			for child in properties.get_children():
-				var v = attack.get(child.name.to_snake_case())
+				var v = object_settings.get(child.name.to_snake_case())
 				if v != null:
 					child.value = v
 				else:
 					push_error("Unable to set value for " + child.name)
+		object_settings.updated_position.connect(_on_settings_updated)
+		object_settings.updated.connect(_on_settings_updated)
 		updated.emit()
 
 @onready var collapse: TextureButton = $HBoxContainer/Collapse
 @onready var properties: VBoxContainer = $Properties
+
+func _on_settings_updated() -> void:
+	for child in properties.get_children():
+		var v = object_settings.get(child.name.to_snake_case())
+		if v != null:
+			child.set_block_signals(true)
+			child.value = v
+			child.set_block_signals(false)
+		else:
+			push_error("Unable to set value for " + child.name)
 
 func _ready() -> void:
 	for child in properties.get_children():
@@ -24,13 +36,13 @@ func _ready() -> void:
 		child.toggled.connect(_set_enabled.bind(child.name.to_snake_case()))
 
 func _set_property(value, property: String) -> void:
-	attack.set(property, value)
+	object_settings.set(property, value)
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
-	attack.set(property + "_enabled", toggled_on)
+	object_settings.set(property + "_enabled", toggled_on)
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
 
 func _on_bullet_area_selected_shooter(node: Node2D) -> void:
-	self.attack = node.attack
+	object_settings = node.object_settings

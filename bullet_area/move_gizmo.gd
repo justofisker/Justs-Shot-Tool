@@ -41,8 +41,13 @@ func _input(event: InputEvent) -> void:
 			else:
 				grab = Grab.NONE
 	elif event is InputEventMouseMotion && grab != Grab.NONE:
+		var current_pos = get_parent().global_position
 		var pos : Vector2 = get_canvas_transform().affine_inverse() * event.position
+		var parent = get_parent()
 		if grab == Grab.X || grab == Grab.XY:
 			get_parent().global_position.x = snappedf(pos.x - grab_offset.x, 10)
 		if grab == Grab.Y || grab == Grab.XY:
 			get_parent().global_position.y = snappedf(pos.y - grab_offset.y, 10)
+		if !current_pos.is_equal_approx(get_parent().global_position):
+			get_parent().object_settings.position = parent.global_position
+			get_parent().object_settings.updated_position.emit()

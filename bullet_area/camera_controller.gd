@@ -2,7 +2,7 @@ extends Camera2D
 
 var zoom_level := 10.0
 var pressed := false
-@onready var reset_zoom_button: Button = $"../CanvasLayer/ViewControlls/HBoxContainer/ResetZoom"
+@export var reset_zoom_button: Button
 
 const ZOOM_MIN: float = 5.0
 const ZOOM_MAX: float = 10.0

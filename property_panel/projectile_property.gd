@@ -5,12 +5,13 @@ signal updated()
 var proj := XMLObjects.Projectile.new() :
 	set(value):
 		proj = value
-		for child in properties.get_children():
-			var v = proj.get(child.name.to_snake_case())
-			if v != null:
-				child.value = v
-			else:
-				push_error("Unable to set value for " + child.name)
+		if properties:
+			for child in properties.get_children():
+				var v = proj.get(child.name.to_snake_case())
+				if v != null:
+					child.value = v
+				else:
+					push_error("Unable to set value for " + child.name)
 		updated.emit()
 
 @onready var properties: VBoxContainer = $Properties
@@ -29,3 +30,6 @@ func _set_enabled(toggled_on: bool, property: String) -> void:
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
+
+func _on_bullet_area_selected_shooter(node: Node2D) -> void:
+	self.proj = node.projectile

@@ -1,4 +1,19 @@
-class_name XMLObjects extends Resource
+class_name XMLObjects
+
+class ObjectSettings extends Resource:
+	signal updated_position()
+	signal updated()
+	
+	var id: String
+	var type: int
+	var position : Vector2 :
+		set(value):
+			position = value
+			updated_position.emit()
+	var ignore_mouse : bool = false :
+		set(value):
+			ignore_mouse = value
+			updated.emit()
 
 class Subattack extends Resource:
 	var projectile_id: int = 0

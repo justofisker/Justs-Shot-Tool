@@ -1,13 +1,11 @@
 extends Node2D
 
 # User defined
-var attack := XMLObjects.Subattack.new() :
-	set(value):
-		attack = value
-		timer.wait_time = 1 / attack.rate_of_fire
-		default_angle_incr = 0
-		timer.start()
+var attack := XMLObjects.Subattack.new()
 var projectile := XMLObjects.Projectile.new()
+var object_settings := XMLObjects.ObjectSettings.new()
+
+# TODO: Set timer on rate of fire change
 
 var timer: Timer
 
@@ -17,6 +15,15 @@ func _ready() -> void:
 	timer.wait_time = 0.5
 	timer.timeout.connect(_shoot)
 	add_child(timer)
+	
+	object_settings.updated_position.connect(_on_updated_position)
+	object_settings.updated.connect(_on_setting_updated)
+
+func _on_updated_position():
+	position = object_settings.position
+
+func _on_setting_updated():
+	pass
 
 const Projectile = preload("res://projectile.gd")
 
@@ -34,7 +41,7 @@ func _shoot() -> void:
 		var node = Projectile.new()
 		node.set_script(preload("res://projectile.gd"))
 		node.proj = projectile
-		node.direction = get_local_mouse_position().angle() - angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
+		node.direction = 0 if object_settings.ignore_mouse else get_local_mouse_position().angle() - angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
 		node.inverted = inverted
 		node.origin = to_global(Vector2(attack.pos_offset).rotated(node.direction))
 		node._ready()

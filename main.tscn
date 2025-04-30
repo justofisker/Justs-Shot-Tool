@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://hr2ctob0s43a"]
+[gd_scene load_steps=7 format=3 uid="uid://hr2ctob0s43a"]
 
 [ext_resource type="PackedScene" uid="uid://b75df6uegy10f" path="res://bullet_area/bullet_area.tscn" id="1_0xm2m"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://8nkbjebubkni" path="res://property_panel/attack_property.tscn" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://cunttn3iful3u" path="res://property_panel/properties_panel.gd" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://na5avsr373e0" path="res://property_panel/projectile_property.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bajtw35qg8jt4" path="res://property_panel/object_property.tscn" id="4_7mycd"]
 
 [node name="Main" type="Node"]
 
@@ -52,11 +53,17 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer"]
 layout_mode = 2
 
+[node name="ObjectProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_7mycd")]
+layout_mode = 2
+
 [node name="AttackProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
 layout_mode = 2
 
 [node name="ProjectileProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_1bvp3")]
 layout_mode = 2
 
+[connection signal="selected_shooter" from="HBoxContainer/SubViewportContainer/SubViewport/BulletArea" to="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ObjectProperty" method="_on_bullet_area_selected_shooter"]
+[connection signal="selected_shooter" from="HBoxContainer/SubViewportContainer/SubViewport/BulletArea" to="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProperty" method="_on_bullet_area_selected_shooter"]
+[connection signal="selected_shooter" from="HBoxContainer/SubViewportContainer/SubViewport/BulletArea" to="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectileProperty" method="_on_bullet_area_selected_shooter"]
 [connection signal="updated" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProperty" to="HBoxContainer/PropertiesPanel" method="_on_attack_property_updated"]
 [connection signal="updated" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectileProperty" to="HBoxContainer/PropertiesPanel" method="_on_projectile_property_updated"]

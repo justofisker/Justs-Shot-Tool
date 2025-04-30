@@ -1,15 +1,15 @@
 [gd_scene load_steps=6 format=3 uid="uid://b6y7xrt1ccj0g"]
 
-[ext_resource type="Script" uid="uid://bilmv1w2k08x2" path="res://gui/number_edit.gd" id="1_w2x4b"]
-[ext_resource type="Texture2D" uid="uid://cm6fxcjank5k2" path="res://gui/Info.svg" id="2_5ns1o"]
-[ext_resource type="Script" uid="uid://dvv1pnpu8nbq7" path="res://gui/suffix.gd" id="2_xkjgk"]
-[ext_resource type="Script" uid="uid://x0rvdp2g68hr" path="res://gui/tooltip_icon.gd" id="3_f7inr"]
+[ext_resource type="Script" uid="uid://bilmv1w2k08x2" path="res://gui/number_edit.gd" id="1_w6xmn"]
+[ext_resource type="Texture2D" uid="uid://cm6fxcjank5k2" path="res://gui/Info.svg" id="2_jg2x4"]
+[ext_resource type="Script" uid="uid://x0rvdp2g68hr" path="res://gui/tooltip_icon.gd" id="3_p0c5w"]
+[ext_resource type="Script" uid="uid://dvv1pnpu8nbq7" path="res://gui/suffix.gd" id="4_v7tm7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
 font_color = Color(0.529067, 0.529067, 0.529067, 1)
 
 [node name="NumberEdit" type="HBoxContainer"]
-script = ExtResource("1_w2x4b")
+script = ExtResource("1_w6xmn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -22,9 +22,9 @@ text = "NumberEdit"
 [node name="TooltipIcon" type="TextureRect" parent="HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("2_5ns1o")
+texture = ExtResource("2_jg2x4")
 stretch_mode = 3
-script = ExtResource("3_f7inr")
+script = ExtResource("3_p0c5w")
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
 visible = false
@@ -50,4 +50,4 @@ theme_type_variation = &"SuffixLabel"
 label_settings = SubResource("LabelSettings_5vw27")
 vertical_alignment = 1
 text_overrun_behavior = 3
-script = ExtResource("2_xkjgk")
+script = ExtResource("4_v7tm7")

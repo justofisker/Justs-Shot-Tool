@@ -1,11 +1,11 @@
 extends Control
 
-@onready var shooter: Node2D = $Shooter
-
-var attack :
+@onready var shooter: Node2D = $Shooter :
 	set(value):
-		shooter.attack = value
+		shooter = value
+		selected_shooter.emit(shooter)
 
-var projectile :
-	set(value):
-		shooter.projectile = value
+signal selected_shooter(node: Node2D)
+
+func _ready() -> void:
+	self.shooter = shooter
