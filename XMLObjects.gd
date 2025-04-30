@@ -10,6 +10,9 @@ class Subattack extends Resource:
 	var burst_min_delay: float = 0.0
 	var arc_gap: int = 0
 	var default_angle: int = 0
+	var default_angle_incr: int = 0
+	var default_angle_incr_max: int = 0
+	var default_angle_incr_min: int = 0
 
 	func to_xml() -> String:
 		

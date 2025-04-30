@@ -63,9 +63,27 @@ layout_mode = 2
 text = "DefaultAngle"
 suffix = "°"
 
+[node name="DefaultAngleIncr" parent="Properties" instance=ExtResource("3_uyim1")]
+layout_mode = 2
+text = "DefaultAngleIncr"
+suffix = "°"
+
+[node name="DefaultAngleIncrMax" parent="Properties" instance=ExtResource("3_uyim1")]
+layout_mode = 2
+text = "      maxAngle"
+suffix = "°"
+
+[node name="DefaultAngleIncrMin" parent="Properties" instance=ExtResource("3_uyim1")]
+layout_mode = 2
+text = "      minAngle"
+suffix = "°"
+
 [connection signal="value_changed" from="Properties/ProjectileId" to="." method="_on_projectile_id_value_changed"]
 [connection signal="value_changed" from="Properties/NumProjectiles" to="." method="_on_num_projectiles_value_changed"]
 [connection signal="value_changed" from="Properties/RateOfFire" to="." method="_on_rate_of_fire_value_changed"]
 [connection signal="value_changed" from="Properties/PosOffset" to="." method="_on_pos_offset_value_changed"]
 [connection signal="value_changed" from="Properties/ArcGap" to="." method="_on_arc_gap_value_changed"]
 [connection signal="value_changed" from="Properties/DefaultAngle" to="." method="_on_default_angle_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngleIncr" to="." method="_on_default_angle_incr_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngleIncrMax" to="." method="_on_default_angle_incr_max_value_changed"]
+[connection signal="value_changed" from="Properties/DefaultAngleIncrMin" to="." method="_on_default_angle_incr_min_value_changed"]

@@ -5,6 +5,8 @@ var attack := XMLObjects.Subattack.new() :
 	set(value):
 		attack = value
 		timer.wait_time = 1 / attack.rate_of_fire
+		default_angle_incr = 0
+		timer.start()
 var projectile := XMLObjects.Projectile.new()
 
 var timer: Timer
@@ -20,9 +22,14 @@ const Projectile = preload("res://projectile.gd")
 
 var projectiles : Array[Projectile]
 
+var default_angle_incr: int = 0
 var inverted : bool = false
 func _shoot() -> void:
-	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0)
+	if attack.default_angle_incr != 0:
+		default_angle_incr = posmod(default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min, attack.default_angle_incr_max - attack.default_angle_incr_min) - attack.default_angle_incr_min
+	else:
+		default_angle_incr = 0
+	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0 + default_angle_incr)
 	for i in attack.num_projectiles:
 		var node = Projectile.new()
 		node.set_script(preload("res://projectile.gd"))

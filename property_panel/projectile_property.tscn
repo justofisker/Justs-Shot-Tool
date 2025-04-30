@@ -79,11 +79,13 @@ suffix = "ms"
 
 [node name="Amplitude" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "Amplitude"
 suffix = "units"
 
 [node name="Frequency" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "Frequency"
 suffix = "cycles/sec"
 

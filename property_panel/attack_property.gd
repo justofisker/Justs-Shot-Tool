@@ -38,3 +38,15 @@ func _on_arc_gap_value_changed(value: float) -> void:
 func _on_default_angle_value_changed(value: float) -> void:
 	attack.default_angle = int(value)
 	updated.emit()
+
+func _on_default_angle_incr_value_changed(value: float) -> void:
+	attack.default_angle_incr = int(value)
+	updated.emit()
+
+func _on_default_angle_incr_max_value_changed(value: float) -> void:
+	attack.default_angle_incr_max = int(value)
+	updated.emit()
+
+func _on_default_angle_incr_min_value_changed(value: float) -> void:
+	attack.default_angle_incr_min = int(value)
+	updated.emit()
