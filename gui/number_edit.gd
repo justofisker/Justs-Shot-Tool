@@ -59,6 +59,7 @@ enum NumberType {INTEGER, FLOAT}
 				line_edit.mouse_default_cursor_shape = Control.CURSOR_ARROW
 				line_edit.selecting_enabled = false
 				line_edit.focus_mode = Control.FOCUS_NONE
+		toggled.emit(enabled)
 
 @export var display_as_hex : bool = false
 
@@ -90,7 +91,7 @@ func _ready() -> void:
 	line_edit.text_submitted.connect(_on_line_edit_text_submitted)
 
 func _on_toggled(toggled_on: bool) -> void:
-	enabled = toggled_on
+	self.enabled = toggled_on
 	line_edit.editable = enabled
 
 func _on_line_edit_text_submitted(_new_text: String) -> void:

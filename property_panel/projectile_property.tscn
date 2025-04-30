@@ -204,6 +204,7 @@ edit_alpha = false
 [connection signal="value_changed" from="Properties/TurnStopTime" to="." method="_on_turn_stop_time_value_changed"]
 [connection signal="value_changed" from="Properties/TurnAcceleration" to="." method="_on_turn_acceleration_value_changed"]
 [connection signal="value_changed" from="Properties/TurnAccelerationDelay" to="." method="_on_turn_acceleration_delay_value_changed"]
+[connection signal="toggled" from="Properties/TurnClamp" to="." method="_on_turn_clamp_toggled"]
 [connection signal="value_changed" from="Properties/TurnClamp" to="." method="_on_turn_clamp_value_changed"]
 [connection signal="toggled" from="Properties/GridContainer/MultiHit" to="." method="_on_multi_hit_toggled"]
 [connection signal="toggled" from="Properties/GridContainer/PassesCover" to="." method="_on_passes_cover_toggled"]

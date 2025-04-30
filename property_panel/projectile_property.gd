@@ -114,3 +114,7 @@ func _on_particle_trail_toggled(toggled_on: bool) -> void:
 
 func _on_particle_trail_color_changed(color: Color) -> void:
 	proj.particle_trail_color = color.b8
+
+func _on_turn_clamp_toggled(enabled: bool) -> void:
+	proj.turn_clamp_enabled = enabled
+	updated.emit()
