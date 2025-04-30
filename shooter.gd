@@ -46,25 +46,13 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 var radius : float = 2
-var segment_count : int = 11
-var tile_scale := 10.0
 func _draw() -> void:
-	if true:
-		var points : PackedVector2Array = []
-		points.push_back(Vector2(1, 0) * radius * 2)
-		for i in range(1, segment_count):
-			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius * 2)
-			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius * 2)
-		points.push_back(Vector2(1, 0) * radius * 2)
-		draw_multiline(points, Color.GREEN)
+	draw_circle(Vector2(), radius * 2, Color.GREEN, false)
 	
 	for proj in projectiles:
+		var offset = Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction) + proj.pos_offset.rotated(proj.direction_init)
+		draw_circle(offset, radius, Color.WHITE, false)
 		var points : PackedVector2Array = []
-		points.push_back(Vector2(1, 0) * radius)
-		for i in range(1, segment_count):
-			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius)
-			points.push_back(Vector2(cos(PI * 2.0 * i / segment_count), sin(PI * 2.0 * i / segment_count)) * radius)
-		points.push_back(Vector2(1, 0) * radius)
 		
 		var delta = sin(PI / 16) * radius
 		var arf = -cos(PI / 16) * radius
@@ -84,9 +72,7 @@ func _draw() -> void:
 		points.push_back(Vector2(radius / 3, delta))
 		
 		for i in points.size():
-			points[i] = points[i].rotated(proj.direction) * proj.proj.size / 100.0
-			points[i] += (Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction))
-			points[i] += proj.pos_offset.rotated(proj.direction_init)
+			points[i] = points[i].rotated(proj.direction) * proj.proj.size / 100.0 + offset
 		
 		draw_multiline(points, Color.WHITE)
 

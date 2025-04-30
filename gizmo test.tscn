@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhyw7sedeciae"]
+
+[ext_resource type="Script" uid="uid://bbcr7otblq70k" path="res://gizmo_test.gd" id="1_5vfje"]
+
+[node name="Camera2D" type="Camera2D"]
+zoom = Vector2(10, 10)
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(3, 9)
+script = ExtResource("1_5vfje")
