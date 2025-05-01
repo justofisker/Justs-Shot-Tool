@@ -53,4 +53,8 @@ suffix = "units"
 layout_mode = 2
 text = "Ignore Mouse"
 
+[node name="ShowPath" parent="Properties" instance=ExtResource("4_a7n1m")]
+layout_mode = 2
+text = "Show Path"
+
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

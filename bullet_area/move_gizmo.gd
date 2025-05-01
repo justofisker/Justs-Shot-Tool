@@ -1,14 +1,13 @@
 extends Node2D
 
-func _process(_delta: float) -> void:
-	queue_redraw()
-
 @export var length := 70
 @export var triangle_size := Vector2(10, 15) 
 @export var thickness = 2
 
-func _ready() -> void:
-	scale *= 1.0 / get_viewport().get_camera_2d().zoom.x
+func _process(_delta: float) -> void:
+	var scalef = 1.0 / get_viewport().get_camera_2d().zoom.x
+	scale = Vector2(scalef, scalef)
+	queue_redraw()
 
 func draw_triangle(length : float, thickness : float, tip_size : Vector2, rotation: float, color: Color) -> void:
 	draw_line(Vector2(), Vector2(0, -length).rotated(rotation), color, thickness)

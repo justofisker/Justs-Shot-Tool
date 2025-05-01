@@ -63,7 +63,7 @@ Button/styles/hover = SubResource("StyleBoxEmpty_5vw27")
 Button/styles/normal = SubResource("StyleBoxEmpty_kek77")
 Button/styles/pressed = SubResource("StyleBoxEmpty_4c57u")
 
-[node name="BulletArea" type="Control" node_paths=PackedStringArray("ShooterArea")]
+[node name="BulletArea" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,7 +73,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 script = ExtResource("1_vbgui")
-ShooterArea = NodePath("Shooters")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

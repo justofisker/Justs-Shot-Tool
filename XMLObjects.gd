@@ -14,11 +14,12 @@ class ObjectSettings extends Resource:
 		set(value):
 			ignore_mouse = value
 			updated.emit()
+	var show_path : bool = false
 
 class Subattack extends Resource:
 	var projectile_id: int = 0
 	var num_projectiles: int = 1
-	var rate_of_fire: float = 1
+	var rate_of_fire: float = 2
 	var pos_offset: Vector2i
 	var burst_count: int = 1
 	var burst_delay: float = 0.0
@@ -26,8 +27,8 @@ class Subattack extends Resource:
 	var arc_gap: int = 0
 	var default_angle: int = 0
 	var default_angle_incr: int = 0
-	var default_angle_incr_max: int = 0
-	var default_angle_incr_min: int = 0
+	var default_angle_incr_max: int = 180
+	var default_angle_incr_min: int = -180
 
 	func to_xml() -> String:
 		
@@ -78,7 +79,7 @@ class Projectile extends Resource:
 	var current_health_damage: float = 0
 	
 	# Speed
-	var speed: int = 100
+	var speed: int = 10
 	var speed_clamp_enabled: bool = false
 	var speed_clamp: int = 0
 	var acceleration: float = 0
@@ -109,7 +110,7 @@ class Projectile extends Resource:
 	var parametric: bool = false
 	# Kinda Flag
 	var particle_trail: Color = DEFAULT_PARTICLE_TRAIL_COLOR
-	const DEFAULT_PARTICLE_TRAIL_COLOR := Color(0xFF00FF)
+	const DEFAULT_PARTICLE_TRAIL_COLOR := Color(0xFF00FFFF)
 	var particle_trail_enabled: bool = false
 	
 	func to_xml() -> String:

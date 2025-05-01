@@ -24,7 +24,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(810, 720)
 render_target_update_mode = 4
 
 [node name="BulletArea" parent="HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
@@ -65,5 +65,3 @@ layout_mode = 2
 [connection signal="selected_shooter" from="HBoxContainer/SubViewportContainer/SubViewport/BulletArea" to="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ObjectProperty" method="_on_bullet_area_selected_shooter"]
 [connection signal="selected_shooter" from="HBoxContainer/SubViewportContainer/SubViewport/BulletArea" to="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProperty" method="_on_bullet_area_selected_shooter"]
 [connection signal="selected_shooter" from="HBoxContainer/SubViewportContainer/SubViewport/BulletArea" to="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectileProperty" method="_on_bullet_area_selected_shooter"]
-[connection signal="updated" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/AttackProperty" to="HBoxContainer/PropertiesPanel" method="_on_attack_property_updated"]
-[connection signal="updated" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectileProperty" to="HBoxContainer/PropertiesPanel" method="_on_projectile_property_updated"]

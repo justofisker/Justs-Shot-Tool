@@ -33,4 +33,9 @@ func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
 
 func _on_bullet_area_selected_shooter(node: Node2D) -> void:
+	if !node:
+		visible = false
+		return
+	else:
+		visible = true
 	self.attack = node.attack

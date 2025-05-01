@@ -4,6 +4,9 @@ signal updated()
 
 var object_settings := XMLObjects.ObjectSettings.new() :
 	set(value):
+		if object_settings.updated_position.is_connected(_on_settings_updated):
+			object_settings.updated_position.disconnect(_on_settings_updated)
+			object_settings.updated.disconnect(_on_settings_updated)
 		object_settings = value
 		if properties:
 			for child in properties.get_children():
@@ -45,4 +48,9 @@ func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
 
 func _on_bullet_area_selected_shooter(node: Node2D) -> void:
+	if !node:
+		visible = false
+		return
+	else:
+		visible = true
 	object_settings = node.object_settings

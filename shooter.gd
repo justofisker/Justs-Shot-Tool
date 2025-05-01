@@ -4,12 +4,20 @@ extends Node2D
 var attack := XMLObjects.Subattack.new()
 var projectile := XMLObjects.Projectile.new()
 var object_settings := XMLObjects.ObjectSettings.new()
+var selected : bool = false :
+	set(value):
+		selected = value
+		if !selected:
+			for child in get_children():
+				if child is not Timer:
+					remove_child(child)
 
 # TODO: Set timer on rate of fire change
 
 var timer: Timer
 
 func _ready() -> void:
+	object_settings.position = position
 	timer = Timer.new()
 	timer.autostart = true
 	timer.wait_time = 0.5
@@ -55,7 +63,7 @@ func _process(_delta: float) -> void:
 
 var radius : float = 2
 func _draw() -> void:
-	draw_circle(Vector2(), radius * 2, Color.GREEN, false)
+	draw_circle(Vector2(), radius * 2, Color.GREEN if selected else Color.WHITE, false)
 	
 	for proj in projectiles:
 		var offset = Vector2(proj.position) + Vector2(0, proj.y_offset).rotated(proj.direction) + to_local(proj.origin)
