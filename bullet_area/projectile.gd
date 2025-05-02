@@ -62,6 +62,6 @@ func _physics_process(delta: float) -> void:
 			if proj.turn_clamp_enabled:
 				turn_amount = clampf(turn_amount, -absf(proj.turn_clamp), absf(proj.turn_clamp))
 	
-	direction = direction_init - deg_to_rad(turn_amount)
+	direction = direction_init + deg_to_rad(turn_amount)
 	
 	position += Vector2(cos(direction), sin(direction)) * delta * speed
