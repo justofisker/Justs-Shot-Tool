@@ -52,7 +52,7 @@ value = 2.0
 [node name="PosOffset" parent="Properties" instance=ExtResource("4_n4pea")]
 layout_mode = 2
 text = "PosOffset"
-suffix = "units"
+suffix = "tiles"
 
 [node name="ArcGap" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
