@@ -62,7 +62,7 @@ func calculate_object_path() -> Array[Curve2D]:
 		paths[idx].add_point(proj.origin + proj.position)
 		for t in projectile.lifetime_ms * SIMULATION_RATE / 1000:
 			projectiles[idx]._physics_process(1.0 / SIMULATION_RATE)
-			paths[idx].add_point(proj.origin + proj.position + Vector2(0, proj.y_offset))
+			paths[idx].add_point(proj.origin + proj.position + Vector2(0, proj.y_offset).rotated(proj.direction))
 	
 	return paths
 
