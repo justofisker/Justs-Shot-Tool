@@ -3,6 +3,9 @@ extends Node2D
 const Projectile = preload("res://bullet_area/projectile.gd")
 var projectiles : Array[Projectile]
 
+func _ready() -> void:
+	Bridge.set_deferred("selected_object", $Object)
+
 func _process(_delta: float) -> void:
 	queue_redraw()
 

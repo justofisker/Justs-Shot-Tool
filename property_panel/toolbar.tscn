@@ -58,7 +58,12 @@ shortcut = SubResource("Shortcut_ikwa3")
 shortcut_in_tooltip = false
 icon = ExtResource("4_mvj0t")
 
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+
 [node name="Ruler" type="Button" parent="HBoxContainer"]
+visible = false
 layout_mode = 2
 tooltip_text = "Ruler (R)"
 toggle_mode = true
@@ -67,10 +72,8 @@ shortcut = SubResource("Shortcut_r1t2s")
 shortcut_in_tooltip = false
 icon = ExtResource("5_4mf1i")
 
-[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
-layout_mode = 2
-
 [node name="Pan" type="Button" parent="HBoxContainer"]
+visible = false
 layout_mode = 2
 tooltip_text = "Pan (G)"
 toggle_mode = true

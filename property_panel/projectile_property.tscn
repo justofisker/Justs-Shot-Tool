@@ -84,13 +84,13 @@ suffix = "ms"
 layout_mode = 2
 number_type = 1
 text = "Amplitude"
-suffix = "units"
+suffix = "tiles"
 
 [node name="Frequency" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "Frequency"
-suffix = "cycles/sec"
+suffix = "cycles"
 
 [node name="CircleTurnDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2

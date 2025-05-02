@@ -41,9 +41,15 @@ func _physics_process(delta: float) -> void:
 			speed = max(speed, proj.speed_clamp)
 	
 	if proj.wavy:
-		y_offset = sin(time_alive * PI * 6) * time_alive / 2
-	elif !is_zero_approx(proj.amplitude):
-		y_offset = sin(time_alive * proj.frequency * 2 * PI * 1.75) * proj.amplitude
+		var amplitude = 1
+		var frequency = 2
+		#if !is_zero_approx(proj.amplitude):
+			#amplitude = proj.amplitude
+		#if !is_zero_approx(proj.frequency):
+			#frequency = proj.frequency
+		y_offset = sin(time_alive / (proj.lifetime_ms / 1000.0) * frequency * 2 * PI) * time_alive / (proj.lifetime_ms / 1000.0) * amplitude * 5
+	elif !is_zero_approx(proj.amplitude) && !is_zero_approx(proj.frequency):
+		y_offset = sin(time_alive / (proj.lifetime_ms / 1000.0) * proj.frequency * 2 * PI ) * proj.amplitude * 10
 	
 	if inverted:
 		y_offset = -y_offset
