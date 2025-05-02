@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://srn1nec0ybgm"
-path="res://.godot/imported/ZoomLess.svg-ba20e160f2d83b21e535e67022a9e0d9.ctex"
+uid="uid://cm6fxcjank5k2"
+path="res://.godot/imported/Info.svg-7ddd0c239425608e6b083b28069c2a70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/ZoomLess.svg"
-dest_files=["res://.godot/imported/ZoomLess.svg-ba20e160f2d83b21e535e67022a9e0d9.ctex"]
+source_file="res://gui/icons/Info.svg"
+dest_files=["res://.godot/imported/Info.svg-7ddd0c239425608e6b083b28069c2a70.ctex"]
 
 [params]
 

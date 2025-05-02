@@ -1,22 +1,33 @@
 class_name XMLObjects
 
 class ObjectSettings extends Resource:
-	signal updated_position()
 	signal updated()
 	
 	var id: String
 	var type: int
-	var position : Vector2 :
-		set(value):
-			position = value
-			updated_position.emit()
-	var ignore_mouse : bool = false :
-		set(value):
-			ignore_mouse = value
-			updated.emit()
+	var position : Vector2
+	var ignore_mouse : bool = false
 	var show_path : bool = false
+	
+	func _set(_property: StringName, _value: Variant) -> bool:
+		updated.emit()
+		return false
+	
+	func copy() -> ObjectSettings:
+		var out = ObjectSettings.new()
+		
+		var do_set := false
+		for prop in out.get_property_list():
+			if do_set:
+				out.set(prop["name"], get(prop["name"]))
+			elif prop["name"] == "Built-in script":
+				do_set = true
+		
+		return out
 
 class Subattack extends Resource:
+	signal updated()
+	
 	var projectile_id: int = 0
 	var num_projectiles: int = 1
 	var rate_of_fire: float = 2
@@ -29,7 +40,23 @@ class Subattack extends Resource:
 	var default_angle_incr: int = 0
 	var default_angle_incr_max: int = 180
 	var default_angle_incr_min: int = -180
-
+	
+	func _set(_property: StringName, _value: Variant) -> bool:
+		updated.emit()
+		return false
+	
+	func copy() -> Subattack:
+		var out = Subattack.new()
+		
+		var do_set := false
+		for prop in out.get_property_list():
+			if do_set:
+				out.set(prop["name"], get(prop["name"]))
+			elif prop["name"] == "Built-in script":
+				do_set = true
+		
+		return out
+	
 	func to_xml() -> String:
 		
 		var out = "<Subattack "
@@ -68,6 +95,8 @@ class ProjectileDescription extends Resource:
 		return out
 
 class Projectile extends Resource:
+	signal updated()
+	
 	var id: int = 0
 	var type: int = 0
 	var object_id: String = ""
@@ -112,6 +141,22 @@ class Projectile extends Resource:
 	var particle_trail: Color = DEFAULT_PARTICLE_TRAIL_COLOR
 	const DEFAULT_PARTICLE_TRAIL_COLOR := Color(0xFF00FFFF)
 	var particle_trail_enabled: bool = false
+
+	func _set(_property: StringName, _value: Variant) -> bool:
+		updated.emit()
+		return false
+	
+	func copy() -> Projectile:
+		var out = Projectile.new()
+		
+		var do_set := false
+		for prop in out.get_property_list():
+			if do_set:
+				out.set(prop["name"], get(prop["name"]))
+			elif prop["name"] == "Built-in script":
+				do_set = true
+		
+		return out
 	
 	func to_xml() -> String:
 		# General

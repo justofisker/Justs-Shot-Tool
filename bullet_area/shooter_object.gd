@@ -6,6 +6,7 @@ const Projectile = preload("res://bullet_area/projectile.gd")
 var attack := XMLObjects.Subattack.new()
 var projectile := XMLObjects.Projectile.new()
 var object_settings := XMLObjects.ObjectSettings.new()
+
 @export var selected : bool = false :
 	set(value):
 		selected = value
@@ -14,25 +15,29 @@ var object_settings := XMLObjects.ObjectSettings.new()
 				if child is not Timer:
 					remove_child(child)
 
-# TODO: Set timer on rate of fire change
-
 var timer: Timer
 
 func _ready() -> void:
-	object_settings.position = position
 	timer = Timer.new()
 	timer.autostart = true
 	timer.wait_time = 0.5
 	timer.timeout.connect(_shoot)
 	add_child(timer)
 	
-	object_settings.updated_position.connect(_on_updated_position)
-	object_settings.updated.connect(_on_setting_updated)
+	position = object_settings.position
+	
+	object_settings.updated.connect(_on_object_settings_updated)
+	attack.updated.connect(_on_attack_updated)
+	projectile.updated.connect(_on_projectile_updated)
 
-func _on_updated_position():
+func _on_object_settings_updated():
 	position = object_settings.position
 
-func _on_setting_updated():
+func _on_attack_updated():
+	if !is_equal_approx(timer.wait_time, 1.0 / attack.rate_of_fire):
+		timer.start(1.0 / attack.rate_of_fire)
+
+func _on_projectile_updated():
 	pass
 
 var default_angle_incr: int = 0
@@ -53,8 +58,8 @@ func _shoot() -> void:
 		node.origin = to_global(Vector2(attack.pos_offset).rotated(node.direction))
 		node._ready()
 		inverted = !inverted
-		%ObjectContainer.projectiles.push_back(node)
-		get_tree().create_timer(projectile.lifetime_ms / 1000.0).timeout.connect(%ObjectContainer.projectiles.erase.bind(node))
+		get_parent().projectiles.push_back(node)
+		get_tree().create_timer(projectile.lifetime_ms / 1000.0).timeout.connect(get_parent().projectiles.erase.bind(node))
 
 func _process(_delta: float) -> void:
 	queue_redraw()

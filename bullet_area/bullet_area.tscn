@@ -1,15 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://b75df6uegy10f"]
+[gd_scene load_steps=19 format=3 uid="uid://b75df6uegy10f"]
 
 [ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://bullet_area/grid.gd" id="1_al8gc"]
 [ext_resource type="Script" uid="uid://btmjb2ug6mrem" path="res://bullet_area/shooter_object.gd" id="2_vbgui"]
-[ext_resource type="Texture2D" uid="uid://bcs0spjtqixln" path="res://gui/CenterView.svg" id="3_efyat"]
-[ext_resource type="Texture2D" uid="uid://srn1nec0ybgm" path="res://gui/ZoomLess.svg" id="4_15s0m"]
-[ext_resource type="Texture2D" uid="uid://br7epmvtri7xk" path="res://gui/ZoomMore.svg" id="5_0ci4i"]
+[ext_resource type="Texture2D" uid="uid://bcs0spjtqixln" path="res://gui/icons/CenterView.svg" id="3_efyat"]
+[ext_resource type="Texture2D" uid="uid://srn1nec0ybgm" path="res://gui/icons/ZoomLess.svg" id="4_15s0m"]
+[ext_resource type="Texture2D" uid="uid://br7epmvtri7xk" path="res://gui/icons/ZoomMore.svg" id="5_0ci4i"]
 [ext_resource type="Script" uid="uid://cl6fw0xi5vhh2" path="res://bullet_area/object_container.gd" id="6_15s0m"]
 [ext_resource type="Script" uid="uid://bagf4r8wl5f15" path="res://bullet_area/camera_controller.gd" id="6_efyat"]
 [ext_resource type="Script" uid="uid://bs4krvcv2s0fr" path="res://bullet_area/move_tool.gd" id="8_0ci4i"]
 [ext_resource type="Script" uid="uid://d4d8cxp2qmmsw" path="res://bullet_area/select_tool.gd" id="8_15s0m"]
 [ext_resource type="Script" uid="uid://bbcr7otblq70k" path="res://bullet_area/move_gizmo.gd" id="9_jfmib"]
+[ext_resource type="Script" uid="uid://fe1rsha0i1w8" path="res://bullet_area/shortcuts.gd" id="11_nd8tn"]
 
 [sub_resource type="FontVariation" id="FontVariation_7mycd"]
 variation_embolden = -0.25
@@ -96,10 +97,6 @@ script = ExtResource("6_15s0m")
 script = ExtResource("2_vbgui")
 selected = true
 
-[node name="Object2" type="Node2D" parent="ObjectContainer"]
-position = Vector2(10, 0)
-script = ExtResource("2_vbgui")
-
 [node name="Tools" type="Node2D" parent="."]
 
 [node name="Move" type="Node" parent="Tools"]
@@ -110,6 +107,10 @@ move_gizmo_script = ExtResource("9_jfmib")
 script = ExtResource("8_15s0m")
 
 [node name="Ruler" type="Node2D" parent="Tools"]
+
+[node name="Shortcuts" type="Node" parent="Tools"]
+script = ExtResource("11_nd8tn")
+object_script = ExtResource("2_vbgui")
 
 [connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/CenterView" to="Camera2D" method="_on_center_view_pressed"]
 [connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/ZoomOut" to="Camera2D" method="_on_zoom_out_pressed"]

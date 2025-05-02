@@ -49,4 +49,4 @@ func _input(event: InputEvent) -> void:
 			get_parent().global_position.y = snappedf(pos.y - grab_offset.y, 10)
 		if !current_pos.is_equal_approx(get_parent().global_position):
 			get_parent().object_settings.position = parent.global_position
-			get_parent().object_settings.updated_position.emit()
+			get_parent().object_settings.updated.emit()

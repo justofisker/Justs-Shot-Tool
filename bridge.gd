@@ -13,6 +13,10 @@ signal object_selected(old_object: Node2D, object: Node2D)
 
 var selected_object : Node = null :
 	set(value):
+		if selected_object:
+			selected_object.selected = false
 		var old_object = selected_object
 		selected_object = value
+		if selected_object:
+			selected_object.selected = true
 		object_selected.emit(old_object, selected_object)

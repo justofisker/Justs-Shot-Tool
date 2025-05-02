@@ -23,8 +23,7 @@ func _input(event: InputEvent) -> void:
 					if area.has_point(object.position):
 						selected = object
 						break
-				
-				%ObjectContainer.selected_object = selected
+				Bridge.selected_object = selected
 				
 				queue_redraw()
 

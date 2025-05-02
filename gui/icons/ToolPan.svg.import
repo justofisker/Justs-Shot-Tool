@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br7epmvtri7xk"
-path="res://.godot/imported/ZoomMore.svg-d9aba332077fb759b541104e1dd6694e.ctex"
+uid="uid://xar7onvvt08r"
+path="res://.godot/imported/ToolPan.svg-6ad362c0afba37c81ff4dfac311af5c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/ZoomMore.svg"
-dest_files=["res://.godot/imported/ZoomMore.svg-d9aba332077fb759b541104e1dd6694e.ctex"]
+source_file="res://gui/icons/ToolPan.svg"
+dest_files=["res://.godot/imported/ToolPan.svg-6ad362c0afba37c81ff4dfac311af5c2.ctex"]
 
 [params]
 

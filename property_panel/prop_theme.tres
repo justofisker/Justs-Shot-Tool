@@ -1,8 +1,8 @@
 [gd_resource type="Theme" load_steps=11 format=3 uid="uid://cv017eo06bbcu"]
 
 [ext_resource type="FontFile" uid="uid://b33u7b5dflnec" path="res://font/Space_Mono/SpaceMono-Regular.ttf" id="1_7g21l"]
-[ext_resource type="Texture2D" uid="uid://xh8qqwwvgyel" path="res://gui/slider_grabber.png" id="1_ffsj7"]
-[ext_resource type="Texture2D" uid="uid://b35gr158a5u7i" path="res://gui/SliderGrabberHover.svg" id="1_yl11o"]
+[ext_resource type="Texture2D" uid="uid://xh8qqwwvgyel" path="res://gui/icons/slider_grabber.png" id="1_ffsj7"]
+[ext_resource type="Texture2D" uid="uid://b35gr158a5u7i" path="res://gui/icons/SliderGrabberHover.svg" id="1_yl11o"]
 [ext_resource type="FontFile" uid="uid://cq0bnr5675ve0" path="res://font/Roboto/Roboto-VariableFont_wdth,wght.ttf" id="3_10udq"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_yl11o"]

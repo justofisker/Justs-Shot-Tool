@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjnwa212567hj"
-path="res://.godot/imported/Collapse.svg-b63fef086f1a757c1cad4fb5e7052d48.ctex"
+uid="uid://b35gr158a5u7i"
+path="res://.godot/imported/SliderGrabberHover.svg-5ecda347bfe28eb3e82445838a904924.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/Collapse.svg"
-dest_files=["res://.godot/imported/Collapse.svg-b63fef086f1a757c1cad4fb5e7052d48.ctex"]
+source_file="res://gui/icons/SliderGrabberHover.svg"
+dest_files=["res://.godot/imported/SliderGrabberHover.svg-5ecda347bfe28eb3e82445838a904924.ctex"]
 
 [params]
 

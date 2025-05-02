@@ -21,6 +21,7 @@ func _ready() -> void:
 
 func _set_property(value, property: String) -> void:
 	projectile.set(property, value)
+	projectile.updated.emit()
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
 	projectile.set(property + "_enabled", toggled_on)

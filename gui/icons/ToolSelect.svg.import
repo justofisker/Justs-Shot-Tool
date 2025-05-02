@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xar7onvvt08r"
-path="res://.godot/imported/ToolPan.svg-5414d6d55c1c14d80fa30d313aa2244f.ctex"
+uid="uid://jslufb22o6qn"
+path="res://.godot/imported/ToolSelect.svg-6a7dc5bdc571edb1d190c3c258f9dd06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/ToolPan.svg"
-dest_files=["res://.godot/imported/ToolPan.svg-5414d6d55c1c14d80fa30d313aa2244f.ctex"]
+source_file="res://gui/icons/ToolSelect.svg"
+dest_files=["res://.godot/imported/ToolSelect.svg-6a7dc5bdc571edb1d190c3c258f9dd06.ctex"]
 
 [params]
 

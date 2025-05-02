@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b35gr158a5u7i"
-path="res://.godot/imported/SliderGrabberHover.svg-a31347ad91917164fd24edf4c9f9ce7b.ctex"
+uid="uid://cvrre8immcq80"
+path="res://.godot/imported/Ruler.svg-f96312ee43032fea0580fadda208b27b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/SliderGrabberHover.svg"
-dest_files=["res://.godot/imported/SliderGrabberHover.svg-a31347ad91917164fd24edf4c9f9ce7b.ctex"]
+source_file="res://gui/icons/Ruler.svg"
+dest_files=["res://.godot/imported/Ruler.svg-f96312ee43032fea0580fadda208b27b.ctex"]
 
 [params]
 

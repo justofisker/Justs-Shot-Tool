@@ -1,21 +1,7 @@
 extends Node2D
 
-const ShooterObject = preload("res://bullet_area/shooter_object.gd")
-@onready var selected_object : ShooterObject = $Object :
-	set(value):
-		if selected_object:
-			selected_object.selected = false
-		selected_object = value
-		if selected_object:
-			selected_object.selected = true
-		Bridge.selected_object = selected_object
-
 const Projectile = preload("res://bullet_area/projectile.gd")
 var projectiles : Array[Projectile]
-
-func _ready() -> void:
-	# Setup properties menu
-	set_deferred("selected_object", selected_object)
 
 func _process(_delta: float) -> void:
 	queue_redraw()

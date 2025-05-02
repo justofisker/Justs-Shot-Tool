@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bcs0spjtqixln"
-path="res://.godot/imported/CenterView.svg-85dcd1685c9512c34b19bb57b731c5c1.ctex"
+path="res://.godot/imported/CenterView.svg-2086a83966143acaad9dcedc513a253b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/CenterView.svg"
-dest_files=["res://.godot/imported/CenterView.svg-85dcd1685c9512c34b19bb57b731c5c1.ctex"]
+source_file="res://gui/icons/CenterView.svg"
+dest_files=["res://.godot/imported/CenterView.svg-2086a83966143acaad9dcedc513a253b.ctex"]
 
 [params]
 

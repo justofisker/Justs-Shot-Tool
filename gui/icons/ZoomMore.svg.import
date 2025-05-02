@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f0fh308pmbjl"
-path="res://.godot/imported/ToolMove.svg-e4aff8ae3ad92587e83701cea1d11abe.ctex"
+uid="uid://br7epmvtri7xk"
+path="res://.godot/imported/ZoomMore.svg-687378f9de8c2490cf0fc5aeb8501b15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/ToolMove.svg"
-dest_files=["res://.godot/imported/ToolMove.svg-e4aff8ae3ad92587e83701cea1d11abe.ctex"]
+source_file="res://gui/icons/ZoomMore.svg"
+dest_files=["res://.godot/imported/ZoomMore.svg-687378f9de8c2490cf0fc5aeb8501b15.ctex"]
 
 [params]
 

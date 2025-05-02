@@ -3,18 +3,18 @@ extends VBoxContainer
 
 var object_settings := XMLObjects.ObjectSettings.new() :
 	set(value):
-		if object_settings.updated_position.is_connected(_on_settings_updated):
-			object_settings.updated_position.disconnect(_on_settings_updated)
+		if object_settings.updated.is_connected(_on_settings_updated):
 			object_settings.updated.disconnect(_on_settings_updated)
 		object_settings = value
 		if properties:
 			for child in properties.get_children():
 				var v = object_settings.get(child.name.to_snake_case())
 				if v != null:
+					child.set_block_signals(true)
 					child.value = v
+					child.set_block_signals(false)
 				else:
 					push_error("Unable to set value for " + child.name)
-		object_settings.updated_position.connect(_on_settings_updated)
 		object_settings.updated.connect(_on_settings_updated)
 
 @export var properties: VBoxContainer
@@ -37,6 +37,7 @@ func _ready() -> void:
 
 func _set_property(value, property: String) -> void:
 	object_settings.set(property, value)
+	object_settings.updated.emit()
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
 	object_settings.set(property + "_enabled", toggled_on)

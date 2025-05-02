@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jslufb22o6qn"
-path="res://.godot/imported/ToolSelect.svg-66aba608ddf702ea3ba28b68576978c1.ctex"
+uid="uid://xh8qqwwvgyel"
+path="res://.godot/imported/slider_grabber.png-2b04feaaa1aff64faf79be704ea007f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/ToolSelect.svg"
-dest_files=["res://.godot/imported/ToolSelect.svg-66aba608ddf702ea3ba28b68576978c1.ctex"]
+source_file="res://gui/icons/slider_grabber.png"
+dest_files=["res://.godot/imported/slider_grabber.png-2b04feaaa1aff64faf79be704ea007f5.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

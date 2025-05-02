@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://na5avsr373e0"]
 
 [ext_resource type="Script" uid="uid://b7ufytjg8hwlk" path="res://property_panel/projectile_property.gd" id="1_vk4nb"]
-[ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/Collapse.svg" id="2_xats3"]
+[ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/icons/Collapse.svg" id="2_xats3"]
 [ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="3_15ut3"]
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="4_5atu8"]
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="5_xats3"]

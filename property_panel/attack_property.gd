@@ -21,6 +21,7 @@ func _ready() -> void:
 
 func _set_property(value, property: String) -> void:
 	attack.set(property, value)
+	attack.updated.emit()
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
 	attack.set(property + "_enabled", toggled_on)

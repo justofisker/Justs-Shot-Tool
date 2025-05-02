@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://cs44sby4b57sn"]
 
 [ext_resource type="Script" uid="uid://cu2hb5jlescib" path="res://property_panel/tools.gd" id="1_cfdxs"]
-[ext_resource type="Texture2D" uid="uid://jslufb22o6qn" path="res://gui/ToolSelect.svg" id="3_otv0s"]
-[ext_resource type="Texture2D" uid="uid://f0fh308pmbjl" path="res://gui/ToolMove.svg" id="4_mvj0t"]
-[ext_resource type="Texture2D" uid="uid://cvrre8immcq80" path="res://gui/Ruler.svg" id="5_4mf1i"]
-[ext_resource type="Texture2D" uid="uid://xar7onvvt08r" path="res://gui/ToolPan.svg" id="5_cfdxs"]
+[ext_resource type="Texture2D" uid="uid://jslufb22o6qn" path="res://gui/icons/ToolSelect.svg" id="3_otv0s"]
+[ext_resource type="Texture2D" uid="uid://f0fh308pmbjl" path="res://gui/icons/ToolMove.svg" id="4_mvj0t"]
+[ext_resource type="Texture2D" uid="uid://cvrre8immcq80" path="res://gui/icons/Ruler.svg" id="5_4mf1i"]
+[ext_resource type="Texture2D" uid="uid://xar7onvvt08r" path="res://gui/icons/ToolPan.svg" id="5_cfdxs"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_nd8tn"]
 
