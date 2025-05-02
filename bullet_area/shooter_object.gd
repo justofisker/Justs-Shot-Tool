@@ -59,10 +59,11 @@ func calculate_object_path() -> Array[Curve2D]:
 	
 	for idx in projectiles.size():
 		var proj = projectiles[idx]
-		paths[idx].add_point(proj.origin + proj.position)
+		var pos_offset = Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.direction) * 10
+		paths[idx].add_point(pos_offset + proj.position)
 		for t in projectile.lifetime_ms * SIMULATION_RATE / 1000:
 			projectiles[idx]._physics_process(1.0 / SIMULATION_RATE)
-			paths[idx].add_point(proj.origin + proj.position + Vector2(0, proj.y_offset).rotated(proj.direction))
+			paths[idx].add_point(pos_offset + proj.position + Vector2(0, proj.y_offset).rotated(proj.direction))
 	
 	return paths
 
