@@ -5,13 +5,6 @@ extends Node2D
 @export var grid_size := Vector2(10, 10)
 @export var color := Color(0.8, 0.8, 0.8, 0.1)
 
-func _ready() -> void:
-	pass
-	#_update_grid_size()
-
-func _update_grid_size() -> void:
-	grid_size = Vector2(8, 8)
-
 func _process(_delta: float) -> void:
 	queue_redraw()
 

@@ -1,7 +1,5 @@
 extends VBoxContainer
 
-signal updated()
-
 var attack := XMLObjects.Subattack.new() :
 	set(value):
 		attack = value
@@ -12,10 +10,8 @@ var attack := XMLObjects.Subattack.new() :
 					child.value = v
 				else:
 					push_error("Unable to set value for " + child.name)
-		updated.emit()
 
-@onready var collapse: TextureButton = $HBoxContainer/Collapse
-@onready var properties: VBoxContainer = $Properties
+@export var properties: VBoxContainer
 
 func _ready() -> void:
 	for child in properties.get_children():
@@ -31,11 +27,3 @@ func _set_enabled(toggled_on: bool, property: String) -> void:
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
-
-func _on_bullet_area_selected_shooter(node: Node2D) -> void:
-	if !node:
-		visible = false
-		return
-	else:
-		visible = true
-	self.attack = node.attack

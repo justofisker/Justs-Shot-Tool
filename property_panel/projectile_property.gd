@@ -1,20 +1,17 @@
 extends VBoxContainer
 
-signal updated()
-
-var proj := XMLObjects.Projectile.new() :
+var projectile := XMLObjects.Projectile.new() :
 	set(value):
-		proj = value
+		projectile = value
 		if properties:
 			for child in properties.get_children():
-				var v = proj.get(child.name.to_snake_case())
+				var v = projectile.get(child.name.to_snake_case())
 				if v != null:
 					child.value = v
 				else:
 					push_error("Unable to set value for " + child.name)
-		updated.emit()
 
-@onready var properties: VBoxContainer = $Properties
+@export var properties: VBoxContainer
 
 func _ready() -> void:
 	for child in properties.get_children():
@@ -23,18 +20,10 @@ func _ready() -> void:
 		child.toggled.connect(_set_enabled.bind(child.name.to_snake_case()))
 
 func _set_property(value, property: String) -> void:
-	proj.set(property, value)
+	projectile.set(property, value)
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
-	proj.set(property + "_enabled", toggled_on)
+	projectile.set(property + "_enabled", toggled_on)
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
-
-func _on_bullet_area_selected_shooter(node: Node2D) -> void:
-	if !node:
-		visible = false
-		return
-	else:
-		visible = true
-	self.proj = node.projectile

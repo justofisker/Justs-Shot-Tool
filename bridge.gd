@@ -1,0 +1,18 @@
+extends Node
+
+signal tool_mode_changed(mode: ToolMode)
+
+enum ToolMode { Select, Move, Ruler }
+
+var tool_mode : ToolMode  = ToolMode.Select :
+	set(value):
+		tool_mode = value
+		tool_mode_changed.emit(tool_mode)
+
+signal object_selected(old_object: Node2D, object: Node2D)
+
+var selected_object : Node = null :
+	set(value):
+		var old_object = selected_object
+		selected_object = value
+		object_selected.emit(old_object, selected_object)

@@ -10,8 +10,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 font_size = 24
 
-[node name="ObjectProperty" type="VBoxContainer"]
+[node name="ObjectProperty" type="VBoxContainer" node_paths=PackedStringArray("properties")]
 script = ExtResource("1_k7ys7")
+properties = NodePath("Properties")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

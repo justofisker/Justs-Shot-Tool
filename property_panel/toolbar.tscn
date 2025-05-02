@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://cs44sby4b57sn"]
+
+[ext_resource type="Script" uid="uid://cu2hb5jlescib" path="res://property_panel/tools.gd" id="1_cfdxs"]
+[ext_resource type="Texture2D" uid="uid://jslufb22o6qn" path="res://gui/ToolSelect.svg" id="3_otv0s"]
+[ext_resource type="Texture2D" uid="uid://f0fh308pmbjl" path="res://gui/ToolMove.svg" id="4_mvj0t"]
+[ext_resource type="Texture2D" uid="uid://cvrre8immcq80" path="res://gui/Ruler.svg" id="5_4mf1i"]
+[ext_resource type="Texture2D" uid="uid://xar7onvvt08r" path="res://gui/ToolPan.svg" id="5_cfdxs"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_nd8tn"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_nd8tn"]
+action = &"tool_select"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_li1xl"]
+events = [SubResource("InputEventAction_nd8tn")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_li1xl"]
+action = &"tool_move"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_ikwa3"]
+events = [SubResource("InputEventAction_li1xl")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_ikwa3"]
+action = &"tool_ruler"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_r1t2s"]
+events = [SubResource("InputEventAction_ikwa3")]
+
+[node name="Toolbar" type="PanelContainer"]
+theme_type_variation = &"ToolbarPanel"
+script = ExtResource("1_cfdxs")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Select" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Select (Q)"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_li1xl")
+shortcut_in_tooltip = false
+icon = ExtResource("3_otv0s")
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Move" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Move (W)"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_ikwa3")
+shortcut_in_tooltip = false
+icon = ExtResource("4_mvj0t")
+
+[node name="Ruler" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Ruler (R)"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_r1t2s")
+shortcut_in_tooltip = false
+icon = ExtResource("5_4mf1i")
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Pan" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Pan (G)"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut_in_tooltip = false
+icon = ExtResource("5_cfdxs")
+
+[connection signal="pressed" from="HBoxContainer/Select" to="." method="_on_select_pressed"]
+[connection signal="pressed" from="HBoxContainer/Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="HBoxContainer/Ruler" to="." method="_on_ruler_pressed"]
+[connection signal="pressed" from="HBoxContainer/Pan" to="." method="_on_ruler_pressed"]

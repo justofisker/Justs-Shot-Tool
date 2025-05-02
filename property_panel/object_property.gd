@@ -1,6 +1,5 @@
 extends VBoxContainer
 
-signal updated()
 
 var object_settings := XMLObjects.ObjectSettings.new() :
 	set(value):
@@ -17,10 +16,8 @@ var object_settings := XMLObjects.ObjectSettings.new() :
 					push_error("Unable to set value for " + child.name)
 		object_settings.updated_position.connect(_on_settings_updated)
 		object_settings.updated.connect(_on_settings_updated)
-		updated.emit()
 
-@onready var collapse: TextureButton = $HBoxContainer/Collapse
-@onready var properties: VBoxContainer = $Properties
+@export var properties: VBoxContainer
 
 func _on_settings_updated() -> void:
 	for child in properties.get_children():
@@ -46,11 +43,3 @@ func _set_enabled(toggled_on: bool, property: String) -> void:
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
-
-func _on_bullet_area_selected_shooter(node: Node2D) -> void:
-	if !node:
-		visible = false
-		return
-	else:
-		visible = true
-	object_settings = node.object_settings
