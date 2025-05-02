@@ -73,7 +73,7 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 		var proj = Projectile.new()
 		proj.proj = projectile
 		proj.direction = 0.0 if ignore_mouse else get_local_mouse_position().angle()
-		proj.direction += -angle_offset + deg_to_rad((i + 0.5) * attack.arc_gap) - deg_to_rad(attack.default_angle)
+		proj.direction += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
 		proj.inverted = inverted
 		proj.origin = to_global(Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.direction) * 10)
 		proj._ready()
@@ -102,7 +102,7 @@ func _draw() -> void:
 	
 	if object_settings.show_path:
 		var rot = 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
-		rot -= deg_to_rad(default_angle_incr)
+		rot += deg_to_rad(default_angle_incr)
 		draw_set_transform(Vector2(), rot)
 		for path in projectile_paths:
 			draw_polyline(path.get_baked_points(), Color.BLACK)
