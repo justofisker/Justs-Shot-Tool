@@ -59,7 +59,7 @@ func calculate_object_path() -> Array[Curve2D]:
 	
 	for idx in projectiles.size():
 		var proj = projectiles[idx]
-		var pos_offset = Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.direction) * 10
+		var pos_offset = to_local(proj.origin)
 		paths[idx].add_point(pos_offset + proj.position)
 		for t in projectile.lifetime_ms * SIMULATION_RATE / 1000:
 			projectiles[idx]._physics_process(1.0 / SIMULATION_RATE)
@@ -74,9 +74,10 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 		var proj = Projectile.new()
 		proj.proj = projectile
 		proj.direction = 0.0 if ignore_mouse else get_local_mouse_position().angle()
-		proj.direction += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap) + deg_to_rad(attack.default_angle)
-		proj.inverted = inverted
 		proj.origin = to_global(Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.direction) * 10)
+		proj.direction += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
+		proj.direction += deg_to_rad(attack.default_angle)
+		proj.inverted = inverted
 		proj._ready()
 		inverted = !inverted
 		projectiles.push_back(proj)

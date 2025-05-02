@@ -31,7 +31,7 @@ class Subattack extends Resource:
 	var projectile_id: int = 0
 	var num_projectiles: int = 1
 	var rate_of_fire: float = 2
-	var pos_offset: Vector2i
+	var pos_offset: Vector2
 	var burst_count: int = 1
 	var burst_delay: float = 0.0
 	var burst_min_delay: float = 0.0

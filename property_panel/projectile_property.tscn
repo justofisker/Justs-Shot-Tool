@@ -124,7 +124,7 @@ tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 layout_mode = 2
 number_type = 1
 text = "TurnAcceleration"
-suffix = "°/sec^2"
+suffix = "???"
 
 [node name="TurnAccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2

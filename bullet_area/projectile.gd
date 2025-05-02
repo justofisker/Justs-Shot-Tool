@@ -8,28 +8,20 @@ var position: Vector2
 var speed : float
 var direction_init : float
 var time_alive : float = 0
-var turn_rate : float
 var turn_amount : float
+var turn_rate : float
 var origin : Vector2
+var distance_traveled : float
 
 func _ready() -> void:
 	speed = proj.speed
 	direction_init = direction
-	if proj.turn_stop_time > 0:
-		turn_rate = proj.turn_rate / ((proj.turn_stop_time - proj.turn_rate_delay) / 1000.0)
-	else:
-		turn_rate = proj.turn_rate / ((proj.lifetime_ms - proj.turn_rate_delay) / 1000.0)
+	var turn_period = ((proj.turn_stop_time - proj.turn_rate_delay) / 1000.0) if proj.turn_stop_time > 0 else ((proj.lifetime_ms - proj.turn_rate_delay) / 1000.0)
+	turn_rate = proj.turn_rate / turn_period
 
 func _physics_process(delta: float) -> void:
 	time_alive += delta
-	
-	if proj.circle_turn_angle != 0 && time_alive > proj.circle_turn_delay / 1000.0:
-		var distance = position.length()
-		var angle = position.angle()
-		angle -= deg_to_rad(delta * proj.circle_turn_angle)
-		position = Vector2(distance, 0).rotated(angle)
-		direction = fposmod(direction + deg_to_rad(-proj.circle_turn_angle) * delta, 2 * PI)
-		return
+	var life_perc = clampf(time_alive / (proj.lifetime_ms / 1000.0), 0, 1)
 	
 	if time_alive > proj.acceleration_delay / 1000.0:
 		speed += proj.acceleration * delta
@@ -41,27 +33,41 @@ func _physics_process(delta: float) -> void:
 			speed = max(speed, proj.speed_clamp)
 	
 	if proj.wavy:
-		var amplitude = 1
-		var frequency = 2
-		#if !is_zero_approx(proj.amplitude):
-			#amplitude = proj.amplitude
-		#if !is_zero_approx(proj.frequency):
-			#frequency = proj.frequency
-		y_offset = sin(time_alive / (proj.lifetime_ms / 1000.0) * frequency * 2 * PI) * time_alive / (proj.lifetime_ms / 1000.0) * amplitude * 5
+		y_offset = sin(time_alive * 3 * 2 * PI) * time_alive * 10
 	elif !is_zero_approx(proj.amplitude) && !is_zero_approx(proj.frequency):
-		y_offset = sin(time_alive / (proj.lifetime_ms / 1000.0) * proj.frequency * 2 * PI ) * proj.amplitude * 10
+		y_offset = sin(life_perc * proj.frequency * 2 * PI ) * proj.amplitude * 10
 	
 	if inverted:
 		y_offset = -y_offset
 	
 	if proj.turn_rate != 0:
-		if proj.turn_rate_delay / 1000.0 <= time_alive && (proj.turn_stop_time == 0 || proj.turn_stop_time / 1000.0 >= time_alive):
-			if proj.turn_acceleration_delay / 1000.0 <= time_alive:
-				turn_rate += proj.turn_acceleration * delta
-			turn_amount += turn_rate * delta
-			if proj.turn_clamp_enabled:
-				turn_amount = clampf(turn_amount, -absf(proj.turn_clamp), absf(proj.turn_clamp))
+		var turn_period =  ((proj.turn_stop_time - proj.turn_rate_delay) / 1000.0) if proj.turn_stop_time > 0 else ((proj.lifetime_ms - proj.turn_rate_delay) / 1000.0)
+		var turn_perc = clampf((time_alive - proj.turn_rate_delay / 1000.0) / turn_period, 0, 1)
+		var accel_period = (proj.lifetime_ms- proj.turn_acceleration_delay) / 1000.0
+		var accel_perc = clampf((time_alive - proj.turn_acceleration_delay / 1000.0) / accel_period, 0, 1)
+		
+		turn_amount = lerpf(0, proj.turn_rate, turn_perc)
+		
+		if proj.turn_clamp_enabled:
+			turn_amount = clampf(turn_amount, -absf(proj.turn_clamp), absf(proj.turn_clamp))
+		
+		#if proj.turn_rate_delay / 1000.0 <= time_alive && (proj.turn_stop_time == 0 || proj.turn_stop_time / 1000.0 >= time_alive):
+			#if proj.turn_acceleration_delay / 1000.0 <= time_alive:
+				#turn_rate += proj.turn_acceleration * delta
+			#turn_amount += turn_rate * delta
 	
-	direction = direction_init + deg_to_rad(turn_amount)
 	
-	position += Vector2(cos(direction), sin(direction)) * delta * speed
+	var old_pos = position
+	
+	if proj.circle_turn_angle != 0 && time_alive > proj.circle_turn_delay / 1000.0:
+		var distance = position.length()
+		var angle = position.angle()
+		angle -= deg_to_rad(delta * proj.circle_turn_angle)
+		position = Vector2(distance, 0).rotated(angle)
+		direction = fposmod(direction + deg_to_rad(-proj.circle_turn_angle) * delta, 2 * PI)
+		return
+	else:
+		direction = direction_init + deg_to_rad(turn_amount)
+		position += Vector2(cos(direction), sin(direction)) * delta * speed
+	
+	distance_traveled += (position - old_pos).length()
