@@ -25,6 +25,7 @@ func _set_property(value, property: String) -> void:
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
 	projectile.set(property + "_enabled", toggled_on)
+	projectile.updated.emit()
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible

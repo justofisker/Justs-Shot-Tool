@@ -9,13 +9,13 @@ func _process(_delta: float) -> void:
 	scale = Vector2(scalef, scalef)
 	queue_redraw()
 
-func draw_triangle(length : float, thickness : float, tip_size : Vector2, rotation: float, color: Color) -> void:
-	draw_line(Vector2(), Vector2(0, -length).rotated(rotation), color, thickness)
-	draw_polygon([Vector2(-triangle_size.x, -length).rotated(rotation), Vector2(0, -length - triangle_size.y).rotated(rotation), Vector2(triangle_size.x, -length).rotated(rotation)], [color])
+func draw_triangle(angle: float, color: Color) -> void:
+	draw_line(Vector2(), Vector2(0, -length).rotated(angle), color, thickness)
+	draw_polygon([Vector2(-triangle_size.x, -length).rotated(angle), Vector2(0, -length - triangle_size.y).rotated(angle), Vector2(triangle_size.x, -length).rotated(angle)], [color])
 
 func _draw() -> void:
-	draw_triangle(length, thickness, triangle_size, PI / 2, Color.RED)
-	draw_triangle(length, thickness, triangle_size, 0, Color.GREEN)
+	draw_triangle(PI / 2, Color.RED)
+	draw_triangle(0, Color.GREEN)
 
 enum Grab {X, Y, XY, NONE}
 

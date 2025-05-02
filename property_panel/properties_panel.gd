@@ -11,7 +11,7 @@ func _input(event: InputEvent) -> void:
 func _ready() -> void:
 	Bridge.object_selected.connect(_on_object_selected)
 
-func _on_object_selected(old_object: Node2D, object: Node2D) -> void:
+func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 	if object:
 		object_properties_panel.visible = true
 		attack_properties_panel.visible = true

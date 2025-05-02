@@ -41,6 +41,7 @@ func _set_property(value, property: String) -> void:
 
 func _set_enabled(toggled_on: bool, property: String) -> void:
 	object_settings.set(property + "_enabled", toggled_on)
+	object_settings.updated.emit()
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible

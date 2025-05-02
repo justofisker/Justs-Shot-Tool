@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 				
 				queue_redraw()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if pressed:
 		queue_redraw()
 
