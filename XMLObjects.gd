@@ -16,12 +16,8 @@ class ObjectSettings extends Resource:
 	func copy() -> ObjectSettings:
 		var out = ObjectSettings.new()
 		
-		var do_set := false
 		for prop in out.get_property_list():
-			if do_set:
-				out.set(prop["name"], get(prop["name"]))
-			elif prop["name"] == "Built-in script":
-				do_set = true
+			out.set(prop["name"], get(prop["name"]))
 		
 		return out
 
@@ -48,12 +44,8 @@ class Subattack extends Resource:
 	func copy() -> Subattack:
 		var out = Subattack.new()
 		
-		var do_set := false
 		for prop in out.get_property_list():
-			if do_set:
-				out.set(prop["name"], get(prop["name"]))
-			elif prop["name"] == "Built-in script":
-				do_set = true
+			out.set(prop["name"], get(prop["name"]))
 		
 		return out
 	
@@ -165,12 +157,8 @@ class Projectile extends Resource:
 	func copy() -> Projectile:
 		var out = Projectile.new()
 		
-		var do_set := false
 		for prop in out.get_property_list():
-			if do_set:
-				out.set(prop["name"], get(prop["name"]))
-			elif prop["name"] == "Built-in script":
-				do_set = true
+			out.set(prop["name"], get(prop["name"]))
 		
 		return out
 	
