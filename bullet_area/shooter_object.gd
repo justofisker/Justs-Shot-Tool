@@ -105,6 +105,6 @@ func _draw() -> void:
 	if object_settings.show_path:
 		var rot = 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
 		rot += deg_to_rad(default_angle_incr)
-		draw_set_transform(Vector2(), rot)
+		draw_set_transform(Vector2())
 		for path in projectile_paths:
 			draw_polyline(path.get_baked_points(), Color.BLACK)

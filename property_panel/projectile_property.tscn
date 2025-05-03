@@ -16,15 +16,20 @@ properties = NodePath("Properties")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "Projectile"
 label_settings = SubResource("LabelSettings_1bvp3")
 
+[node name="CopyButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Copy XML"
+
 [node name="Collapse" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 10
 focus_mode = 0
 texture_normal = ExtResource("2_xats3")
 stretch_mode = 3
@@ -40,22 +45,17 @@ layout_mode = 2
 title = "objectId"
 placeholder_text = "Doggy Dart"
 
-[node name="type" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="Size" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "type"
-display_as_hex = true
+text = "Size"
+suffix = "%"
+value = 100.0
 
 [node name="LifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "LifetimeMS"
 suffix = "ms"
 value = 1000.0
-
-[node name="Size" parent="Properties" instance=ExtResource("4_5atu8")]
-layout_mode = 2
-text = "Size"
-suffix = "%"
-value = 100.0
 
 [node name="Speed" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
@@ -68,6 +68,11 @@ layout_mode = 2
 text = "Acceleration"
 suffix = "units/sec^2"
 
+[node name="AccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "AccelerationDelay"
+suffix = "ms"
+
 [node name="SpeedClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "SpeedClamp"
@@ -75,10 +80,8 @@ suffix = "units/sec"
 toggleable = true
 enabled = false
 
-[node name="AccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="HSeparator" type="HSeparator" parent="Properties"]
 layout_mode = 2
-text = "AccelerationDelay"
-suffix = "ms"
 
 [node name="Amplitude" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
@@ -91,6 +94,17 @@ layout_mode = 2
 number_type = 1
 text = "Frequency"
 suffix = "cycles"
+
+[node name="Wavy" parent="Properties" instance=ExtResource("5_xats3")]
+layout_mode = 2
+text = "Wavy"
+
+[node name="Parametric" parent="Properties" instance=ExtResource("5_xats3")]
+layout_mode = 2
+text = "Parametric"
+
+[node name="HSeparator2" type="HSeparator" parent="Properties"]
+layout_mode = 2
 
 [node name="CircleTurnDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
@@ -125,11 +139,14 @@ layout_mode = 2
 number_type = 1
 text = "TurnAcceleration"
 suffix = "???"
+enabled = false
 
 [node name="TurnAccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnAccelerationDelay"
 suffix = "ms"
+enabled = false
+tooltip = "Disabled Cause I don't know how it works yet"
 
 [node name="TurnClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
@@ -137,6 +154,9 @@ text = "TurnClamp"
 suffix = "°"
 toggleable = true
 enabled = false
+
+[node name="HSeparator3" type="HSeparator" parent="Properties"]
+layout_mode = 2
 
 [node name="MultiHit" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
@@ -158,21 +178,27 @@ text = "ProtectFromSink"
 layout_mode = 2
 text = "FaceDir"
 
-[node name="Wavy" parent="Properties" instance=ExtResource("5_xats3")]
-layout_mode = 2
-text = "Wavy"
-
 [node name="Boomerang" parent="Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "Boomerang"
-
-[node name="Parametric" parent="Properties" instance=ExtResource("5_xats3")]
-layout_mode = 2
-text = "Parametric"
 
 [node name="ParticleTrail" parent="Properties" instance=ExtResource("6_15ut3")]
 layout_mode = 2
 value = Color(1, 0, 1, 1)
 text = "ParticleTrail"
 
+[node name="ParticleTrailIntensity" parent="Properties" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+number_type = 1
+text = "└ Intensity"
+suffix = "x"
+value = 1.0
+
+[node name="ParticleTrailLifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "└ Lifetime"
+suffix = "ms"
+value = 500.0
+
+[connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

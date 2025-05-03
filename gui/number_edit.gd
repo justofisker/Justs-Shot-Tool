@@ -54,10 +54,12 @@ enum NumberType {INTEGER, FLOAT}
 				line_edit.mouse_default_cursor_shape = Control.CURSOR_IBEAM
 				line_edit.selecting_enabled = true
 				line_edit.focus_mode = Control.FOCUS_ALL
+				line_edit.editable = enabled
 			else:
 				line_edit.mouse_default_cursor_shape = Control.CURSOR_ARROW
 				line_edit.selecting_enabled = false
 				line_edit.focus_mode = Control.FOCUS_NONE
+				line_edit.editable = enabled
 		toggled.emit(enabled)
 
 @export var display_as_hex : bool = false
@@ -91,7 +93,6 @@ func _ready() -> void:
 
 func _on_toggled(toggled_on: bool) -> void:
 	self.enabled = toggled_on
-	line_edit.editable = enabled
 
 func _on_line_edit_text_submitted(_new_text: String) -> void:
 	line_edit.release_focus()

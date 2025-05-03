@@ -38,3 +38,6 @@ func _ready() -> void:
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
 	self.enabled = toggled_on
+
+func _on_color_picker_button_color_changed(color: Color) -> void:
+	self.value = color

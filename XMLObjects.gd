@@ -62,6 +62,21 @@ class Subattack extends Resource:
 		var out = "<Subattack "
 		out += "projectileId=\"" + str(projectile_id) + "\">\n"
 		
+		if num_projectiles != 1:
+			out += "\t<NumProjectiles>" + str(num_projectiles) + "</NumProjectiles>\n"
+		out += "\t<RateOfFire>" + str(rate_of_fire) + "</RateOfFire>\n"
+		if !pos_offset.is_zero_approx():
+			out += "\t<PosOffset>" + str(pos_offset.x) + "," + str(pos_offset.y) + "</PosOffset>\n"
+		if arc_gap != 0:
+			out += "\t<ArcGap>" + str(arc_gap) + "</ArcGap>\n"
+		if default_angle != 0:
+			out += "\t<DefaultAngle>" + str(arc_gap) + "</DefaultAngle>\n"
+		if default_angle_incr != 0:
+			out += "\t<DefaultAngleIncr"
+			if default_angle_incr_max != 180 || default_angle_incr_min != -180:
+				out += " maxAngle=\"%d\" minAngle=\"%d\"" % [ default_angle_incr_max, default_angle_incr_min ]
+			out += ">" + str(default_angle_incr) + "</DefaultAngleIncr>\n"
+		
 		out += "</Subattack>\n"
 		
 		return out
@@ -98,7 +113,6 @@ class Projectile extends Resource:
 	signal updated()
 	
 	var id: int = 0
-	var type: int = 0
 	var object_id: String = ""
 	var min_damage: int = 0
 	var max_damage: int = 0
@@ -117,8 +131,8 @@ class Projectile extends Resource:
 	var frequency: float = 0
 	
 	# Circle Turn
-	var circle_turn_delay = 0
-	var circle_turn_angle = 0
+	var circle_turn_delay: int = 0
+	var circle_turn_angle: int = 0
 	# Turn
 	var turn_rate: int = 0
 	var turn_rate_delay: int = 0 # ms
@@ -141,6 +155,8 @@ class Projectile extends Resource:
 	var particle_trail: Color = DEFAULT_PARTICLE_TRAIL_COLOR
 	const DEFAULT_PARTICLE_TRAIL_COLOR := Color(0xFF00FFFF)
 	var particle_trail_enabled: bool = false
+	var particle_trail_lifetime_ms : int = 500
+	var particle_trail_intensity : float = 1
 
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()
@@ -162,7 +178,6 @@ class Projectile extends Resource:
 		# General
 		var out = "<Projectile id=\"" + str(id) + "\">\n"
 		out += "\t<ObjectId>" + object_id + "</ObjectId>\n"
-		out += "\t<LifetimeMS>" + str(lifetime_ms) + "</LifetimeMS>\n"
 		if size != 100:
 			out += "\t<Size>" + str(size) + "</Size>\n"
 		
@@ -174,25 +189,43 @@ class Projectile extends Resource:
 		if !is_zero_approx(max_health_damage):
 			out += "\t<CurrentHealthDamage>" + str(current_health_damage) + "</CurrentHealthDamage>\n"
 		
-		#var speed_clamp: int = 0
-		# Speed
+		# Distance
+		out += "\t<LifetimeMS>" + str(lifetime_ms) + "</LifetimeMS>\n"
 		out += "\t<Speed>" + str(speed) + "</Speed>\n"
+		if speed_clamp_enabled:
+			out += "\t<SpeedClamp>" + str(speed_clamp) + "</SpeedClamp>\n"
 		if acceleration != 0:
 			out += "\t<Acceleration>" + str(acceleration) + "</Acceleration>\n"
 		if acceleration_delay != 0:
 			out += "\t<AccelerationDelay>" + str(acceleration_delay) + "</AccelerationDelay>\n"
+		
+		# Sinosoidal
 		if !is_equal_approx(amplitude, 0):
 			out += "\t<Amplitude>" + str(amplitude) + "</Amplitude>\n"
-		if !is_equal_approx(frequency, 1):
+		if !is_equal_approx(frequency, 0):
 			out += "\t<Frequency>" + str(frequency) + "</Frequency>\n"
-		
-		# TODO: Turn
+		if wavy:
+			out += "\t<Wavy />\n"
+		if parametric:
+			out += "\t<Parametric />\n"
 		
 		# Circle
 		if circle_turn_delay != 0:
 			out += "\t<CircleTurnDelay>" + str(circle_turn_delay) + "</CircleTurnDelay>\n"
 		if circle_turn_angle != 0:
 			out += "\t<CircleTurnAngle>" + str(circle_turn_angle) + "</CircleTurnAngle>\n"
+		if turn_rate != 0:
+			out += "\t<TurnRate>" + str(turn_rate) + "</TurnRate>\n"
+		if turn_rate_delay != 0:
+			out += "\t<TurnRateDelay>" + str(turn_rate_delay) + "</TurnRateDelay>\n"
+		if turn_stop_time != 0:
+			out += "\t<TurnStopTime>" + str(turn_stop_time) + "</TurnStopTime>\n"
+		if turn_acceleration != 0:
+			out += "\t<TurnAcceleration>" + str(turn_acceleration) + "</TurnAcceleration>\n"
+		if turn_acceleration_delay != 0:
+			out += "\t<TurnAccelerationDelay>" + str(turn_acceleration_delay) + "</TurnAccelerationDelay>\n"
+		if turn_clamp_enabled:
+			out += "\t<TurnClamp>" + str(turn_clamp) + "</TurnClamp>\n"
 		
 		# Flags
 		if multi_hit:
@@ -205,15 +238,21 @@ class Projectile extends Resource:
 			out += "\t<ProtectFromSink />\n"
 		if face_dir:
 			out += "\t<FaceDir />\n"
-		if wavy:
-			out += "\t<Wavy />\n"
 		if boomerang:
 			out += "\t<Boomerang />\n"
-		#if particle_trail:
-			#out += "\t<ParticleTrail "
-			#if particle_trail_color != DEFAULT_PARTICLE_TRAIL_COLOR:
-				#out += "color=\"" + ("%06x" % particle_trail_color) + "\" "
-			#out += "/>\n"
+		if particle_trail_enabled:
+			out += "\t<ParticleTrail"
+			if particle_trail != DEFAULT_PARTICLE_TRAIL_COLOR || is_equal_approx(particle_trail_intensity, 1) || particle_trail_lifetime_ms != 500:
+				if !is_equal_approx(particle_trail_intensity, 1):
+					out += " intensity=\"" + str(particle_trail_intensity) + "\""
+				if particle_trail_lifetime_ms != 500:
+					out += " lifetimeMS=\"" + str(particle_trail_lifetime_ms) + "\""
+				if particle_trail != DEFAULT_PARTICLE_TRAIL_COLOR:
+					out += ">0x%06x</ParticleTrail>\n" % (particle_trail.to_rgba32() >> 8)
+				else:
+					out += "/>\n"
+			else:
+				out += "/>\n"
 		
 		out += "</Projectile>\n"
 		

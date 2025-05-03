@@ -29,3 +29,6 @@ func _set_enabled(toggled_on: bool, property: String) -> void:
 
 func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
+
+func _on_copy_button_pressed() -> void:
+	DisplayServer.clipboard_set(attack.to_xml())

@@ -26,3 +26,4 @@ color = Color(1, 1, 1, 1)
 edit_alpha = false
 
 [connection signal="toggled" from="HBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
