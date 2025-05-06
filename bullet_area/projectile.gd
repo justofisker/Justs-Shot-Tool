@@ -10,7 +10,7 @@ var turn_rate_phase_available : bool = false
 var is_turning_acceleration : bool = false
 var is_accelerating : bool = false
 var turn_stop_time : int = 0
-var time_alive : int = 0
+var time_alive : float = 0
 
 func calculate_position(elapsed: int) -> Vector2:
 	var point = origin

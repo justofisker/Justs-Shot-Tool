@@ -1,31 +1,21 @@
 extends Node2D
 
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
-@onready var viewport : Viewport = get_viewport()
-@export var grid_size := Vector2(10, 10)
+@onready var viewport : SubViewport = get_viewport()
+@export var grid_size := Vector2(8, 8)
 @export var color := Color(0.8, 0.8, 0.8, 0.1)
 
 func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var vp_size : Vector2i = viewport.size
-	var cam_pos: = camera.position
-	var vp_right: = vp_size.x / camera.zoom.x
-	var vp_bottom: = vp_size.y / camera.zoom.y
+	var vp_size := Vector2(viewport.size) * get_viewport_transform().affine_inverse()
+	var cam_pos := camera.global_position
 	
-	var leftmost: = -vp_right + cam_pos.x
-	var topmost: = -vp_bottom + cam_pos.y
-	
-	var left: = ceilf(leftmost / grid_size.x) * grid_size.x
-	var bottommost: = vp_bottom + cam_pos.y
-	for x in range(0, vp_size.x / camera.zoom.x + 1):
-		draw_line(Vector2(left, topmost) + grid_size / 2, Vector2(left, bottommost) + grid_size / 2, color)
-		left += grid_size.x
+	draw_set_transform(cam_pos.snapped(grid_size) + grid_size / 2.0)
+	for x in range(snappedf(-vp_size.x / 2, grid_size.x), snappedf(vp_size.x / 2, grid_size.x), grid_size.x):
+		draw_line(Vector2(x, -vp_size.y / 2 - grid_size.y / 2), Vector2(x, vp_size.y / 2), color)
+	for y in range(snappedf(-vp_size.y / 2, grid_size.y), snappedf(vp_size.y / 2, grid_size.y), grid_size.y):
+		draw_line(Vector2(-vp_size.x / 2 - grid_size.x / 2, y), Vector2(vp_size.x / 2, y), color)
 
-	var top: = ceilf(topmost / grid_size.y) * grid_size.y
-	var rightmost: = vp_right + cam_pos.x
-	for y in range(0, vp_size.y / camera.zoom.y + 1):
-		draw_line(Vector2(leftmost, top) + grid_size / 2, Vector2(rightmost, top) + grid_size / 2, color)
-		top += grid_size.y
 	

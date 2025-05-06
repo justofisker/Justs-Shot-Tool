@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://b75df6uegy10f"]
+[gd_scene load_steps=21 format=3 uid="uid://b75df6uegy10f"]
 
 [ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://bullet_area/grid.gd" id="1_al8gc"]
+[ext_resource type="Script" uid="uid://bg11enmtw15o4" path="res://bullet_area/bullet_area.gd" id="1_ikwa3"]
 [ext_resource type="Script" uid="uid://btmjb2ug6mrem" path="res://bullet_area/shooter_object.gd" id="2_vbgui"]
 [ext_resource type="Texture2D" uid="uid://bcs0spjtqixln" path="res://gui/icons/CenterView.svg" id="3_efyat"]
 [ext_resource type="Texture2D" uid="uid://srn1nec0ybgm" path="res://gui/icons/ZoomLess.svg" id="4_15s0m"]
@@ -44,6 +45,7 @@ Button/styles/normal = SubResource("StyleBoxEmpty_kek77")
 Button/styles/pressed = SubResource("StyleBoxEmpty_4c57u")
 
 [node name="BulletArea" type="Node2D"]
+script = ExtResource("1_ikwa3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -83,7 +85,6 @@ icon = ExtResource("5_0ci4i")
 
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource("1_al8gc")
-grid_size = Vector2(8, 8)
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("reset_zoom_button")]

@@ -8,14 +8,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	for proj in projectiles:
-		proj.time_alive += delta * 1000
+		proj.time_alive += delta
 	queue_redraw()
 
 var radius : float = 2
 func _draw() -> void:
-	var time := Time.get_ticks_msec()
 	for proj in projectiles:
-		draw_circle(proj.calculate_position(proj.time_alive) * 8, radius * proj.proj.size / 100.0, Color.WHITE, false)
+		draw_circle(proj.calculate_position(proj.time_alive * 1000) * 8, radius * proj.proj.size / 100.0, Color.WHITE, false)
 		#var points : PackedVector2Array = []
 		#
 		#var delta = sin(PI / 16) * radius
