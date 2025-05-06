@@ -1,73 +1,189 @@
 extends Object
 
 var proj: XMLObjects.Projectile
-var direction: float = 0
-var y_offset: float = 0
-var inverted: bool = false
-var position: Vector2
-var speed : float
-var direction_init : float
-var time_alive : float = 0
-var turn_amount : float
-var turn_rate : float
+var angle: float = 0
 var origin : Vector2
-var distance_traveled : float
+var bullet_id = 0
+var is_turning : bool = false
+var is_turning_circled : bool = false
+var turn_rate_phase_available : bool = false
+var is_turning_acceleration : bool = false
+var is_accelerating : bool = false
+var time_created : int = 0
+func setup() -> void:
+	pass
 
-func _ready() -> void:
-	speed = proj.speed
-	direction_init = direction
-	var turn_period = ((proj.turn_stop_time - proj.turn_rate_delay) / 1000.0) if proj.turn_stop_time > 0 else ((proj.lifetime_ms - proj.turn_rate_delay) / 1000.0)
-	turn_rate = proj.turn_rate / turn_period
-
-func _physics_process(delta: float) -> void:
-	time_alive += delta
-	var life_perc = clampf(time_alive / (proj.lifetime_ms / 1000.0), 0, 1)
+func calculate_position(elapsed: int) -> Vector2:
+	var point = origin
+	var offset := Vector2.ZERO
 	
-	if time_alive > proj.acceleration_delay / 1000.0:
-		speed += proj.acceleration * delta
-	
-	if proj.speed_clamp_enabled:
-		if proj.acceleration > 0:
-			speed = min(speed, proj.speed_clamp)
-		elif proj.acceleration < 0:
-			speed = max(speed, proj.speed_clamp)
+	var dist = calculate_distance(elapsed)
+	var phase = PI if bullet_id % 2 == 0 else 0
 	
 	if proj.wavy:
-		y_offset = sin(time_alive * 3 * 2 * PI) * time_alive * 10
-	elif !is_zero_approx(proj.amplitude) && !is_zero_approx(proj.frequency):
-		y_offset = sin(life_perc * proj.frequency * 2 * PI ) * proj.amplitude * 10
-	
-	if inverted:
-		y_offset = -y_offset
-	
-	if proj.turn_rate != 0:
-		var turn_period =  ((proj.turn_stop_time - proj.turn_rate_delay) / 1000.0) if proj.turn_stop_time > 0 else ((proj.lifetime_ms - proj.turn_rate_delay) / 1000.0)
-		var turn_perc = clampf((time_alive - proj.turn_rate_delay / 1000.0) / turn_period, 0, 1)
-		var accel_period = (proj.lifetime_ms- proj.turn_acceleration_delay) / 1000.0
-		var accel_perc = clampf((time_alive - proj.turn_acceleration_delay / 1000.0) / accel_period, 0, 1)
+		var period_factor = 6.0 * PI
+		var amplitude_factor = PI / 64.0
+		var theta = angle + amplitude_factor * sin(phase + period_factor * elapsed * 0.001)
+		point += Vector2(cos(theta), sin(theta)) * dist
+		offset = get_offset(theta)
+	elif proj.parametric:
+		var t := (float(elapsed) / proj.lifetime_ms) * 2 * PI
+		var xt := sin(t) * (1 if bullet_id % 2 > 0 else -1)
+		var yt := sin(2 * t) * (1 if bullet_id % 4 < 2 else -1)
+		point += Vector2(xt * cos(angle) - yt * sin(angle), xt * sin(angle) + yt * cos(angle)) * proj.speed
+		offset = get_offset(angle)
+	elif is_turning:
+		var angle_v = 0
+		if is_turning_circled && elapsed >= proj.circle_turn_delay:
+			dist = calculate_circle_turn_distance()
+			angle_v = calculate_circle_turn_angle(elapsed, 0)
+		else:
+			var turn_stop_time := proj.lifetime_ms if proj.turn_stop_time == 0 else proj.turn_stop_time
+			if elapsed >= turn_stop_time && turn_rate_phase_available:
+				point = apply_new_turn_rate_parameters(point)
+			
+			dist -= turn_distance
+			angle_v = calculate_turn(elapsed)
 		
-		turn_amount = lerpf(0, proj.turn_rate, turn_perc)
+		point += Vector2(cos(angle + angle_v), sin(angle + angle_v)) * dist
+		offset = get_offset(angle + angle_v)
+	elif is_turning_circled:
+		var angle_v := 0.0
+		if elapsed >= proj.circle_turn_delay:
+			dist = calculate_circle_turn_distance()
+			angle_v = calculate_circle_turn_angle(elapsed, proj.circle_turn_delay)
 		
-		if proj.turn_clamp_enabled:
-			turn_amount = clampf(turn_amount, -absf(proj.turn_clamp), absf(proj.turn_clamp))
-		
-		#if proj.turn_rate_delay / 1000.0 <= time_alive && (proj.turn_stop_time == 0 || proj.turn_stop_time / 1000.0 >= time_alive):
-			#if proj.turn_acceleration_delay / 1000.0 <= time_alive:
-				#turn_rate += proj.turn_acceleration * delta
-			#turn_amount += turn_rate * delta
-	
-	
-	var old_pos = position
-	
-	if proj.circle_turn_angle != 0 && time_alive > proj.circle_turn_delay / 1000.0:
-		var distance = position.length()
-		var angle = position.angle()
-		angle -= deg_to_rad(delta * proj.circle_turn_angle)
-		position = Vector2(distance, 0).rotated(angle)
-		direction = fposmod(direction + deg_to_rad(-proj.circle_turn_angle) * delta, 2 * PI)
-		return
+		point += Vector2(cos(angle + angle_v), sin(angle + angle_v)) * dist
+		offset = get_offset(angle + angle_v)
 	else:
-		direction = direction_init + deg_to_rad(turn_amount)
-		position += Vector2(cos(direction), sin(direction)) * delta * speed
+		if proj.boomerang:
+			var halfway = proj.lifetime_ms * proj.speed / 10000.0 / 2.0
+			if dist > halfway:
+				dist = halfway - (dist - halfway)
+		
+		point += Vector2(cos(angle), sin(angle)) * dist
+		
+		if !is_zero_approx(proj.amplitude):
+			var deflection = proj.amplitude * sin(phase + (float(elapsed) / proj.lifetime_ms) * proj.frequency * 2 * PI)
+			point += Vector2(-sin(angle), cos(angle)) * deflection
+		
+		offset = get_offset(angle)
 	
-	distance_traveled += (position - old_pos).length()
+	return point
+
+func calculate_distance(elapsed: int) -> float:
+	var t = elapsed / 1000.0
+	var speed_factor = proj.speed / 10.0
+	var dist = t * speed_factor
+	
+	if is_accelerating:
+		if elapsed >= proj.acceleration_delay:
+			t -= proj.acceleration_delay / 1000.0
+			var dv = proj.acceleration * t
+			
+			if proj.acceleration > 0:
+				var max_dv = max(proj.speed_clamp, speed_factor) - speed_factor
+				var t_max = max_dv * proj.acceleration
+				
+				if (t > t_max):
+					dist += max_dv * t_max * 0.5
+					dist += max_dv * (t - t_max)
+				else:
+					dist += dv * t * 0.5
+			else:
+				var min_dv = minf(proj.speed_clamp, speed_factor) - speed_factor
+				var t_max2 = min_dv * proj.acceleration
+				
+				if t > t_max2:
+					dist += min_dv * t_max2 * 0.5
+					dist += min_dv * (t - t_max2)
+				else:
+					dist += dv * t * 0.5
+	return dist
+
+var circle_distance := 0
+func calculate_circle_turn_distance() -> float:
+	if circle_distance == 0:
+		circle_distance = calculate_distance(proj.circle_turn_delay)
+	return circle_distance
+
+func calculate_circle_turn_angle(elapsed: int, delay: int) -> float:
+	var stop_time = proj.circle_turn_delay if proj.turn_stop_time == 0 else proj.turn_stop_time
+	return deg_to_rad(proj.circle_turn_angle) / stop_time * (elapsed - delay)
+
+var turn_distance : float = 0
+func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
+	if !is_turning:
+		return point
+	
+	var turn_stop_time := proj.lifetime_ms if proj.turn_stop_time == 0 else proj.turn_stop_time
+	
+	turn_distance = calculate_distance(turn_stop_time)
+	var angle_v := calculate_turn(turn_stop_time)
+	
+	point += Vector2(cos(angle + angle_v), sin(angle + angle_v)) * turn_distance
+	
+	var next_dist := calculate_distance(turn_stop_time + 16)
+	angle_v = calculate_turn(turn_stop_time + 16, true)
+	var next_pos := origin + Vector2(cos(angle + angle_v), sin(angle_v)) * next_dist
+	
+	var dx := next_pos.x - point.x
+	var dy := next_pos.y - point.y
+	angle = atan2(dy, dx)
+	
+	origin = point
+	is_turning = false
+	
+	return point
+
+func get_offset(angle: float) -> Vector2:
+	return Vector2(cos(angle), sin(angle))
+
+func calculate_turn(elapsed: int, ignore_lifetime: bool = false) -> float:
+	var angle_v := 0.0
+	
+	var turn_stop_time := proj.lifetime_ms if proj.turn_stop_time == 0 else proj.turn_stop_time
+	
+	if (!ignore_lifetime && elapsed > turn_stop_time):
+		return angle_v
+	
+	var t := elapsed / 1000.0
+	
+	if proj.turn_rate_delay > 0:
+		# TODO: Look over
+		if elapsed > proj.turn_rate_delay:
+			angle_v = (deg_to_rad(proj.turn_rate) / turn_stop_time) * (elapsed - proj.turn_rate_delay)
+			angle_v = add_turn_acceleration(angle_v, t)
+	else:
+		angle_v = deg_to_rad(proj.turn_rate) / turn_stop_time * elapsed
+		angle_v = add_turn_acceleration(angle_v, t)
+	
+	return angle_v
+
+func add_turn_acceleration(ang: float, t: float) -> float:
+	if is_turning_acceleration:
+		if t >= proj.turn_acceleration_delay / 1000.0:
+			t -= proj.turn_acceleration_delay / 1000.0
+			
+			var turn_factor := proj.turn_rate
+			var dv = proj.turn_acceleration * t
+			var max_dv = maxf(proj.turn_clamp, turn_factor) - turn_factor
+			var t_max = max_dv * proj.turn_acceleration
+			
+			if proj.turn_acceleration > 0:
+				if t > t_max:
+					ang += max_dv * t_max * 0.5
+					ang += max_dv * (t - t_max)
+				else:
+					ang += dv * t * 0.5
+			else:
+				var min_dv = minf(proj.turn_clamp, turn_factor) - turn_factor
+				var t_max2 = min_dv * proj.turn_acceleration
+				
+				if t > t_max2:
+					ang += min_dv * t_max2 * 0.5
+					ang += min_dv * (t - t_max2)
+				else:
+					ang += dv * t * 0.5
+	
+	return ang

@@ -139,14 +139,12 @@ layout_mode = 2
 number_type = 1
 text = "TurnAcceleration"
 suffix = "???"
-enabled = false
+tooltip = "Unsure what this specifically does. I'll need to look into the code more"
 
 [node name="TurnAccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnAccelerationDelay"
 suffix = "ms"
-enabled = false
-tooltip = "Disabled Cause I don't know how it works yet"
 
 [node name="TurnClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2

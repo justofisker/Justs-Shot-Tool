@@ -7,6 +7,8 @@ var attack := XMLObjects.Subattack.new()
 var projectile := XMLObjects.Projectile.new()
 var object_settings := XMLObjects.ObjectSettings.new()
 
+var bullet_id : int = 0
+
 @export var selected : bool = false
 
 var timer: Timer
@@ -25,26 +27,28 @@ func _ready() -> void:
 	projectile.updated.connect(_on_projectile_updated)
 
 func _on_object_settings_updated():
-	position = object_settings.position
+	position = object_settings.position * 8
 	if object_settings.show_path:
 		projectile_paths = calculate_object_path()
 	else:
 		projectile_paths = []
+	bullet_id = 0
 
 func _on_attack_updated():
 	if !is_equal_approx(timer.wait_time, 1.0 / attack.rate_of_fire):
 		timer.start(1.0 / attack.rate_of_fire)
-	inverted = false
 	if object_settings.show_path:
 		projectile_paths = calculate_object_path()
 	else:
 		projectile_paths = []
+	bullet_id = 0
 
 func _on_projectile_updated():
 	if object_settings.show_path:
 		projectile_paths = calculate_object_path()
 	else:
 		projectile_paths = []
+	bullet_id = 0
 
 const SIMULATION_RATE = 60
 func calculate_object_path() -> Array[Curve2D]:
@@ -55,15 +59,13 @@ func calculate_object_path() -> Array[Curve2D]:
 	var paths : Array[Curve2D]
 	paths.resize(projectiles.size())
 	for idx in paths.size():
+		projectiles[idx].origin -= position / 8.0
 		paths[idx] = Curve2D.new()
 	
 	for idx in projectiles.size():
 		var proj = projectiles[idx]
-		var pos_offset = to_local(proj.origin)
-		paths[idx].add_point(pos_offset + proj.position)
-		for t in projectile.lifetime_ms * SIMULATION_RATE / 1000:
-			projectiles[idx]._physics_process(1.0 / SIMULATION_RATE)
-			paths[idx].add_point(pos_offset + proj.position + Vector2(0, proj.y_offset).rotated(proj.direction))
+		for t in projectile.lifetime_ms * SIMULATION_RATE / 1000 + 1:
+			paths[idx].add_point(proj.calculate_position(t * 1000 / SIMULATION_RATE))
 	
 	return paths
 
@@ -73,21 +75,24 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 	for i in attack.num_projectiles:
 		var proj = Projectile.new()
 		proj.proj = projectile
-		proj.direction = 0.0 if ignore_mouse else get_local_mouse_position().angle()
-		proj.origin = to_global(Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.direction) * 10)
-		proj.direction += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
-		proj.direction += deg_to_rad(attack.default_angle)
-		proj.inverted = inverted
-		proj._ready()
-		inverted = !inverted
+		proj.angle = 0.0 if ignore_mouse else get_local_mouse_position().angle()
+		proj.origin = position / 8.0 + Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.angle)
+		proj.angle += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
+		proj.angle += deg_to_rad(attack.default_angle)
+		proj.is_accelerating = !is_zero_approx(projectile.acceleration)
+		proj.is_turning = projectile.turn_rate != 0
+		proj.is_turning_acceleration = !is_zero_approx(projectile.turn_acceleration)
+		proj.is_turning_circled = projectile.circle_turn_angle != 0
+		proj.time_created = Time.get_ticks_msec()
+		proj.bullet_id = bullet_id
+		bullet_id += 1
 		projectiles.push_back(proj)
 	return projectiles
 
 var default_angle_incr: int = 0
-var inverted : bool = false
 func _shoot() -> void:
 	if attack.default_angle_incr != 0:
-		default_angle_incr = posmod(default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min, attack.default_angle_incr_max - attack.default_angle_incr_min) - attack.default_angle_incr_min
+		default_angle_incr = ((default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min) % (attack.default_angle_incr_max - attack.default_angle_incr_min)) - attack.default_angle_incr_min
 	else:
 		default_angle_incr = 0
 	for proj in create_projectiles(object_settings.ignore_mouse):
@@ -97,14 +102,13 @@ func _shoot() -> void:
 func _process(_delta: float) -> void:
 	queue_redraw()
 
-var radius : float = 5
 var projectile_paths : Array[Curve2D]
 func _draw() -> void:
-	draw_circle(Vector2(), radius, Color.GREEN if selected else Color.WHITE, false)
+	draw_circle(Vector2(), 4, Color.GREEN if selected else Color.WHITE, false)
 	
 	if object_settings.show_path:
 		var rot = 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
 		rot += deg_to_rad(default_angle_incr)
-		draw_set_transform(Vector2())
+		draw_set_transform(Vector2.ZERO, rot, Vector2(8, 8))
 		for path in projectile_paths:
 			draw_polyline(path.get_baked_points(), Color.BLACK)

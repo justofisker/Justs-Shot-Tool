@@ -7,7 +7,9 @@ var attack := XMLObjects.Subattack.new() :
 			for child in properties.get_children():
 				var v = attack.get(child.name.to_snake_case())
 				if v != null:
+					child.set_block_signals(true)
 					child.value = v
+					child.set_block_signals(false)
 				else:
 					push_error("Unable to set value for " + child.name)
 

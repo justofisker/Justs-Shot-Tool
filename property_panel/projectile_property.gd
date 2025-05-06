@@ -9,7 +9,9 @@ var projectile := XMLObjects.Projectile.new() :
 					continue
 				var v = projectile.get(child.name.to_snake_case())
 				if v != null:
+					child.set_block_signals(true)
 					child.value = v
+					child.set_block_signals(false)
 				else:
 					push_error("Unable to set value for " + child.name)
 

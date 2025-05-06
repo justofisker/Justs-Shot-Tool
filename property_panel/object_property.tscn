@@ -54,7 +54,7 @@ display_as_hex = true
 [node name="Position" parent="Properties" instance=ExtResource("3_pr4qe")]
 layout_mode = 2
 text = "Position"
-suffix = "units"
+suffix = "tiles"
 
 [node name="IgnoreMouse" parent="Properties" instance=ExtResource("4_a7n1m")]
 layout_mode = 2
