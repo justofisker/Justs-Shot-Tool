@@ -73,7 +73,7 @@ func _on_zoom_out_pressed() -> void:
 	_update_zoom_text()
 
 func _on_reset_zoom_pressed() -> void:
-	zoom_level = ZOOM_MIN
+	zoom_level = ZOOM_MAX
 	zoom = Vector2.ONE * zoom_level * zoom_mult
 	_update_zoom_text()
 
