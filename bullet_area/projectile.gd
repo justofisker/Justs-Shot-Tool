@@ -6,12 +6,11 @@ var origin : Vector2
 var bullet_id = 0
 var is_turning : bool = false
 var is_turning_circled : bool = false
-var turn_rate_phase_available : bool = false
+var turn_rate_phase_available : bool = true
 var is_turning_acceleration : bool = false
 var is_accelerating : bool = false
-var time_created : int = 0
-func setup() -> void:
-	pass
+var turn_stop_time : int = 0
+var time_alive : int = 0
 
 func calculate_position(elapsed: int) -> Vector2:
 	var point = origin
@@ -32,13 +31,12 @@ func calculate_position(elapsed: int) -> Vector2:
 		var yt := sin(2 * t) * (1 if bullet_id % 4 < 2 else -1)
 		point += Vector2(xt * cos(angle) - yt * sin(angle), xt * sin(angle) + yt * cos(angle)) * proj.speed
 		offset = get_offset(angle)
-	elif is_turning:
+	elif proj.turn_rate != 0:
 		var angle_v = 0
 		if is_turning_circled && elapsed >= proj.circle_turn_delay:
 			dist = calculate_circle_turn_distance()
 			angle_v = calculate_circle_turn_angle(elapsed, 0)
 		else:
-			var turn_stop_time := proj.lifetime_ms if proj.turn_stop_time == 0 else proj.turn_stop_time
 			if elapsed >= turn_stop_time && turn_rate_phase_available:
 				point = apply_new_turn_rate_parameters(point)
 			
@@ -108,15 +106,13 @@ func calculate_circle_turn_distance() -> float:
 	return circle_distance
 
 func calculate_circle_turn_angle(elapsed: int, delay: int) -> float:
-	var stop_time = proj.circle_turn_delay if proj.turn_stop_time == 0 else proj.turn_stop_time
-	return deg_to_rad(proj.circle_turn_angle) / stop_time * (elapsed - delay)
+	return deg_to_rad(proj.circle_turn_angle) / turn_stop_time * (elapsed - delay)
 
 var turn_distance : float = 0
 func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	if !is_turning:
 		return point
 	
-	var turn_stop_time := proj.lifetime_ms if proj.turn_stop_time == 0 else proj.turn_stop_time
 	
 	turn_distance = calculate_distance(turn_stop_time)
 	var angle_v := calculate_turn(turn_stop_time)
@@ -125,7 +121,7 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	
 	var next_dist := calculate_distance(turn_stop_time + 16)
 	angle_v = calculate_turn(turn_stop_time + 16, true)
-	var next_pos := origin + Vector2(cos(angle + angle_v), sin(angle_v)) * next_dist
+	var next_pos := origin + Vector2(cos(angle + angle_v), sin(angle + angle_v)) * next_dist
 	
 	var dx := next_pos.x - point.x
 	var dy := next_pos.y - point.y
@@ -137,12 +133,11 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	return point
 
 func get_offset(angle: float) -> Vector2:
-	return Vector2(cos(angle), sin(angle))
+	return Vector2.ZERO
+	#return Vector2(cos(angle), sin(angle))
 
 func calculate_turn(elapsed: int, ignore_lifetime: bool = false) -> float:
 	var angle_v := 0.0
-	
-	var turn_stop_time := proj.lifetime_ms if proj.turn_stop_time == 0 else proj.turn_stop_time
 	
 	if (!ignore_lifetime && elapsed > turn_stop_time):
 		return angle_v
@@ -150,8 +145,7 @@ func calculate_turn(elapsed: int, ignore_lifetime: bool = false) -> float:
 	var t := elapsed / 1000.0
 	
 	if proj.turn_rate_delay > 0:
-		# TODO: Look over
-		if elapsed > proj.turn_rate_delay:
+		if elapsed >= proj.turn_rate_delay:
 			angle_v = (deg_to_rad(proj.turn_rate) / turn_stop_time) * (elapsed - proj.turn_rate_delay)
 			angle_v = add_turn_acceleration(angle_v, t)
 	else:
@@ -165,9 +159,9 @@ func add_turn_acceleration(ang: float, t: float) -> float:
 		if t >= proj.turn_acceleration_delay / 1000.0:
 			t -= proj.turn_acceleration_delay / 1000.0
 			
-			var turn_factor := proj.turn_rate
+			var turn_factor := deg_to_rad(proj.turn_rate)
 			var dv = proj.turn_acceleration * t
-			var max_dv = maxf(proj.turn_clamp, turn_factor) - turn_factor
+			var max_dv = maxf(deg_to_rad(proj.turn_clamp), turn_factor) - turn_factor
 			var t_max = max_dv * proj.turn_acceleration
 			
 			if proj.turn_acceleration > 0:
@@ -177,7 +171,7 @@ func add_turn_acceleration(ang: float, t: float) -> float:
 				else:
 					ang += dv * t * 0.5
 			else:
-				var min_dv = minf(proj.turn_clamp, turn_factor) - turn_factor
+				var min_dv = minf(deg_to_rad(proj.turn_clamp), turn_factor) - turn_factor
 				var t_max2 = min_dv * proj.turn_acceleration
 				
 				if t > t_max2:

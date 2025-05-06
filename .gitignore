@@ -6,3 +6,6 @@
 export.cfg
 export_presets.cfg
 *.tmp
+
+# MacOS
+.DS_Store

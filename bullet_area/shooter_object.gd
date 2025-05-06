@@ -83,7 +83,7 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 		proj.is_turning = projectile.turn_rate != 0
 		proj.is_turning_acceleration = !is_zero_approx(projectile.turn_acceleration)
 		proj.is_turning_circled = projectile.circle_turn_angle != 0
-		proj.time_created = Time.get_ticks_msec()
+		proj.turn_stop_time = (projectile.lifetime_ms if projectile.turn_stop_time == 0 else projectile.turn_stop_time) if projectile.circle_turn_delay == 0 || projectile.circle_turn_angle == 0 else projectile.circle_turn_delay
 		proj.bullet_id = bullet_id
 		bullet_id += 1
 		projectiles.push_back(proj)

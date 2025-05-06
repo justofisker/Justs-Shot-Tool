@@ -60,13 +60,17 @@ value = 1000.0
 [node name="Speed" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Speed"
-suffix = "units/sec"
+suffix = "unit/sec"
 value = 10.0
+tooltip = "1 unit = 0.1 tiles
+10 units = 1 tile"
 
 [node name="Acceleration" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Acceleration"
-suffix = "units/sec^2"
+suffix = "unit/sec^2"
+tooltip = "1 unit = 0.1 tiles
+10 units = 1 tile"
 
 [node name="AccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
@@ -76,9 +80,9 @@ suffix = "ms"
 [node name="SpeedClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "SpeedClamp"
-suffix = "units/sec"
-toggleable = true
-enabled = false
+suffix = "unit/sec"
+tooltip = "1 unit = 0.1 tiles
+10 units = 1 tile"
 
 [node name="HSeparator" type="HSeparator" parent="Properties"]
 layout_mode = 2
@@ -114,7 +118,8 @@ suffix = "ms"
 [node name="CircleTurnAngle" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "CircleTurnAngle"
-suffix = "°/sec"
+suffix = "°/time"
+tooltip = "Degrees per [code]CircleTurnDelay[/code] or [code]TurnStopTime[/code] if set."
 
 [node name="TurnRate" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
@@ -138,7 +143,7 @@ tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 layout_mode = 2
 number_type = 1
 text = "TurnAcceleration"
-suffix = "???"
+suffix = "x"
 tooltip = "Unsure what this specifically does. I'll need to look into the code more"
 
 [node name="TurnAccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
@@ -150,8 +155,6 @@ suffix = "ms"
 layout_mode = 2
 text = "TurnClamp"
 suffix = "°"
-toggleable = true
-enabled = false
 
 [node name="HSeparator3" type="HSeparator" parent="Properties"]
 layout_mode = 2
