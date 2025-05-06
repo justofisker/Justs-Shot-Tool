@@ -5,7 +5,7 @@ extends Node2D
 @export var thickness = 2
 
 func _process(_delta: float) -> void:
-	var scalef = 1.0 / get_viewport().get_camera_2d().zoom.x
+	var scalef = 1.0 / get_viewport().get_camera_2d().zoom.x * get_window().content_scale_factor
 	scale = Vector2(scalef, scalef)
 	queue_redraw()
 
