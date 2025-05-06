@@ -47,7 +47,7 @@ func _input(event: InputEvent) -> void:
 			if mouse_position.x < 0 || mouse_position.x > viewport_size.x || mouse_position.y < 0 || mouse_position.y > viewport_size.y:
 				mouse_position.x = posmod(int(mouse_position.x), viewport_size.x)
 				mouse_position.y = posmod(int(mouse_position.y), viewport_size.y)
-				Input.warp_mouse(mouse_position)
+				get_viewport().warp_mouse(mouse_position)
 				ignore_next_mouse = true
 		elif event is InputEventMouseButton && !event.pressed && event.button_index == MOUSE_BUTTON_RIGHT:
 			pressed = false
@@ -57,7 +57,7 @@ func _input(event: InputEvent) -> void:
 func zoom_towards_cursor(level: float) -> void:
 	var old_zoom_amount := zoom_level
 	zoom_level = clampf(level, ZOOM_MIN, ZOOM_MAX)
-	global_position -= (get_viewport().get_mouse_position() - get_viewport().size * 0.5) * (1.0 / zoom_level / zoom_mult - 1.0 / old_zoom_amount / zoom_mult)
+	global_position -= (get_viewport().get_mouse_position() - get_viewport_rect().size * 0.5) * (1.0 / zoom_level / zoom_mult - 1.0 / old_zoom_amount / zoom_mult)
 	zoom = Vector2.ONE * zoom_level * zoom_mult
 	_update_zoom_text()
 
