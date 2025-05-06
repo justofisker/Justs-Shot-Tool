@@ -20,7 +20,7 @@ func _ready() -> void:
 	timer.timeout.connect(_shoot)
 	add_child(timer)
 	
-	position = object_settings.position
+	position = object_settings.position * 8
 	
 	object_settings.updated.connect(_on_object_settings_updated)
 	attack.updated.connect(_on_attack_updated)
@@ -84,6 +84,7 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 		proj.is_turning_acceleration = !is_zero_approx(projectile.turn_acceleration)
 		proj.is_turning_circled = projectile.circle_turn_angle != 0
 		proj.turn_stop_time = (projectile.lifetime_ms if projectile.turn_stop_time == 0 else projectile.turn_stop_time) if projectile.circle_turn_delay == 0 || projectile.circle_turn_angle == 0 else projectile.circle_turn_delay
+		proj.turn_rate_phase_available = projectile.lifetime_ms > proj.turn_stop_time
 		proj.bullet_id = bullet_id
 		bullet_id += 1
 		projectiles.push_back(proj)

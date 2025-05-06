@@ -19,7 +19,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action_add"):
 		var obj = Node2D.new()
 		obj.set_script(object_script)
-		obj.object_settings.position = get_parent().get_local_mouse_position().snapped(Vector2(10, 10))
+		obj.object_settings.position = get_parent().get_local_mouse_position().snapped(Vector2(8, 8)) / 8
 		%ObjectContainer.add_child(obj)
 		Bridge.selected_object = obj
 	if event.is_action_pressed("action_focus"):

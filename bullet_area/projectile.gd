@@ -6,7 +6,7 @@ var origin : Vector2
 var bullet_id = 0
 var is_turning : bool = false
 var is_turning_circled : bool = false
-var turn_rate_phase_available : bool = true
+var turn_rate_phase_available : bool = false
 var is_turning_acceleration : bool = false
 var is_accelerating : bool = false
 var turn_stop_time : int = 0
