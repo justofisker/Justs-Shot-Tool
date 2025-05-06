@@ -31,7 +31,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventPanGesture:
 		position += event.delta / zoom.x * 10
 	if event is InputEventMagnifyGesture:
-		zoom_towards_cursor(zoom_level * sqrt(event.factor))	
+		zoom_towards_cursor(zoom_level * sqrt(event.factor))
 
 var ignore_next_mouse := false
 

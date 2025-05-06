@@ -3,7 +3,10 @@ extends Node2D
 var pressed : bool = false
 var box_origin : Vector2
 
-func _input(event: InputEvent) -> void:
+func _ready() -> void:
+	set_process_unhandled_input(true)
+
+func _unhandled_input(event: InputEvent) -> void:
 	if Bridge.tool_mode != Bridge.ToolMode.Select:
 		pressed = false
 		queue_redraw()
