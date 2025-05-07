@@ -171,7 +171,7 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	
 	return point
 
-func get_offset(angle: float) -> Vector2:
+func get_offset(_ang: float) -> Vector2:
 	return Vector2.ZERO
 	#return Vector2(cos(angle), sin(angle))
 

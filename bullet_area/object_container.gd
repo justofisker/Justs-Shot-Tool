@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 var radius : float = 2
 func _draw() -> void:
 	for proj in projectiles:
-		var elapsed : int = proj.time_alive * 1000
+		var elapsed := roundi(proj.time_alive * 1000)
 		var pos := proj.calculate_position(elapsed) * 8
 		draw_circle(pos, radius * proj.proj.size / 100.0, Color.WHITE, false)
 		var points : PackedVector2Array = []
