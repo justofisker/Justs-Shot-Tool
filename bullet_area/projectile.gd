@@ -14,11 +14,11 @@ var time_alive : float = 0
 
 func get_angle(elapsed: int) -> float:
 	var phase := PI if bullet_id % 2 == 0 else 0.0
-	var t := elapsed / 1000.0
 	
 	if proj.wavy:
 		if !proj.face_dir:
 			return angle
+		var t := elapsed / 1000.0
 		var period_factor := 6.0 * PI
 		var amplitude_factor := PI / 64.0
 		var x := period_factor * amplitude_factor * cos(phase + period_factor * t) * t
@@ -26,7 +26,7 @@ func get_angle(elapsed: int) -> float:
 	elif proj.parametric:
 		if !proj.face_dir:
 			return angle
-		t *= 2 * PI
+		var t := (float(elapsed) / proj.lifetime_ms) * 2 * PI
 		var xt := cos(t) * (1 if bullet_id % 2 > 0 else -1)
 		var yt := 2 * cos(2 * t) * (1 if bullet_id % 4 < 2 else -1)
 		return angle + atan2(xt * sin(angle) + yt * cos(angle), xt * cos(angle) - yt * sin(angle))
