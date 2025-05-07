@@ -38,6 +38,8 @@ func get_angle(elapsed: int) -> float:
 		var next_pos := Vector2.from_angle(angle + angle_v) * calculate_distance(elapsed + 16)
 		return angle + (next_pos - point).angle()
 	elif is_turning_circled:
+		if elapsed < proj.circle_turn_delay:
+			return angle
 		return angle + calculate_circle_turn_angle(elapsed, proj.circle_turn_delay)
 	elif proj.turn_rate == 0:
 		if !proj.face_dir:
