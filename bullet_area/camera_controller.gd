@@ -9,7 +9,7 @@ var zoom_mult = 1 :
 @export var reset_zoom_button: Button
 
 const ZOOM_MIN: float = 2.0
-const ZOOM_MAX: float = 10.0
+const ZOOM_MAX: float = 20.0
 const ZOOM_STEP: float = 0.1
 const ZOOM_STEP_MULT_KEYBOARD: float = 1
 
@@ -73,7 +73,7 @@ func _on_zoom_out_pressed() -> void:
 	_update_zoom_text()
 
 func _on_reset_zoom_pressed() -> void:
-	zoom_level = ZOOM_MAX
+	zoom_level = 10.0
 	zoom = Vector2.ONE * zoom_level * zoom_mult
 	_update_zoom_text()
 
