@@ -27,9 +27,9 @@ func get_angle(elapsed: int) -> float:
 		if !proj.face_dir:
 			return angle
 		var t := (float(elapsed) / proj.lifetime_ms) * 2 * PI
-		var xt := cos(t) * (1 if bullet_id % 2 > 0 else -1)
-		var yt := 2 * cos(2 * t) * (1 if bullet_id % 4 < 2 else -1)
-		return angle + atan2(xt * sin(angle) + yt * cos(angle), xt * cos(angle) - yt * sin(angle))
+		var xt := 2 * cos(t) * (1 if bullet_id % 2 > 0 else -1)
+		var yt := 4 * cos(2 * t) * (1 if bullet_id % 4 < 2 else -1)
+		return atan2(xt * sin(angle) + yt * cos(angle), xt * cos(angle) - yt * sin(angle))
 	elif is_turning:
 		# I don't want to find the derivative of this
 		var angle_v := calculate_turn(elapsed)
@@ -68,7 +68,7 @@ func calculate_position(elapsed: int) -> Vector2:
 	if proj.wavy:
 		var period_factor := 6.0 * PI
 		var amplitude_factor := PI / 64.0
-		var theta := angle + amplitude_factor * sin(phase + period_factor * elapsed * 0.001)
+		var theta := angle + amplitude_factor * sin(phase + period_factor * elapsed / 1000)
 		point += Vector2.from_angle(theta) * dist
 		offset = get_offset(theta)
 	elif proj.parametric:
