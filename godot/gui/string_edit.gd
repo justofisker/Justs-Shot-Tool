@@ -13,7 +13,7 @@ signal toggled(toggle_on: bool)
 @export var value : String = "" :
 	set(new_value):
 		value = new_value
-		if line_edit:
+		if line_edit && line_edit.text != value:
 			line_edit.text = value
 		value_changed.emit(value)
 
@@ -62,4 +62,7 @@ func _ready() -> void:
 	line_edit.placeholder_text = placeholder_text
 	
 func _on_line_edit_text_changed(new_text: String) -> void:
+	self.value = new_text
+
+func _on_line_edit_text_submitted(new_text: String) -> void:
 	self.value = new_text

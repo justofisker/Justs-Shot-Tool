@@ -1,4 +1,4 @@
-extends Object
+extends Node2D
 
 var proj: XMLObjects.Projectile
 var angle: float = 0
@@ -11,6 +11,26 @@ var is_turning_acceleration : bool = false
 var is_accelerating : bool = false
 var turn_stop_time : int = 0
 var time_alive : float = 0
+var rotation_rate : float = 0
+
+func _ready() -> void:
+	position = calculate_position(0) * 8.0
+	rotation = get_angle(0)
+
+func _draw() -> void:
+	if get_child_count() == 0:
+		draw_circle(Vector2.ZERO, 1, Color.WHITE, false)
+
+func _process(delta: float) -> void:
+	time_alive += delta
+	var t := roundi(time_alive * 1000)
+	if t > proj.lifetime_ms:
+		queue_free()
+		return
+	position = calculate_position(t) * 8.0
+	rotation = get_angle(t)
+	if !is_zero_approx(rotation_rate):
+		rotation += deg_to_rad(rotation_rate) * Time.get_ticks_msec() / 1000.0
 
 func get_angle(elapsed: int) -> float:
 	var phase := PI if bullet_id % 2 == 0 else 0.0
@@ -27,20 +47,23 @@ func get_angle(elapsed: int) -> float:
 		if !proj.face_dir:
 			return angle
 		var t := (float(elapsed) / proj.lifetime_ms) * 2 * PI
-		var xt := 2 * cos(t) * (1 if bullet_id % 2 > 0 else -1)
-		var yt := 4 * cos(2 * t) * (1 if bullet_id % 4 < 2 else -1)
+		var xt := cos(t) * (1 if bullet_id % 2 > 0 else -1)
+		var yt := 2 * cos(2 * t) * (1 if bullet_id % 4 < 2 else -1)
 		return atan2(xt * sin(angle) + yt * cos(angle), xt * cos(angle) - yt * sin(angle))
 	elif is_turning:
 		# I don't want to find the derivative of this
 		var angle_v := calculate_turn(elapsed)
-		var point := Vector2.from_angle(angle + angle_v) * calculate_distance(elapsed)
+		var point := -Vector2.from_angle(angle + angle_v) * calculate_distance(elapsed)
 		angle_v = calculate_turn(elapsed + 16, true)
-		var next_pos := Vector2.from_angle(angle + angle_v) * calculate_distance(elapsed + 16)
-		return angle + (next_pos - point).angle()
+		point += Vector2.from_angle(angle + angle_v) * calculate_distance(elapsed + 16)
+		return point.angle()
 	elif is_turning_circled:
 		if elapsed < proj.circle_turn_delay:
 			return angle
-		return angle + calculate_circle_turn_angle(elapsed, proj.circle_turn_delay)
+		var v_angle := calculate_circle_turn_angle(elapsed, proj.circle_turn_delay)
+		if proj.face_dir:
+			v_angle += PI / 2 * signf(proj.circle_turn_angle)
+		return angle + v_angle
 	elif proj.turn_rate == 0:
 		if !proj.face_dir:
 			return angle
@@ -126,16 +149,16 @@ func calculate_distance(elapsed: int) -> float:
 			var dv := proj.acceleration * t
 			
 			if proj.acceleration > 0:
-				var max_dv := maxf(proj.speed_clamp, speed_factor) - speed_factor
-				var t_max := max_dv * proj.acceleration
+				var max_dv := maxf(proj.speed_clamp / 50.0, speed_factor) - speed_factor
+				var t_max := max_dv / proj.acceleration
 				if (t > t_max):
 					dist += max_dv * t_max * 0.5
 					dist += max_dv * (t - t_max)
 				else:
 					dist += dv * t * 0.5
 			else:
-				var min_dv := minf(proj.speed_clamp, speed_factor) - speed_factor
-				var t_max := min_dv * proj.acceleration
+				var min_dv := minf(proj.speed_clamp / 10.0, speed_factor) - speed_factor
+				var t_max := min_dv / proj.acceleration
 				if t > t_max:
 					dist += min_dv * t_max * 0.5
 					dist += min_dv * (t - t_max)

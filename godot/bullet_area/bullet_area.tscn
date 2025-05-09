@@ -100,6 +100,10 @@ script = ExtResource("6_15s0m")
 script = ExtResource("2_vbgui")
 selected = true
 
+[node name="ProjectileContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+
 [node name="Tools" type="Node2D" parent="."]
 
 [node name="Move" type="Node" parent="Tools"]

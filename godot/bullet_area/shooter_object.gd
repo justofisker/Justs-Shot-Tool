@@ -97,8 +97,7 @@ func _shoot() -> void:
 	else:
 		default_angle_incr = 0
 	for proj in create_projectiles(object_settings.ignore_mouse):
-		get_parent().projectiles.push_back(proj)
-		get_tree().create_timer(projectile.lifetime_ms / 1000.0).timeout.connect(get_parent().projectiles.erase.bind(proj))
+		get_parent().add_projectile(proj)
 
 func _process(_delta: float) -> void:
 	queue_redraw()

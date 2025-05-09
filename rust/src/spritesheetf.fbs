@@ -1,0 +1,46 @@
+struct Position {
+    x: float;
+    y: float;
+    h: float;
+    w: float;
+}
+
+struct Color {
+    r: float;
+    g: float;
+    b: float;
+    a: float;
+}
+
+table Sprite {
+    position: Position;
+    mask_position: Position;
+    padding: ushort;
+    index: ushort;
+    most_common_color: Color;
+    is_t: bool;
+    sprite_sheet_name: string;
+    a_id: ulong;
+}
+
+table SpriteSheet {
+    sprite_sheet_name: string;
+    atlas_id: ulong;
+    sprites: [Sprite];
+}
+
+table AnimatedSprite {
+    sprite_sheet_name: string;
+    index: ushort;
+    set: ushort;
+    direction: ushort;
+    action: ushort;
+    sprite: Sprite;
+}
+
+table SpriteSheetRoot {
+    sprites: [SpriteSheet];
+    animated_sprites: [AnimatedSprite];
+}
+
+root_type SpriteSheetRoot;

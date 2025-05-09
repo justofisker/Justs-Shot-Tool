@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 DpiScale="res://dpi_scale.gd"
 Bridge="*res://bridge.gd"
+ProjectileManager="*res://xml/projectile_manager.gd"
 
 [debug]
 
@@ -28,6 +29,10 @@ gdscript/warnings/integer_division=0
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/auto_complete_menu_node/plugin.cfg")
 
 [gui]
 
