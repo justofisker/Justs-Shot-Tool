@@ -5,10 +5,9 @@ var parser: XMLParser
 func _init() -> void:
 	parser = XMLParser.new()
 
-#static func from_parser(p: XMLParser) -> SimpleXmlParser:
-	#var sp = SimpleXmlParser.new()
-	#sp.parser = p
-	#return sp
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		parser.free()
 
 # Overrides
 

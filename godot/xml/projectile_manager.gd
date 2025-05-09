@@ -18,18 +18,18 @@ func get_texture(texture: XMLTexture) -> AtlasTexture:
 					atlas.region = sprite.position
 					match sprite.a_id:
 						1:
-							atlas.atlas = preload("res://assets/sprites/groundTiles.png")
+							atlas.atlas = ground_tiles
 						2:
-							atlas.atlas = preload("res://assets/sprites/characters.png")
+							atlas.atlas = characters
 						4:
-							atlas.atlas = preload("res://assets/sprites/mapObjects.png")
+							atlas.atlas = map_objects
 						_:
 							push_error("Invalid atlas_id: %d" % sprite.a_id)
 							return null
 					return atlas
 	return null
 
-const XML_DIR := "res://assets/xml/"
+const XML_DIR := "./assets/xml/"
 func parse_projectiles() -> void:
 	var dir = DirAccess.open(XML_DIR)
 	for file in dir.get_files():
@@ -72,7 +72,19 @@ func parse_projectiles() -> void:
 			if !p.read_possible_end():
 				break
 
+var ground_tiles: Texture2D
+var characters: Texture2D
+var map_objects: Texture2D
+
 func _ready() -> void:
+	if OS.has_feature("editor"):
+		#ground_tiles = load("res://assets/sprites/groundTiles.png")
+		characters = load("res://assets/sprites/characters.png")
+		map_objects = load("res://assets/sprites/mapObjects.png")
+	else:
+		#ground_tiles = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/groundTiles.png"))
+		characters = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/characters.png"))
+		map_objects = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/mapObjects.png"))
 	parse_projectiles()
 	var spritesheetf = SpriteSheetDeserializer.open("res://assets/flatbuffer/spritesheetf")
 	sheets = spritesheetf.sprite_sheets
