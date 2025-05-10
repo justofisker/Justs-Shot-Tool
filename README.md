@@ -1,2 +1,4 @@
-# RotMG-Shot-Preview-Tool
+# RotMG Shot Visualizer
+
+This tool is 
  

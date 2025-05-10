@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="RotMG Shot Preview Tool"
+config/name="RotMG Shot Visualizer"
 run/main_scene="uid://hr2ctob0s43a"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
@@ -32,7 +32,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/auto_complete_menu_node/plugin.cfg")
+enabled=PackedStringArray()
 
 [gui]
 
