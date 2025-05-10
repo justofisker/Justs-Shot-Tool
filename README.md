@@ -6,7 +6,7 @@ This tool is designed to help UGC members visualize how shots will appear and he
  
  `rust/` is for the library to deserialize `spritesheetf` which contains information about sprite sheets and where they are on the atlases.
 
-| Shortcut | Keyboard |
+| Action | Keyboard Shortcut |
 | - | - |
 | Pan | Right Click |
 | Select Tool | Q |
