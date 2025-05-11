@@ -57,6 +57,7 @@ class Subattack extends Resource:
 		if num_projectiles != 1:
 			out += "\t<NumProjectiles>" + str(num_projectiles) + "</NumProjectiles>\n"
 		out += "\t<RateOfFire>" + str(rate_of_fire) + "</RateOfFire>\n"
+		out += "\t<Damage>0</Damage>\n"
 		if !pos_offset.is_zero_approx():
 			out += "\t<PosOffset>" + str(pos_offset.x) + "," + str(pos_offset.y) + "</PosOffset>\n"
 		if arc_gap != 0:
