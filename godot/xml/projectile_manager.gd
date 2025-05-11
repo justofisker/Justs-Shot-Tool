@@ -6,10 +6,13 @@ var sheets: Array[RotmgSpriteSheet]
 var animated_sprites: Array[RotmgAnimatedSprite]
 
 var objects := Dictionary({}, TYPE_STRING, "", null, TYPE_OBJECT, "Resource", XMLProjectileVisual)
+var texture_cache := Dictionary({}, TYPE_OBJECT, "Resource", XMLTexture, TYPE_OBJECT, "AtlasTexture", null)
 
 func get_texture(texture: XMLTexture) -> AtlasTexture:
 	if !texture:
 		return null
+	if texture_cache.has(texture):
+		return texture_cache[texture]
 	for sheet in sheets:
 		if sheet.sprite_sheet_name == texture.file_name:
 			for sprite in sheet.sprites:
@@ -26,6 +29,7 @@ func get_texture(texture: XMLTexture) -> AtlasTexture:
 						_:
 							push_error("Invalid atlas_id: %d" % sprite.a_id)
 							return null
+					texture_cache[texture] = atlas
 					return atlas
 	return null
 
