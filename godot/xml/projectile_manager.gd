@@ -29,12 +29,14 @@ func get_texture(texture: XMLTexture) -> AtlasTexture:
 					return atlas
 	return null
 
-const XML_DIR := "./assets/xml/"
 func parse_projectiles() -> void:
-	var dir = DirAccess.open(XML_DIR)
+	var xml_dir := "./assets/xml/"
+	if OS.get_name() == "macOS":
+		xml_dir = "res://assets/xml/"
+	var dir = DirAccess.open(xml_dir)
 	for file in dir.get_files():
 		var p = SimpleXmlParser.new()
-		var err = p.open(XML_DIR + file)
+		var err = p.open(xml_dir + file)
 		if err != OK:
 			push_error("Error while trying to open %s: %s" % [file, error_string(err)])
 			continue
@@ -77,7 +79,7 @@ var characters: Texture2D
 var map_objects: Texture2D
 
 func _ready() -> void:
-	if OS.has_feature("editor"):
+	if OS.has_feature("editor") || OS.get_name() == "macOS":
 		#ground_tiles = load("res://assets/sprites/groundTiles.png")
 		characters = load("res://assets/sprites/characters.png")
 		map_objects = load("res://assets/sprites/mapObjects.png")
