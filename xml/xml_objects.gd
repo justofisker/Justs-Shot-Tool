@@ -8,7 +8,7 @@ class ObjectSettings extends Resource:
 	var position : Vector2
 	var ignore_mouse : bool = false
 	var show_path : bool = false
-	var dexterity: int = 75
+	var dexterity: int = 45
 	
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()
@@ -27,7 +27,7 @@ class Subattack extends Resource:
 	
 	var projectile_id: int = 0
 	var num_projectiles: int = 1
-	var rate_of_fire: float = 2
+	var rate_of_fire: float = 1
 	var pos_offset: Vector2
 	var burst_count: int = 1
 	var burst_delay: float = 0.0

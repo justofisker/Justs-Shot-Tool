@@ -1,25 +1,24 @@
 extends Node
 
-var sprite_sheet := SpriteSheetDeserializer.open("res://assets/flatbuffer/")
-
-var sheets: Array[RotmgSpriteSheet]
-var animated_sprites: Array[RotmgAnimatedSprite]
-
 var objects := Dictionary({}, TYPE_STRING, "", null, TYPE_OBJECT, "Resource", XMLProjectileVisual)
 var texture_cache := Dictionary({}, TYPE_OBJECT, "Resource", XMLTexture, TYPE_OBJECT, "AtlasTexture", null)
 
+var sheets : Array
+var animated_sprites : Array
+
 func get_texture(texture: XMLTexture) -> AtlasTexture:
-	if !texture:
+	if !texture || !sheets:
 		return null
 	if texture_cache.has(texture):
 		return texture_cache[texture]
-	for sheet in sheets:
-		if sheet.sprite_sheet_name == texture.file_name:
-			for sprite in sheet.sprites:
-				if sprite.index == texture.index:
+	for sheet: Dictionary in sheets:
+		if sheet["sprite_sheet_name"] == texture.file_name:
+			for sprite: Dictionary in sheet["sprites"]:
+				if sprite.get("index", 0) == texture.index:
 					var atlas = AtlasTexture.new()
-					atlas.region = sprite.position
-					match sprite.a_id:
+					var pos: Dictionary = sprite["position"]
+					atlas.region = Rect2(pos["x"], pos["y"], pos["w"], pos["h"])
+					match int(sprite["a_id"]):
 						1:
 							atlas.atlas = ground_tiles
 						2:
@@ -27,7 +26,7 @@ func get_texture(texture: XMLTexture) -> AtlasTexture:
 						4:
 							atlas.atlas = map_objects
 						_:
-							push_error("Invalid atlas_id: %d" % sprite.a_id)
+							push_error("Invalid atlas_id: %d" % sprite["a_id"])
 							return null
 					texture_cache[texture] = atlas
 					return atlas
@@ -35,7 +34,7 @@ func get_texture(texture: XMLTexture) -> AtlasTexture:
 
 func parse_projectiles() -> void:
 	var xml_dir := "./assets/xml/"
-	if OS.get_name() == "macOS":
+	if OS.get_name() == "macOS" || OS.get_name() == "Web":
 		xml_dir = "res://assets/xml/"
 	var dir = DirAccess.open(xml_dir)
 	for file in dir.get_files():
@@ -83,7 +82,7 @@ var characters: Texture2D
 var map_objects: Texture2D
 
 func _ready() -> void:
-	if OS.has_feature("editor") || OS.get_name() == "macOS":
+	if OS.has_feature("editor") || OS.get_name() == "macOS" || OS.get_name() == "Web":
 		#ground_tiles = load("res://assets/sprites/groundTiles.png")
 		characters = load("res://assets/sprites/characters.png")
 		map_objects = load("res://assets/sprites/mapObjects.png")
@@ -92,6 +91,10 @@ func _ready() -> void:
 		characters = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/characters.png"))
 		map_objects = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/mapObjects.png"))
 	parse_projectiles()
-	var spritesheetf = SpriteSheetDeserializer.open("res://assets/flatbuffer/spritesheetf")
-	sheets = spritesheetf.sprite_sheets
-	animated_sprites = spritesheetf.animated_sprites
+	var spritesheetf = JSON.new()
+	var err = spritesheetf.parse(FileAccess.get_file_as_string("res://assets/spritesheetf.json"))
+	if err != OK:
+		push_error("Failed to load spritesheetf.json line: ", str(spritesheetf.get_error_line()), ": ", spritesheetf.get_error_message())
+		return
+	sheets = spritesheetf.data["sprites"]
+	animated_sprites = spritesheetf.data["animated_sprites"]
