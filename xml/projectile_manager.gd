@@ -6,6 +6,8 @@ var texture_cache := Dictionary({}, TYPE_OBJECT, "Resource", XMLTexture, TYPE_OB
 var sheets : Array
 var animated_sprites : Array
 
+signal sprites_loaded()
+
 func get_texture(texture: XMLTexture) -> AtlasTexture:
 	if !texture || !sheets:
 		return null
@@ -19,8 +21,6 @@ func get_texture(texture: XMLTexture) -> AtlasTexture:
 					var pos: Dictionary = sprite["position"]
 					atlas.region = Rect2(pos["x"], pos["y"], pos["w"], pos["h"])
 					match int(sprite["a_id"]):
-						1:
-							atlas.atlas = ground_tiles
 						2:
 							atlas.atlas = characters
 						4:
@@ -57,13 +57,11 @@ func parse_projectiles() -> void:
 				
 				var offset := p.get_node_offset()
 				p.read()
-				var object_class : String
-				var object_class_set := false
+				var object_class := ""
 				while !p.is_element_end():
 					if p.get_node_name() == "Class":
 						p.read_whitespace()
 						object_class = p.get_node_data()
-						object_class_set = true
 						break
 					p.skip_section()
 					p.read()
@@ -77,20 +75,18 @@ func parse_projectiles() -> void:
 			if !p.read_possible_end():
 				break
 
-var ground_tiles: Texture2D
 var characters: Texture2D
 var map_objects: Texture2D
 
-func _ready() -> void:
+func load_images() -> void:
 	if OS.has_feature("editor") || OS.get_name() == "macOS" || OS.get_name() == "Web":
-		#ground_tiles = load("res://assets/sprites/groundTiles.png")
 		characters = load("res://assets/sprites/characters.png")
 		map_objects = load("res://assets/sprites/mapObjects.png")
 	else:
-		#ground_tiles = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/groundTiles.png"))
 		characters = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/characters.png"))
 		map_objects = ImageTexture.create_from_image(Image.load_from_file("res://assets/sprites/mapObjects.png"))
-	parse_projectiles()
+
+func load_spritesheetf() -> void:
 	var spritesheetf = JSON.new()
 	var err = spritesheetf.parse(FileAccess.get_file_as_string("res://assets/spritesheetf.json"))
 	if err != OK:
@@ -98,3 +94,20 @@ func _ready() -> void:
 		return
 	sheets = spritesheetf.data["sprites"]
 	animated_sprites = spritesheetf.data["animated_sprites"]
+
+var load_img_thread := Thread.new()
+var load_spritesheetf_thread := Thread.new()
+var parse_proj_thread := Thread.new()
+
+var finished_loading := false
+func _process(_delta: float) -> void:
+	if finished_loading || load_img_thread.is_alive() || load_spritesheetf_thread.is_alive() || parse_proj_thread.is_alive():
+		return
+	finished_loading = true
+	sprites_loaded.emit()
+	print("Finished loading sprites")
+
+func _ready() -> void:
+	load_img_thread.start(load_images)
+	load_spritesheetf_thread.start(load_spritesheetf, Thread.PRIORITY_HIGH)
+	parse_proj_thread.start(parse_projectiles)

@@ -3,8 +3,12 @@ extends Node2D
 const Projectile = preload("res://bullet_area/projectile.gd")
 
 func add_projectile(proj: Projectile) -> void:
-	var object : XMLProjectileVisual = ProjectileManager.objects.get(proj.proj.object_id)
 	%ProjectileContainer.add_child(proj)
+	
+	if !ProjectileManager.finished_loading:
+		return
+	
+	var object : XMLProjectileVisual = ProjectileManager.objects.get(proj.proj.object_id)
 	if object:
 		proj.rotation_rate = object.rotation
 		var sprite := Sprite2D.new()
