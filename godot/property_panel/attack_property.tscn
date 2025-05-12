@@ -51,8 +51,8 @@ value = 1.0
 layout_mode = 2
 number_type = 1
 text = "RateOfFire"
-suffix = "shots/sec"
-value = 2.0
+suffix = "x"
+value = 1.0
 
 [node name="PosOffset" parent="Properties" instance=ExtResource("4_n4pea")]
 layout_mode = 2

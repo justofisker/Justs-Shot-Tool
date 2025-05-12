@@ -1,6 +1,5 @@
 extends VBoxContainer
 
-
 var object_settings := XMLObjects.ObjectSettings.new() :
 	set(value):
 		if object_settings.updated.is_connected(_on_settings_updated):

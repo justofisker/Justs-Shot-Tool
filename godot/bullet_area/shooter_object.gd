@@ -13,10 +13,13 @@ var bullet_id : int = 0
 
 var timer: Timer
 
+func calculate_shots_per_sec() -> float:
+	return (1.5 + 6.5 * (object_settings.dexterity / 75.0)) * attack.rate_of_fire
+
 func _ready() -> void:
 	timer = Timer.new()
 	timer.autostart = true
-	timer.wait_time = 0.5
+	timer.wait_time = 1.0 / calculate_shots_per_sec()
 	timer.timeout.connect(_shoot)
 	add_child(timer)
 	
@@ -27,6 +30,8 @@ func _ready() -> void:
 	projectile.updated.connect(_on_projectile_updated)
 
 func _on_object_settings_updated():
+	if !is_equal_approx(timer.wait_time, 1.0 / calculate_shots_per_sec()):
+		timer.start(1.0 / calculate_shots_per_sec())
 	position = object_settings.position * 8
 	if object_settings.show_path:
 		projectile_paths = calculate_object_path()
@@ -35,8 +40,8 @@ func _on_object_settings_updated():
 	bullet_id = 0
 
 func _on_attack_updated():
-	if !is_equal_approx(timer.wait_time, 1.0 / attack.rate_of_fire):
-		timer.start(1.0 / attack.rate_of_fire)
+	if !is_equal_approx(timer.wait_time, 1.0 / calculate_shots_per_sec()):
+		timer.start(1.0 / calculate_shots_per_sec())
 	if object_settings.show_path:
 		projectile_paths = calculate_object_path()
 	else:

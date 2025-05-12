@@ -64,5 +64,10 @@ text = "Ignore Mouse"
 layout_mode = 2
 text = "Show Path"
 
+[node name="Dexterity" parent="Properties" instance=ExtResource("4_tgbvj")]
+layout_mode = 2
+text = "Dexterity"
+value = 75.0
+
 [connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

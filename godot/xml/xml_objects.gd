@@ -8,6 +8,7 @@ class ObjectSettings extends Resource:
 	var position : Vector2
 	var ignore_mouse : bool = false
 	var show_path : bool = false
+	var dexterity: int = 75
 	
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()

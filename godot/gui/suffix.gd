@@ -15,8 +15,8 @@ func _on_text_changed(new_string: String) -> void:
 	var offset := 10
 	if text.begins_with("°"):
 		offset = 4
-	elif text.begins_with("%"):
-		offset = 7
+	elif text.begins_with("%") || text == "x":
+		offset = 6
 	position.x = preload("res://font/Space_Mono/SpaceMono-Regular.ttf").get_string_size(new_string).x + offset
 	size.x = get_parent_control().size.x - position.x
 	size.y = get_parent_control().size.y
