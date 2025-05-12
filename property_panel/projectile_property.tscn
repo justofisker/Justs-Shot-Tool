@@ -59,6 +59,7 @@ value = 1000.0
 
 [node name="Speed" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "Speed"
 suffix = "unit/sec"
 value = 10.0
@@ -67,6 +68,7 @@ tooltip = "1 unit = 0.1 tiles
 
 [node name="Acceleration" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "Acceleration"
 suffix = "unit/sec^2"
 tooltip = "1 unit = 0.1 tiles
@@ -79,6 +81,7 @@ suffix = "ms"
 
 [node name="SpeedClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "SpeedClamp"
 suffix = "unit/sec"
 tooltip = "1 unit = 0.1 tiles
@@ -117,12 +120,14 @@ suffix = "ms"
 
 [node name="CircleTurnAngle" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "CircleTurnAngle"
 suffix = "°/time"
 tooltip = "Degrees per [code]CircleTurnDelay[/code] or [code]TurnStopTime[/code] if set."
 
 [node name="TurnRate" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "TurnRate"
 suffix = "°"
 tooltip = "Despite being named [code]TurnRate[/code], this actually refers
@@ -153,6 +158,7 @@ suffix = "ms"
 
 [node name="TurnClamp" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
+number_type = 1
 text = "TurnClamp"
 suffix = "°"
 
@@ -191,13 +197,13 @@ text = "ParticleTrail"
 [node name="ParticleTrailIntensity" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "└ Intensity"
+text = "- Intensity"
 suffix = "x"
 value = 1.0
 
 [node name="ParticleTrailLifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "└ Lifetime"
+text = "- Lifetime"
 suffix = "ms"
 value = 500.0
 

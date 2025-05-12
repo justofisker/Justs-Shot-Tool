@@ -38,3 +38,5 @@ func _on_collapse_pressed() -> void:
 
 func _on_copy_button_pressed() -> void:
 	DisplayServer.clipboard_set(projectile.to_xml())
+	if OS.get_name() == "Web":
+		JavaScriptBridge.eval("Navigator.clipboard.write(%s)" % projectile.to_xml())

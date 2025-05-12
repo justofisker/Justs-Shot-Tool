@@ -61,28 +61,33 @@ suffix = "tiles"
 
 [node name="ArcGap" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
+number_type = 1
 text = "ArcGap"
 suffix = "°"
 
 [node name="DefaultAngle" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
+number_type = 1
 text = "DefaultAngle"
 suffix = "°"
 
 [node name="DefaultAngleIncr" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
+number_type = 1
 text = "DefaultAngleIncr"
 suffix = "°"
 
 [node name="DefaultAngleIncrMax" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
-text = "└ maxAngle"
+number_type = 1
+text = "- maxAngle"
 suffix = "°"
 value = 180.0
 
 [node name="DefaultAngleIncrMin" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
-text = "└ minAngle"
+number_type = 1
+text = "- minAngle"
 suffix = "°"
 value = -180.0
 

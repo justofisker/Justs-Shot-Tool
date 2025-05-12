@@ -98,7 +98,7 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 var default_angle_incr: int = 0
 func _shoot() -> void:
 	if attack.default_angle_incr != 0:
-		default_angle_incr = ((default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min) % (attack.default_angle_incr_max - attack.default_angle_incr_min)) - attack.default_angle_incr_min
+		default_angle_incr = fmod((default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min), (attack.default_angle_incr_max - attack.default_angle_incr_min)) - attack.default_angle_incr_min
 	else:
 		default_angle_incr = 0
 	for proj in create_projectiles(object_settings.ignore_mouse):

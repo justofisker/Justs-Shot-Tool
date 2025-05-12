@@ -32,11 +32,11 @@ class Subattack extends Resource:
 	var burst_count: int = 1
 	var burst_delay: float = 0.0
 	var burst_min_delay: float = 0.0
-	var arc_gap: int = 0
-	var default_angle: int = 0
-	var default_angle_incr: int = 0
-	var default_angle_incr_max: int = 180
-	var default_angle_incr_min: int = -180
+	var arc_gap: float = 11.25
+	var default_angle: float = 0
+	var default_angle_incr: float = 0
+	var default_angle_incr_max: float = 180
+	var default_angle_incr_min: float = -180
 	
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()
@@ -61,7 +61,7 @@ class Subattack extends Resource:
 		out += "\t<Damage>0</Damage>\n"
 		if !pos_offset.is_zero_approx():
 			out += "\t<PosOffset>" + str(pos_offset.x) + "," + str(pos_offset.y) + "</PosOffset>\n"
-		if arc_gap != 0:
+		if !is_equal_approx(arc_gap, 11.25):
 			out += "\t<ArcGap>" + str(arc_gap) + "</ArcGap>\n"
 		if default_angle != 0:
 			out += "\t<DefaultAngle>" + str(arc_gap) + "</DefaultAngle>\n"
@@ -116,9 +116,9 @@ class Projectile extends Resource:
 	var current_health_damage: float = 0
 	
 	# Speed
-	var speed: int = 10
+	var speed: float = 10
 	var speed_clamp_enabled: bool = false
-	var speed_clamp: int = 0
+	var speed_clamp: float = 0
 	var acceleration: float = 0
 	var acceleration_delay: int = 0
 	var amplitude: float = 0
@@ -128,13 +128,13 @@ class Projectile extends Resource:
 	var circle_turn_delay: int = 0
 	var circle_turn_angle: int = 0
 	# Turn
-	var turn_rate: int = 0
+	var turn_rate: float = 0
 	var turn_rate_delay: int = 0 # ms
 	var turn_stop_time: int = 0
 	var turn_acceleration: float = 0
 	var turn_acceleration_delay: int = 0 # ms
 	var turn_clamp_enabled: bool = false
-	var turn_clamp: int = 0
+	var turn_clamp: float = 0
 	
 	# Flags
 	var multi_hit: bool = false
