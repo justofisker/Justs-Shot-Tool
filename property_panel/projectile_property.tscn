@@ -68,7 +68,8 @@ layout_mode = 2
 number_type = 1
 text = "Acceleration"
 suffix = "unit/sec^2"
-tooltip = "1 unit = 0.1 tiles
+tooltip = "[b]Make sure to set an appropriate [code]SpeedClamp[/code][/b]
+1 unit = 0.1 tiles
 10 units = 1 tile"
 
 [node name="AccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
@@ -128,7 +129,7 @@ number_type = 1
 text = "TurnRate"
 suffix = "°"
 tooltip = "Despite being named [code]TurnRate[/code], this actually refers
-to how much the projectile will turn over its lifetime."
+to how much the projectile will turn about it's origin over its lifetime."
 
 [node name="TurnRateDelay" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
