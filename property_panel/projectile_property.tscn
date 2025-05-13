@@ -49,20 +49,17 @@ placeholder_text = "Doggy Dart"
 layout_mode = 2
 text = "Size"
 suffix = "%"
-value = 100.0
 
 [node name="LifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "LifetimeMS"
 suffix = "ms"
-value = 1000.0
 
 [node name="Speed" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "Speed"
 suffix = "unit/sec"
-value = 10.0
 tooltip = "1 unit = 0.1 tiles
 10 units = 1 tile"
 
@@ -199,13 +196,11 @@ layout_mode = 2
 number_type = 1
 text = "- Intensity"
 suffix = "x"
-value = 1.0
 
 [node name="ParticleTrailLifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "- Lifetime"
 suffix = "ms"
-value = 500.0
 
 [connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

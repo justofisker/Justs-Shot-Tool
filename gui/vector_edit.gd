@@ -16,7 +16,10 @@ signal toggled(toggled_on: bool)
 			y_edit.value = value.y
 		value_changed.emit(value)
 	get():
-		return Vector2(x_edit.value, y_edit.value)
+		if x_edit && y_edit:
+			return Vector2(x_edit.value, y_edit.value)
+		else:
+			return Vector2()
 
 @export var text : String = "VectorEdit" :
 	set(value):

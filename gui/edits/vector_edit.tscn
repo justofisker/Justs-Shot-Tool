@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://mj6uop2d0u5m"]
+[gd_scene load_steps=8 format=3 uid="uid://mj6uop2d0u5m"]
 
 [ext_resource type="Script" uid="uid://bilmv1w2k08x2" path="res://gui/number_edit.gd" id="1_6dyrf"]
 [ext_resource type="Script" uid="uid://b6lkbyukobuke" path="res://gui/vector_edit.gd" id="1_hrj13"]
 [ext_resource type="Script" uid="uid://dvv1pnpu8nbq7" path="res://gui/suffix.gd" id="2_hrj13"]
+[ext_resource type="Script" uid="uid://ctnd11am0ckfc" path="res://gui/mouse_blocker.gd" id="4_u8lc4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_272bh"]
 font_color = Color(0.784314, 0.27451, 0.27451, 1)
@@ -67,6 +68,12 @@ text_overrun_behavior = 3
 ellipsis_char = "."
 script = ExtResource("2_hrj13")
 
+[node name="MouseBlocker" type="Control" parent="VBoxContainer/FloatXEdit/PanelContainer" node_paths=PackedStringArray("line_edit")]
+layout_mode = 2
+script = ExtResource("4_u8lc4")
+line_edit = NodePath("../HBoxContainer2/LineEdit")
+value_type = 1
+
 [node name="FloatYEdit" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 script = ExtResource("1_6dyrf")
@@ -107,3 +114,9 @@ vertical_alignment = 1
 text_overrun_behavior = 3
 ellipsis_char = "."
 script = ExtResource("2_hrj13")
+
+[node name="MouseBlocker" type="Control" parent="VBoxContainer/FloatYEdit/PanelContainer" node_paths=PackedStringArray("line_edit")]
+layout_mode = 2
+script = ExtResource("4_u8lc4")
+line_edit = NodePath("../HBoxContainer2/LineEdit")
+value_type = 2

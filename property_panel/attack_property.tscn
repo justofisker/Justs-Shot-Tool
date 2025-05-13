@@ -45,14 +45,12 @@ text = "ProjectileId"
 [node name="NumProjectiles" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 text = "NumProjectiles"
-value = 1.0
 
 [node name="RateOfFire" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
 text = "RateOfFire"
 suffix = "x"
-value = 1.0
 
 [node name="PosOffset" parent="Properties" instance=ExtResource("4_n4pea")]
 layout_mode = 2
@@ -82,14 +80,12 @@ layout_mode = 2
 number_type = 1
 text = "- maxAngle"
 suffix = "°"
-value = 180.0
 
 [node name="DefaultAngleIncrMin" parent="Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
 text = "- minAngle"
 suffix = "°"
-value = -180.0
 
 [connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

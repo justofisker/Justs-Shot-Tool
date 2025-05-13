@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6y7xrt1ccj0g"]
+[gd_scene load_steps=7 format=3 uid="uid://b6y7xrt1ccj0g"]
 
 [ext_resource type="Script" uid="uid://bilmv1w2k08x2" path="res://gui/number_edit.gd" id="1_w6xmn"]
 [ext_resource type="Texture2D" uid="uid://cm6fxcjank5k2" path="res://gui/icons/Info.svg" id="2_jg2x4"]
 [ext_resource type="Script" uid="uid://x0rvdp2g68hr" path="res://gui/tooltip_icon.gd" id="3_p0c5w"]
 [ext_resource type="Script" uid="uid://dvv1pnpu8nbq7" path="res://gui/suffix.gd" id="4_v7tm7"]
+[ext_resource type="Script" uid="uid://ctnd11am0ckfc" path="res://gui/mouse_blocker.gd" id="5_jg2x4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
 font_color = Color(0.529067, 0.529067, 0.529067, 1)
@@ -38,6 +39,9 @@ size_flags_horizontal = 3
 [node name="LineEdit" type="LineEdit" parent="PanelContainer"]
 layout_mode = 2
 text = "0"
+emoji_menu_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
 flat = true
 select_all_on_focus = true
 
@@ -51,3 +55,9 @@ label_settings = SubResource("LabelSettings_5vw27")
 vertical_alignment = 1
 text_overrun_behavior = 3
 script = ExtResource("4_v7tm7")
+
+[node name="MouseBlocker" type="Control" parent="PanelContainer" node_paths=PackedStringArray("line_edit")]
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("5_jg2x4")
+line_edit = NodePath("../LineEdit")

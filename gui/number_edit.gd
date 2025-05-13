@@ -1,7 +1,7 @@
 @tool
 extends HBoxContainer
 
-signal value_changed(value: float)
+signal value_changed(value)
 signal toggled(enabled: bool)
 
 @onready var line_edit: LineEdit = find_children("*", "LineEdit", true, true)[0]
@@ -25,20 +25,29 @@ enum NumberType {INTEGER, FLOAT}
 		if label_suffix:
 			label_suffix.text = value
 
-@export var value : float = 0 :
+@export var value_int : int = 0
+@export var value_float : float = 0.0
+var value :
 	set(new_value):
-		value = new_value
+		if number_type == NumberType.INTEGER:
+			value_int = new_value
+		else:
+			value_float = new_value
 		if line_edit:
 			if number_type == NumberType.INTEGER:
 				if display_as_hex:
-					line_edit.text = "0x%x" % roundi(value)
+					line_edit.text = "0x%x" % value_int
 				else:
-					line_edit.text = str(roundi(value))
+					line_edit.text = str(value_int)
 			else:
-				# TODO: there has to be some fancy math way to do this
-				line_edit.text = ("%." + str(min(str(fmod(value, 1)).substr(2).length(), 3)) + "f") % value
-			line_edit.text_changed.emit(line_edit.text)
+				line_edit.text = ("%." + str(min(str(fmod(value_float, 1)).substr(2).length(), 3)) + "f") % value_float
+			line_edit.text_changed.emit.bind(line_edit.text).call_deferred()
 		value_changed.emit(value)
+	get():
+		if number_type == NumberType.INTEGER:
+			return value_int
+		else:
+			return value_float
 
 @export var toggleable : bool = false :
 	set(value):
@@ -67,7 +76,7 @@ enum NumberType {INTEGER, FLOAT}
 @export_multiline var tooltip : String = "" :
 	set(value):
 		tooltip = value
-		if is_instance_valid(tooltip_icon):
+		if tooltip_icon:
 			tooltip_icon.visible = !(tooltip == "")
 
 func _ready() -> void:
@@ -83,8 +92,8 @@ func _ready() -> void:
 		label.text = text
 	if label_suffix:
 		label_suffix.text = suffix
-	self.enabled = enabled
-	self.value = value
+	enabled = enabled
+	value = value
 	line_edit.text_changed.emit.bind(line_edit.text).call_deferred()
 	
 	line_edit.focus_entered.connect(_on_line_edit_focused_entered)
