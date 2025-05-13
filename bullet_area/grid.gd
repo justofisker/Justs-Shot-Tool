@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
-@onready var viewport : SubViewport = get_viewport()
 @export var grid_size := Vector2(8, 8)
 @export var color := Color(0.8, 0.8, 0.8, 0.1)
 

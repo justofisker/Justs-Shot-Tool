@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b75df6uegy10f" path="res://bullet_area/bullet_area.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cs44sby4b57sn" path="res://property_panel/toolbar.tscn" id="1_272bh"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_h2yge"]
-[ext_resource type="Script" uid="uid://bkqegeltkl248" path="res://bullet_area/sub_viewport_scale.gd" id="3_5vw27"]
+[ext_resource type="Script" uid="uid://da6rgx8h2t4b2" path="res://bullet_area/sub_viewport_position.gd" id="3_5vw27"]
 [ext_resource type="PackedScene" uid="uid://8nkbjebubkni" path="res://property_panel/attack_property.tscn" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://cunttn3iful3u" path="res://property_panel/properties_panel.gd" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://na5avsr373e0" path="res://property_panel/projectile_property.tscn" id="4_1bvp3"]
@@ -29,20 +29,31 @@ theme_override_constants/separation = 0
 z_index = 1
 layout_mode = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="SubViewportPosition" type="Control" parent="HBoxContainer/VBoxContainer" node_paths=PackedStringArray("container", "viewport")]
 layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_5vw27")
+container = NodePath("SubViewportContainer")
+viewport = NodePath("SubViewportContainer/SubViewport")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer/SubViewportPosition"]
+show_behind_parent = true
+top_level = true
+layout_mode = 2
+offset_top = 34.0
+offset_right = 810.0
+offset_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
 size = Vector2i(810, 686)
+size_2d_override_stretch = true
 render_target_update_mode = 4
-script = ExtResource("3_5vw27")
 
-[node name="BulletArea" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
+[node name="BulletArea" parent="HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
 
 [node name="PropertiesPanel" type="PanelContainer" parent="HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attack_properties_panel", "projectile_properties_panel")]
 custom_minimum_size = Vector2(470, 0)
