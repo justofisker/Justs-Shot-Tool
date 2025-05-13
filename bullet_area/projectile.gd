@@ -61,8 +61,7 @@ func get_angle(elapsed: int) -> float:
 		if elapsed < proj.circle_turn_delay:
 			return angle
 		var v_angle := calculate_circle_turn_angle(elapsed, proj.circle_turn_delay)
-		if proj.face_dir:
-			v_angle += PI / 2 * signf(proj.circle_turn_angle)
+		v_angle += PI / 2 * signf(proj.circle_turn_angle)
 		return angle + v_angle
 	elif proj.turn_rate == 0:
 		if !proj.face_dir:
@@ -149,7 +148,7 @@ func calculate_distance(elapsed: int) -> float:
 			var dv := proj.acceleration * t
 			
 			if proj.acceleration > 0:
-				var max_dv := maxf(proj.speed_clamp / 50.0, speed_factor) - speed_factor
+				var max_dv := maxf(proj.speed_clamp / 10.0, speed_factor) - speed_factor
 				var t_max := max_dv / proj.acceleration
 				if (t > t_max):
 					dist += max_dv * t_max * 0.5
