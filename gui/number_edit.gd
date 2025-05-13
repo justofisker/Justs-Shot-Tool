@@ -27,12 +27,13 @@ enum NumberType {INTEGER, FLOAT}
 
 @export var value_int : int = 0
 @export var value_float : float = 0.0
+
 var value :
 	set(new_value):
 		if number_type == NumberType.INTEGER:
-			value_int = new_value
+			value_int = snapped(new_value, step_int)
 		else:
-			value_float = new_value
+			value_float = snappedf(new_value, step_float)
 		if line_edit:
 			if number_type == NumberType.INTEGER:
 				if display_as_hex:
@@ -48,6 +49,25 @@ var value :
 			return value_int
 		else:
 			return value_float
+
+var step :
+	get():
+		if number_type == NumberType.INTEGER:
+			return step_int
+		else:
+			return step_float
+
+var step_modified :
+	get():
+		if number_type == NumberType.INTEGER:
+			return step_modified_int
+		else:
+			return step_modified_float
+
+@export var step_int : int = 1
+@export var step_float : float = 0.001
+@export var step_modified_int : int = 1
+@export var step_modified_float : float = 1
 
 @export var toggleable : bool = false :
 	set(value):

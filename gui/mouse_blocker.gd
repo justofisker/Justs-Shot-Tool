@@ -28,30 +28,39 @@ var owner_value :
 				return owner.value.y
 
 var grab_value
+var grab_motion : Vector2
 var grab_origin : Vector2
 var pressed := false
 var moved := false
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
 			pressed = true
 			moved = false
 			grab_value = owner_value
-			grab_origin = get_global_mouse_position()
+			grab_motion = Vector2.ZERO
+			grab_origin = event.position
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		if pressed:
+	if event is InputEventMouseMotion && pressed:
+		grab_motion += event.relative
+		if !moved && grab_motion.length() > 3.0:
 			moved = true
-		if pressed && moved:
-			owner_value = grab_value + max(abs(grab_value), 0.5) * (get_global_mouse_position().x - grab_origin.x) * 0.003
+			if OS.get_name() != "Web":
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if moved:
+			owner_value = grab_value + owner.step_modified * grab_motion.x * 0.03
 			if event.ctrl_pressed:
-				owner_value = round(owner_value)
+				owner_value = snapped(owner_value, owner.step_modified)
 	if event is InputEventMouseButton:
 		if pressed && !event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
 			if moved:
 				pressed = false
 				moved = false
+				if OS.get_name() != "Web":
+					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					warp_mouse(grab_origin)
 			else:
 				line_edit.grab_focus()
 				mouse_filter = Control.MOUSE_FILTER_IGNORE
