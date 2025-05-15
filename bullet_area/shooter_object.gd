@@ -76,7 +76,7 @@ func calculate_object_path() -> Array[Curve2D]:
 
 func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[Projectile]:
 	var projectiles : Array[Projectile]
-	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0 + (default_angle_incr if angle_incr else 0))
+	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0 + (default_angle_incr if angle_incr else 0.0))
 	for i in attack.num_projectiles:
 		var proj = Projectile.new()
 		proj.proj = projectile
