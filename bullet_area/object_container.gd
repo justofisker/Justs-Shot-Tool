@@ -4,6 +4,7 @@ const Projectile = preload("res://bullet_area/projectile.gd")
 
 func add_projectile(proj: Projectile) -> void:
 	%ProjectileContainer.add_child(proj)
+	proj.scale = Vector2.ONE * proj.proj.size / 100.0
 	
 	if !ProjectileManager.finished_loading:
 		return
