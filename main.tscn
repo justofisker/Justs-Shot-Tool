@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://hr2ctob0s43a"]
+[gd_scene load_steps=10 format=3 uid="uid://hr2ctob0s43a"]
 
 [ext_resource type="PackedScene" uid="uid://b75df6uegy10f" path="res://bullet_area/bullet_area.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cs44sby4b57sn" path="res://property_panel/toolbar.tscn" id="1_272bh"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://cunttn3iful3u" path="res://property_panel/properties_panel.gd" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://na5avsr373e0" path="res://property_panel/projectile_property.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bajtw35qg8jt4" path="res://property_panel/object_property.tscn" id="4_7mycd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_size = 24
 
 [node name="Main" type="Node"]
 
@@ -62,7 +65,7 @@ focus_mode = 1
 theme_type_variation = &"PropertyPanel"
 script = ExtResource("3_lquwl")
 object_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContainer/ObjectProperty")
-attack_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContainer/AttackProperty")
+attack_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer/AttackProperty")
 projectile_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContainer/ProjectileProperty")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/PropertiesPanel"]
@@ -85,7 +88,15 @@ layout_mode = 2
 [node name="ObjectProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_7mycd")]
 layout_mode = 2
 
-[node name="AttackProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Subattacks"
+label_settings = SubResource("LabelSettings_5vw27")
+
+[node name="AttackProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_h2yge")]
 layout_mode = 2
 
 [node name="ProjectileProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_1bvp3")]

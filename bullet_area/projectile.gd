@@ -4,18 +4,37 @@ var proj: XMLObjects.Projectile
 var angle: float = 0
 var origin : Vector2
 var bullet_id = 0
-var is_turning : bool = false
-var is_turning_circled : bool = false
+@onready var is_turning : bool = proj.turn_rate != 0
+@onready var is_turning_circled : bool = proj.circle_turn_delay != 0
 var turn_rate_phase_available : bool = false
-var is_turning_acceleration : bool = false
-var is_accelerating : bool = false
+@onready var is_turning_acceleration : bool = !is_zero_approx(proj.turn_acceleration)
+@onready var is_accelerating : bool = !is_zero_approx(proj.acceleration)
 var turn_stop_time : int = 0
+var real_turn_stop_time : int = 0
+var circle_turn_stop_time : int = 0
 var time_alive : float = 0
 var rotation_rate : float = 0
 
 func _ready() -> void:
 	position = calculate_position(0) * 8.0
 	rotation = get_angle(0)
+	if proj.turn_stop_time != 0:
+		turn_stop_time = proj.turn_stop_time
+	else:
+		if proj.circle_turn_delay == 0:
+			turn_stop_time = proj.lifetime_ms
+		else:
+			turn_stop_time = proj.circle_turn_delay
+			
+	if proj.circle_turn_delay != 0:
+		real_turn_stop_time = proj.circle_turn_delay
+	else:
+		if proj.turn_stop_time == 0:
+			real_turn_stop_time = proj.lifetime_ms
+		else:
+			real_turn_stop_time = proj.turn_stop_time
+	
+	turn_rate_phase_available = real_turn_stop_time < proj.lifetime_ms
 
 func _draw() -> void:
 	if get_child_count() == 0:
@@ -101,11 +120,11 @@ func calculate_position(elapsed: int) -> Vector2:
 		offset = get_offset(angle)
 	elif proj.turn_rate != 0:
 		var angle_v := 0.0
-		if is_turning_circled && elapsed >= proj.circle_turn_delay:
+		if is_turning_circled && elapsed >= real_turn_stop_time:
 			dist = calculate_circle_turn_distance()
 			angle_v = calculate_circle_turn_angle(elapsed, 0)
 		else:
-			if elapsed >= turn_stop_time && turn_rate_phase_available:
+			if elapsed >= real_turn_stop_time && turn_rate_phase_available:
 				point = apply_new_turn_rate_parameters(point)
 			
 			dist -= turn_distance
@@ -179,12 +198,12 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	if !is_turning:
 		return point
 	
-	turn_distance = calculate_distance(turn_stop_time)
-	var angle_v := calculate_turn(turn_stop_time)
+	turn_distance = calculate_distance(real_turn_stop_time)
+	var angle_v := calculate_turn(real_turn_stop_time)
 	point += Vector2.from_angle(angle + angle_v) * turn_distance
 	
-	var next_dist := calculate_distance(turn_stop_time + 16)
-	angle_v = calculate_turn(turn_stop_time + 16, true)
+	var next_dist := calculate_distance(real_turn_stop_time + 16)
+	angle_v = calculate_turn(real_turn_stop_time + 16, true)
 	var next_pos := origin + Vector2.from_angle(angle + angle_v) * next_dist
 	angle = (next_pos - point).angle()
 	

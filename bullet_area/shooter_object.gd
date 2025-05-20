@@ -69,6 +69,7 @@ func calculate_object_path() -> Array[Curve2D]:
 	
 	for idx in projectiles.size():
 		var proj = projectiles[idx]
+		proj._ready()
 		for t in projectile.lifetime_ms * SIMULATION_RATE / 1000 + 1:
 			paths[idx].add_point(proj.calculate_position(t * 1000 / SIMULATION_RATE))
 	
@@ -84,12 +85,6 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 		proj.origin = position / 8.0 + Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.angle)
 		proj.angle += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
 		proj.angle += deg_to_rad(attack.default_angle)
-		proj.is_accelerating = !is_zero_approx(projectile.acceleration)
-		proj.is_turning = projectile.turn_rate != 0
-		proj.is_turning_acceleration = !is_zero_approx(projectile.turn_acceleration)
-		proj.is_turning_circled = projectile.circle_turn_angle != 0
-		proj.turn_stop_time = (projectile.lifetime_ms if projectile.turn_stop_time == 0 else projectile.turn_stop_time) if projectile.circle_turn_delay == 0 || projectile.circle_turn_angle == 0 else projectile.circle_turn_delay
-		proj.turn_rate_phase_available = projectile.lifetime_ms > proj.turn_stop_time
 		proj.bullet_id = bullet_id
 		bullet_id += 1
 		projectiles.push_back(proj)

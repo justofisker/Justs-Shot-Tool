@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://8nkbjebubkni"]
+[gd_scene load_steps=7 format=3 uid="uid://8nkbjebubkni"]
 
 [ext_resource type="Script" uid="uid://4pbb7vk5tnlo" path="res://property_panel/attack_property.gd" id="1_psuee"]
 [ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/icons/Collapse.svg" id="2_yda5i"]
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="3_uyim1"]
 [ext_resource type="PackedScene" uid="uid://mj6uop2d0u5m" path="res://gui/edits/vector_edit.tscn" id="4_n4pea"]
 
+[sub_resource type="FontVariation" id="FontVariation_psuee"]
+variation_embolden = 0.5
+
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
-font_size = 24
+font = SubResource("FontVariation_psuee")
+font_size = 18
 
 [node name="AttackProperty" type="VBoxContainer" node_paths=PackedStringArray("properties")]
 script = ExtResource("1_psuee")
@@ -18,7 +22,7 @@ theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-text = "Attack"
+text = "Attack %d"
 label_settings = SubResource("LabelSettings_1bvp3")
 
 [node name="CopyButton" type="Button" parent="HBoxContainer"]
