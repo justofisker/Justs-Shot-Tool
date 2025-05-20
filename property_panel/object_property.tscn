@@ -68,5 +68,9 @@ text = "Show Path"
 layout_mode = 2
 text = "Dexterity"
 
+[node name="Autofire" parent="Properties" instance=ExtResource("4_a7n1m")]
+layout_mode = 2
+text = "Autofire"
+
 [connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Collapse" to="." method="_on_collapse_pressed"]

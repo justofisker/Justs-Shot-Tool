@@ -65,7 +65,7 @@ func _input(event: InputEvent) -> void:
 				line_edit.grab_focus()
 				mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if event is InputEventMouse:
-		if pressed && event.button_mask & MOUSE_BUTTON_LEFT == 0:
+		if pressed && event.button_mask & MOUSE_BUTTON_MASK_LEFT == 0:
 			set_deferred("pressed", false)
 
 func _line_edit_focus_entered() -> void:

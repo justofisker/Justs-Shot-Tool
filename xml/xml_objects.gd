@@ -9,6 +9,7 @@ class ObjectSettings extends Resource:
 	var ignore_mouse : bool = false
 	var show_path : bool = false
 	var dexterity: int = 45
+	var autofire : bool = true
 	
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()

@@ -92,6 +92,8 @@ func create_projectiles(ignore_mouse: bool, angle_incr : bool = true) -> Array[P
 
 var default_angle_incr: float = 0.0
 func _shoot() -> void:
+	if !object_settings.autofire && !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return
 	if attack.default_angle_incr != 0:
 		default_angle_incr = fmod((default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min), (attack.default_angle_incr_max - attack.default_angle_incr_min)) - attack.default_angle_incr_min
 	else:

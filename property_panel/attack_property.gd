@@ -1,5 +1,8 @@
 extends VBoxContainer
 
+signal duplicate_pressed()
+signal delete_pressed()
+
 var attack := XMLObjects.Subattack.new() :
 	set(value):
 		attack = value
@@ -33,6 +36,13 @@ func _on_collapse_pressed() -> void:
 	properties.visible = !properties.visible
 
 func _on_copy_button_pressed() -> void:
-	DisplayServer.clipboard_set(attack.to_xml())
 	if OS.get_name() == "Web":
-		JavaScriptBridge.eval("Navigator.clipboard.write(%s)" % attack.to_xml())
+		JavaScriptBridge.eval("window.copied_text = '%s'" % attack.to_xml().c_escape())
+	else:
+		DisplayServer.clipboard_set(attack.to_xml())
+
+func _on_duplicate_pressed() -> void:
+	duplicate_pressed.emit()
+
+func _on_delete_pressed() -> void:
+	delete_pressed.emit()

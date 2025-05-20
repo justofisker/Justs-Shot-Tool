@@ -81,6 +81,12 @@ button_group = SubResource("ButtonGroup_nd8tn")
 shortcut_in_tooltip = false
 icon = ExtResource("5_cfdxs")
 
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Enemy Mode"
+
 [connection signal="pressed" from="HBoxContainer/Select" to="." method="_on_select_pressed"]
 [connection signal="pressed" from="HBoxContainer/Move" to="." method="_on_move_pressed"]
 [connection signal="pressed" from="HBoxContainer/Ruler" to="." method="_on_ruler_pressed"]
