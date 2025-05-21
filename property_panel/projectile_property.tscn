@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://na5avsr373e0"]
+[gd_scene load_steps=14 format=3 uid="uid://na5avsr373e0"]
 
+[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="1_pk0ss"]
 [ext_resource type="Script" uid="uid://b7ufytjg8hwlk" path="res://property_panel/projectile_property.gd" id="1_vk4nb"]
 [ext_resource type="Texture2D" uid="uid://li32t4aji72h" path="res://gui/icons/Duplicate.svg" id="2_c77km"]
 [ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/icons/Collapse.svg" id="2_xats3"]
@@ -7,73 +8,111 @@
 [ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="3_15ut3"]
 [ext_resource type="Texture2D" uid="uid://dqeun4g6xfevj" path="res://gui/icons/Close.svg" id="3_y6nvx"]
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="4_5atu8"]
+[ext_resource type="Texture2D" uid="uid://i647i3fpchqf" path="res://gui/icons/ActionCopy.svg" id="4_7fhwm"]
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="5_xats3"]
 [ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/edits/color_edit.tscn" id="6_15ut3"]
+[ext_resource type="Texture2D" uid="uid://u4ts7mfiq77b" path="res://gui/icons/MoveUp.svg" id="7_matn6"]
+[ext_resource type="Texture2D" uid="uid://b1vbt16mpkxcl" path="res://gui/icons/MoveDown.svg" id="8_iqspa"]
 
-[node name="ProjectileProperty" type="VBoxContainer" node_paths=PackedStringArray("properties")]
+[node name="ProjectileProperty" type="VBoxContainer" node_paths=PackedStringArray("properties", "properties_container", "title")]
+offset_right = 684.0
+offset_bottom = 1019.0
+theme = ExtResource("1_pk0ss")
+theme_override_constants/separation = 0
 script = ExtResource("1_vk4nb")
-properties = NodePath("Properties")
+properties = NodePath("ValueConatainer/Properties")
+properties_container = NodePath("ValueConatainer")
+title = NodePath("TitleContainer/TitleBar/Label")
 
-[node name="TitleBar" type="HBoxContainer" parent="."]
+[node name="TitleContainer" type="PanelContainer" parent="."]
+z_index = 1
+layout_mode = 2
+theme_type_variation = &"PropertyTitleContainer"
+
+[node name="TitleBar" type="HBoxContainer" parent="TitleContainer"]
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 7
 theme_override_constants/separation = 10
 
-[node name="GrabIndicator" type="TextureRect" parent="TitleBar"]
+[node name="GrabIndicator" type="TextureRect" parent="TitleContainer/TitleBar"]
 layout_mode = 2
 texture = ExtResource("2_y6nvx")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="TitleBar"]
+[node name="Label" type="Label" parent="TitleContainer/TitleBar"]
 layout_mode = 2
 text = "Projectile %d"
 
-[node name="CopyButton" type="Button" parent="TitleBar"]
+[node name="CopyButton" type="TextureButton" parent="TitleContainer/TitleBar"]
 layout_mode = 2
-text = "Copy XML"
+tooltip_text = "Copy XML"
+texture_normal = ExtResource("4_7fhwm")
+stretch_mode = 3
 
-[node name="Duplicate" type="TextureButton" parent="TitleBar"]
+[node name="Duplicate" type="TextureButton" parent="TitleContainer/TitleBar"]
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "Duplicate"
 texture_normal = ExtResource("2_c77km")
 stretch_mode = 3
 
-[node name="Delete" type="TextureButton" parent="TitleBar"]
+[node name="Delete" type="TextureButton" parent="TitleContainer/TitleBar"]
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "Delete"
 texture_normal = ExtResource("3_y6nvx")
 stretch_mode = 3
 
-[node name="Collapse" type="TextureButton" parent="TitleBar"]
+[node name="VSeparator" type="VSeparator" parent="TitleContainer/TitleBar"]
+layout_mode = 2
+
+[node name="MoveUp" type="TextureButton" parent="TitleContainer/TitleBar"]
+layout_mode = 2
+tooltip_text = "Move Up"
+texture_normal = ExtResource("7_matn6")
+stretch_mode = 3
+
+[node name="MoveDown" type="TextureButton" parent="TitleContainer/TitleBar"]
+layout_mode = 2
+tooltip_text = "Move Down"
+texture_normal = ExtResource("8_iqspa")
+stretch_mode = 3
+
+[node name="VSeparator2" type="VSeparator" parent="TitleContainer/TitleBar"]
+layout_mode = 2
+
+[node name="Collapse" type="TextureButton" parent="TitleContainer/TitleBar"]
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "Toggle Collapse"
 focus_mode = 0
 texture_normal = ExtResource("2_xats3")
 stretch_mode = 3
 
-[node name="HSeparator2" type="HSeparator" parent="."]
+[node name="ValueConatainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_type_variation = &"PropertyValueContainer"
+
+[node name="Properties" type="VBoxContainer" parent="ValueConatainer"]
 layout_mode = 2
 
-[node name="Properties" type="VBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="objectId" parent="Properties" instance=ExtResource("3_15ut3")]
+[node name="objectId" parent="ValueConatainer/Properties" instance=ExtResource("3_15ut3")]
 layout_mode = 2
 title = "objectId"
 placeholder_text = "Doggy Dart"
 
-[node name="Size" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="Size" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "Size"
 suffix = "%"
 
-[node name="LifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="LifetimeMS" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "LifetimeMS"
 suffix = "ms"
 
-[node name="Speed" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="Speed" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "Speed"
@@ -81,7 +120,7 @@ suffix = "unit/sec"
 tooltip = "1 unit = 0.1 tiles
 10 units = 1 tile"
 
-[node name="Acceleration" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="Acceleration" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "Acceleration"
@@ -90,12 +129,12 @@ tooltip = "[b]Make sure to set an appropriate [code]SpeedClamp[/code][/b]
 1 unit = 0.1 tiles
 10 units = 1 tile"
 
-[node name="AccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="AccelerationDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "AccelerationDelay"
 suffix = "ms"
 
-[node name="SpeedClamp" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="SpeedClamp" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "SpeedClamp"
@@ -103,45 +142,45 @@ suffix = "unit/sec"
 tooltip = "1 unit = 0.1 tiles
 10 units = 1 tile"
 
-[node name="HSeparator" type="HSeparator" parent="Properties"]
+[node name="HSeparator" type="HSeparator" parent="ValueConatainer/Properties"]
 layout_mode = 2
 
-[node name="Amplitude" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="Amplitude" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "Amplitude"
 suffix = "tiles"
 
-[node name="Frequency" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="Frequency" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "Frequency"
 suffix = "cycles"
 
-[node name="Wavy" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="Wavy" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "Wavy"
 
-[node name="Parametric" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="Parametric" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "Parametric"
 
-[node name="HSeparator2" type="HSeparator" parent="Properties"]
+[node name="HSeparator2" type="HSeparator" parent="ValueConatainer/Properties"]
 layout_mode = 2
 
-[node name="CircleTurnDelay" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="CircleTurnDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "CircleTurnDelay"
 suffix = "ms"
 
-[node name="CircleTurnAngle" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="CircleTurnAngle" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "CircleTurnAngle"
 suffix = "°/time"
 tooltip = "Degrees per [code]CircleTurnDelay[/code] or [code]TurnStopTime[/code] if set."
 
-[node name="TurnRate" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="TurnRate" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "TurnRate"
@@ -149,79 +188,81 @@ suffix = "°"
 tooltip = "Despite being named [code]TurnRate[/code], this actually refers
 to how much the projectile will turn about it's origin over its lifetime."
 
-[node name="TurnRateDelay" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="TurnRateDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnRateDelay"
 suffix = "ms"
 
-[node name="TurnStopTime" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="TurnStopTime" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnStopTime"
 suffix = "ms"
 tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 
-[node name="TurnAcceleration" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="TurnAcceleration" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "TurnAcceleration"
 suffix = "x"
 tooltip = "Unsure what this specifically does. I'll need to look into the code more"
 
-[node name="TurnAccelerationDelay" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="TurnAccelerationDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "TurnAccelerationDelay"
 suffix = "ms"
 
-[node name="TurnClamp" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="TurnClamp" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "TurnClamp"
 suffix = "°"
 
-[node name="HSeparator3" type="HSeparator" parent="Properties"]
+[node name="HSeparator3" type="HSeparator" parent="ValueConatainer/Properties"]
 layout_mode = 2
 
-[node name="MultiHit" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="MultiHit" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "MultiHit"
 
-[node name="PassesCover" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="PassesCover" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "PassesCover"
 
-[node name="ArmorPiercing" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="ArmorPiercing" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "ArmorPiercing"
 
-[node name="ProtectFromSink" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="ProtectFromSink" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "ProtectFromSink"
 
-[node name="FaceDir" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="FaceDir" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "FaceDir"
 
-[node name="Boomerang" parent="Properties" instance=ExtResource("5_xats3")]
+[node name="Boomerang" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
 text = "Boomerang"
 
-[node name="ParticleTrail" parent="Properties" instance=ExtResource("6_15ut3")]
+[node name="ParticleTrail" parent="ValueConatainer/Properties" instance=ExtResource("6_15ut3")]
 layout_mode = 2
 value = Color(1, 0, 1, 1)
 text = "ParticleTrail"
 
-[node name="ParticleTrailIntensity" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="ParticleTrailIntensity" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
 text = "- Intensity"
 suffix = "x"
 
-[node name="ParticleTrailLifetimeMS" parent="Properties" instance=ExtResource("4_5atu8")]
+[node name="ParticleTrailLifetimeMS" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 text = "- Lifetime"
 suffix = "ms"
 
-[connection signal="pressed" from="TitleBar/CopyButton" to="." method="_on_copy_button_pressed"]
-[connection signal="pressed" from="TitleBar/Duplicate" to="." method="_on_duplicate_pressed"]
-[connection signal="pressed" from="TitleBar/Delete" to="." method="_on_delete_pressed"]
-[connection signal="pressed" from="TitleBar/Collapse" to="." method="_on_collapse_pressed"]
+[connection signal="pressed" from="TitleContainer/TitleBar/CopyButton" to="." method="_on_copy_button_pressed"]
+[connection signal="pressed" from="TitleContainer/TitleBar/Duplicate" to="." method="_on_duplicate_pressed"]
+[connection signal="pressed" from="TitleContainer/TitleBar/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="TitleContainer/TitleBar/MoveUp" to="." method="_on_move_up_pressed"]
+[connection signal="pressed" from="TitleContainer/TitleBar/MoveDown" to="." method="_on_move_down_pressed"]
+[connection signal="pressed" from="TitleContainer/TitleBar/Collapse" to="." method="_on_collapse_pressed"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://cv017eo06bbcu"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://cv017eo06bbcu"]
 
 [ext_resource type="FontFile" uid="uid://b33u7b5dflnec" path="res://font/Space_Mono/SpaceMono-Regular.ttf" id="1_7g21l"]
 [ext_resource type="Texture2D" uid="uid://xh8qqwwvgyel" path="res://gui/icons/slider_grabber.png" id="1_ffsj7"]
@@ -25,6 +25,29 @@ thickness = 2
 bg_color = Color(0.207843, 0.207843, 0.207843, 1)
 border_width_left = 1
 border_color = Color(0.103744, 0.103744, 0.103743, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u33yr"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.156863, 0.156863, 0.156863, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brm5r"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.24, 0.24, 0.24, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10udq"]
 content_margin_left = 5.0
@@ -58,6 +81,10 @@ HSlider/styles/slider = SubResource("StyleBoxLine_7g21l")
 LineEdit/fonts/font = ExtResource("1_7g21l")
 PropertyPanel/base_type = &"PanelContainer"
 PropertyPanel/styles/panel = SubResource("StyleBoxFlat_bpl1t")
+PropertyTitleContainer/base_type = &"PanelContainer"
+PropertyTitleContainer/styles/panel = SubResource("StyleBoxFlat_u33yr")
+PropertyValueContainer/base_type = &"PanelContainer"
+PropertyValueContainer/styles/panel = SubResource("StyleBoxFlat_brm5r")
 SuffixLabel/base_type = &"Label"
 SuffixLabel/fonts/font = ExtResource("1_7g21l")
 ToolbarPanel/base_type = &"PanelContainer"

@@ -128,3 +128,6 @@ layout_mode = 2
 
 [node name="ProjectileProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/Projectiles" instance=ExtResource("4_1bvp3")]
 layout_mode = 2
+
+[node name="ProjectileProperty2" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/Projectiles" instance=ExtResource("4_1bvp3")]
+layout_mode = 2
