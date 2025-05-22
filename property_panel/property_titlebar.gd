@@ -18,7 +18,7 @@ func _on_copy_button_pressed() -> void:
 	if OS.get_name() == "Web":
 		JavaScriptBridge.eval("window.copied_text = '%s'" % owner.value.to_xml().c_escape())
 	else:
-		DisplayServer.clipboard_set(owner.value.to_xml())
+		DisplayServer.clipboard_set(owner.value.to_xml(owner.get_index()))
 
 func _on_duplicate_pressed() -> void:
 	var prop : Node = load(owner.scene_file_path).instantiate()

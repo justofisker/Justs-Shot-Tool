@@ -51,9 +51,10 @@ class Subattack extends Resource:
 		
 		return out
 	
-	func to_xml() -> String:
+	func to_xml(index: int) -> String:
 		
 		var out = "<Subattack "
+		out += "index=\"" + str(index) + "\" "
 		out += "projectileId=\"" + str(projectile_id) + "\">\n"
 		
 		if num_projectiles != 1:
@@ -111,7 +112,6 @@ class ProjectileDescription extends Resource:
 class Projectile extends Resource:
 	signal updated()
 	
-	var id: int = 0
 	var object_id: String = ""
 	var min_damage: int = 0
 	var max_damage: int = 0
@@ -169,9 +169,9 @@ class Projectile extends Resource:
 		
 		return out
 	
-	func to_xml() -> String:
+	func to_xml(index: int) -> String:
 		# General
-		var out = "<Projectile id=\"" + str(id) + "\">\n"
+		var out = "<Projectile id=\"" + str(index) + "\">\n"
 		out += "\t<ObjectId>" + object_id + "</ObjectId>\n"
 		if size != 100:
 			out += "\t<Size>" + str(size) + "</Size>\n"
