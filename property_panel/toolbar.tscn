@@ -75,6 +75,7 @@ tooltip_text = "Aim (A)"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_nd8tn")
 shortcut = SubResource("Shortcut_otv0s")
+shortcut_in_tooltip = false
 icon = ExtResource("4_787al")
 
 [node name="Ruler" type="Button" parent="HBoxContainer"]
