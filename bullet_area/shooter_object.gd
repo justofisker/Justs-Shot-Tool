@@ -101,12 +101,15 @@ func _process(delta: float) -> void:
 		queue_redraw()
 	var is_shooting = object_settings.autofire || Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	
+	for idx in attacks.size():
+		var timing := timings[idx]
+		timing.burst_period += delta
+		timing.last_attack += delta
+	
 	if is_shooting:
 		for idx in attacks.size():
 			var attack := attacks[idx]
 			var timing := timings[idx]
-			timing.burst_period += delta
-			timing.last_attack += delta
 			var shots_per_second := (1.5 + 6.5 * (object_settings.dexterity / 75.0)) * attack.rate_of_fire
 			var burst_period = lerpf(attack.burst_delay, attack.burst_min_delay, mini(object_settings.dexterity, 75) / 75.0)
 			if attack.burst_count > 0:

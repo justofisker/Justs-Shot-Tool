@@ -8,3 +8,6 @@ func _on_move_pressed() -> void:
 
 func _on_ruler_pressed() -> void:
 	Bridge.tool_mode = Bridge.ToolMode.Ruler
+
+func _on_aim_pressed() -> void:
+	Bridge.tool_mode = Bridge.ToolMode.Aim

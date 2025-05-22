@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cs44sby4b57sn"]
+[gd_scene load_steps=16 format=3 uid="uid://cs44sby4b57sn"]
 
 [ext_resource type="Script" uid="uid://cu2hb5jlescib" path="res://property_panel/tools.gd" id="1_cfdxs"]
 [ext_resource type="Texture2D" uid="uid://jslufb22o6qn" path="res://gui/icons/ToolSelect.svg" id="3_otv0s"]
+[ext_resource type="Texture2D" uid="uid://b52n448eior1l" path="res://gui/icons/Aim.svg" id="4_787al"]
 [ext_resource type="Texture2D" uid="uid://f0fh308pmbjl" path="res://gui/icons/ToolMove.svg" id="4_mvj0t"]
 [ext_resource type="Texture2D" uid="uid://cvrre8immcq80" path="res://gui/icons/Ruler.svg" id="5_4mf1i"]
 [ext_resource type="Texture2D" uid="uid://xar7onvvt08r" path="res://gui/icons/ToolPan.svg" id="5_cfdxs"]
@@ -21,6 +22,13 @@ pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_ikwa3"]
 events = [SubResource("InputEventAction_li1xl")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_787al"]
+action = &"tool_aim"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_otv0s"]
+events = [SubResource("InputEventAction_787al")]
 
 [sub_resource type="InputEventAction" id="InputEventAction_ikwa3"]
 action = &"tool_ruler"
@@ -59,8 +67,15 @@ shortcut_in_tooltip = false
 icon = ExtResource("4_mvj0t")
 
 [node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
-visible = false
 layout_mode = 2
+
+[node name="Aim" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Aim (A)"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_otv0s")
+icon = ExtResource("4_787al")
 
 [node name="Ruler" type="Button" parent="HBoxContainer"]
 visible = false
@@ -89,5 +104,6 @@ text = "Enemy Mode"
 
 [connection signal="pressed" from="HBoxContainer/Select" to="." method="_on_select_pressed"]
 [connection signal="pressed" from="HBoxContainer/Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="HBoxContainer/Aim" to="." method="_on_aim_pressed"]
 [connection signal="pressed" from="HBoxContainer/Ruler" to="." method="_on_ruler_pressed"]
 [connection signal="pressed" from="HBoxContainer/Pan" to="." method="_on_ruler_pressed"]
