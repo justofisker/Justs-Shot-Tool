@@ -132,4 +132,5 @@ func _draw() -> void:
 		rot += deg_to_rad(default_angle_incr)
 		draw_set_transform(Vector2.ZERO, rot, Vector2(8, 8))
 		for path in projectile_paths:
-			draw_polyline(path.get_baked_points(), Color.BLACK)
+			if path.point_count > 2:
+				draw_polyline(path.get_baked_points(), Color.BLACK)
