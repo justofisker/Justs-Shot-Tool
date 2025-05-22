@@ -7,8 +7,14 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action_duplicate"):
 		var dupe = Node2D.new()
 		dupe.set_script(object_script)
-		dupe.attack = Bridge.selected_object.attack.copy()
-		dupe.projectile = Bridge.selected_object.projectile.copy()
+		var attacks : Array[XMLObjects.Subattack] = []
+		for attack in Bridge.selected_object.attacks:
+			attacks.push_back(attack.copy())
+		dupe.attacks = attacks
+		var projectiles : Array[XMLObjects.Projectile] = []
+		for projectile in Bridge.selected_object.projectiles:
+			projectiles.push_back(projectile.copy())
+		dupe.projectiles = projectiles
 		dupe.object_settings = Bridge.selected_object.object_settings.copy()
 		%ObjectContainer.add_child(dupe)
 		Bridge.selected_object = dupe

@@ -15,7 +15,10 @@ var object_settings := XMLObjects.ObjectSettings.new()
 
 var bullet_id : int = 0
 
-@export var selected : bool = false
+@export var selected : bool = false :
+	set(value):
+		selected = value
+		queue_redraw()
 
 func _ready() -> void:
 	position = object_settings.position * 8
@@ -88,8 +91,8 @@ func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_
 	return projs
 
 class AttackTiming:
-	var burst_period : float = INF
-	var last_attack : float = INF
+	var burst_period : float = 0
+	var last_attack : float = 0
 	var burst_count : int = 0
 	var default_angle_incr: float = 0.0
 
