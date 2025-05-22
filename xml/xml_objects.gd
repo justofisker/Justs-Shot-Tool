@@ -183,9 +183,8 @@ class Projectile extends Resource:
 		# Distance
 		out += "\t<LifetimeMS>" + str(lifetime_ms) + "</LifetimeMS>\n"
 		out += "\t<Speed>" + str(speed) + "</Speed>\n"
-		if speed_clamp_enabled:
-			out += "\t<SpeedClamp>" + str(speed_clamp) + "</SpeedClamp>\n"
 		if acceleration != 0:
+			out += "\t<SpeedClamp>" + str(speed_clamp) + "</SpeedClamp>\n"
 			out += "\t<Acceleration>" + str(acceleration) + "</Acceleration>\n"
 		if acceleration_delay != 0:
 			out += "\t<AccelerationDelay>" + str(acceleration_delay) + "</AccelerationDelay>\n"

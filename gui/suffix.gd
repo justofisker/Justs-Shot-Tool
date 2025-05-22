@@ -1,12 +1,16 @@
 @tool
 extends Label
 
+@onready var line_edit : LineEdit = get_parent()
+
 func _ready() -> void:
-	var line_edit := (get_parent() as LineEdit)
 	line_edit.text_changed.connect(_on_text_changed)
 	line_edit.focus_entered.connect(_on_focus_toggled.bind(true))
 	line_edit.focus_exited.connect(_on_focus_toggled.bind(false))
-	_on_text_changed.bind(line_edit.text).call_deferred()
+	visibility_changed.connect(_on_visibility_changed)
+
+func _on_visibility_changed():
+	_on_text_changed.call_deferred(line_edit.text)
 
 func _on_focus_toggled(focused: bool):
 	visible = !focused

@@ -31,8 +31,8 @@ func _on_delete_pressed() -> void:
 
 func _on_move_up_pressed() -> void:
 	var parent := owner.get_parent()
-	parent.move_child(owner, clampi(get_index() - 1, 0, parent.get_child_count() - 1))
+	parent.move_child(owner, clampi(owner.get_index() - 1, 0, parent.get_child_count() - 1))
 
 func _on_move_down_pressed() -> void:
 	var parent := owner.get_parent()
-	parent.move_child(owner, clampi(get_index() + 1, 0, parent.get_child_count() - 1))
+	parent.move_child(owner, clampi(owner.get_index() + 1, 0, parent.get_child_count() - 1))
