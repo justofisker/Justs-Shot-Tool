@@ -30,9 +30,9 @@ class Subattack extends Resource:
 	var num_projectiles: int = 1
 	var rate_of_fire: float = 1
 	var pos_offset: Vector2
-	var burst_count: int = 1
-	var burst_delay: float = 0.0
-	var burst_min_delay: float = 0.0
+	var burst_count: int = 0
+	var burst_delay: float = 1.8
+	var burst_min_delay: float = 0.8
 	var arc_gap: float = 11.25
 	var default_angle: float = 0
 	var default_angle_incr: float = 0
@@ -60,6 +60,10 @@ class Subattack extends Resource:
 			out += "\t<NumProjectiles>" + str(num_projectiles) + "</NumProjectiles>\n"
 		out += "\t<RateOfFire>" + str(rate_of_fire) + "</RateOfFire>\n"
 		out += "\t<Damage>0</Damage>\n"
+		if burst_count > 0:
+			out += "\t<BurstCount>" + str(burst_count) + "</BurstCount>\n"
+			out += "\t<BurstDelay>" + str(burst_delay) + "</BurstDelay>\n"
+			out += "\t<BurstDelayMin>" + str(burst_min_delay) + "</BurstDelayMin>\n"
 		if !pos_offset.is_zero_approx():
 			out += "\t<PosOffset>" + str(pos_offset.x) + "," + str(pos_offset.y) + "</PosOffset>\n"
 		if !is_equal_approx(arc_gap, 11.25):

@@ -17,29 +17,18 @@ var bullet_id : int = 0
 
 @export var selected : bool = false
 
-var timer: Timer
-
-func calculate_shots_per_sec() -> float:
-	return 2
-	#return (1.5 + 6.5 * (object_settings.dexterity / 75.0)) * attack.rate_of_fire
-
 func _ready() -> void:
-	timer = Timer.new()
-	timer.autostart = true
-	timer.wait_time = 1.0 / calculate_shots_per_sec()
-	timer.timeout.connect(_shoot)
-	add_child(timer)
-	
 	position = object_settings.position * 8
-	
 	object_settings.updated.connect(_on_object_settings_updated)
-	for attack in attacks:
-		attack.updated.connect(reset)
-	for projectile in projectiles:
-		projectile.updated.connect(reset)
+	reset()
+
+var timings : Array[AttackTiming] = []
 
 func reset() -> void:
+	queue_redraw()
+	timings = []
 	for attack in attacks:
+		timings.push_back(AttackTiming.new())
 		if !attack.updated.is_connected(reset):
 			attack.updated.connect(reset)
 	for projectile in projectiles:
@@ -84,6 +73,7 @@ func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_
 	var projs : Array[Projectile]
 	if attack.projectile_id < 0 || attack.projectile_id >= projectiles.size():
 		return projs
+	var default_angle_incr = 0.0
 	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0 + (default_angle_incr if angle_incr else 0.0))
 	for i in attack.num_projectiles:
 		var proj = Projectile.new()
@@ -97,20 +87,37 @@ func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_
 		projs.push_back(proj)
 	return projs
 
-var default_angle_incr: float = 0.0
-func _shoot() -> void:
-	if !object_settings.autofire && !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		return
-	#if attack.default_angle_incr != 0:
-		#default_angle_incr = fmod((default_angle_incr + attack.default_angle_incr + attack.default_angle_incr_min), (attack.default_angle_incr_max - attack.default_angle_incr_min)) - attack.default_angle_incr_min
-	#else:
-		#default_angle_incr = 0
-	for attack in attacks:
-		for proj in create_projectiles(attack, object_settings.ignore_mouse):
-			get_parent().add_projectile(proj)
+class AttackTiming:
+	var burst_period : float = INF
+	var last_attack : float = INF
+	var burst_count : int = 0
+	var default_angle_incr: float = 0.0
 
-func _process(_delta: float) -> void:
-	queue_redraw()
+func _process(delta: float) -> void:
+	if object_settings.show_path:
+		queue_redraw()
+	var is_shooting = object_settings.autofire || Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+	
+	if is_shooting:
+		for idx in attacks.size():
+			var attack := attacks[idx]
+			var timing := timings[idx]
+			timing.burst_period += delta
+			timing.last_attack += delta
+			var shots_per_second := (1.5 + 6.5 * (object_settings.dexterity / 75.0)) * attack.rate_of_fire
+			var burst_period = lerpf(attack.burst_delay, attack.burst_min_delay, mini(object_settings.dexterity, 75) / 75.0)
+			if attack.burst_count > 0:
+				if timing.burst_period > burst_period:
+					timing.burst_count = 0
+					timing.burst_period = 0
+				if timing.burst_count >= attack.burst_count && timing.burst_period < burst_period:
+					continue
+			if timing.last_attack > 1.0 / shots_per_second:
+				timing.last_attack = 0
+				timing.burst_count += 1
+				
+				for proj in create_projectiles(attack, object_settings.ignore_mouse):
+					get_parent().add_projectile(proj)
 
 var projectile_paths : Array[Curve2D]
 func _draw() -> void:
@@ -118,6 +125,7 @@ func _draw() -> void:
 	
 	if object_settings.show_path:
 		var rot = 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
+		var default_angle_incr := 0.0
 		rot += deg_to_rad(default_angle_incr)
 		draw_set_transform(Vector2.ZERO, rot, Vector2(8, 8))
 		for path in projectile_paths:
