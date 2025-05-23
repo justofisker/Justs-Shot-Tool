@@ -115,7 +115,7 @@ func calculate_position(elapsed: int) -> Vector2:
 		if is_turning_circled && elapsed >= proj.circle_turn_delay:
 			dist = calculate_circle_turn_distance()
 			angle = orig_angle
-			angle_v = calculate_circle_turn_angle(elapsed, 0)
+			angle_v = calculate_circle_turn_angle(elapsed, 0) * 2
 			angle_v -= calculate_turn(turn_stop_time) - calculate_circle_turn_angle(proj.circle_turn_delay, 0)
 		else:
 			if elapsed >= turn_stop_time && turn_rate_phase_available:
@@ -185,7 +185,7 @@ func calculate_circle_turn_distance() -> float:
 	return circle_distance
 
 func calculate_circle_turn_angle(elapsed: int, delay: int) -> float:
-	return deg_to_rad(proj.circle_turn_angle) / turn_stop_time * (elapsed - delay) * 2
+	return deg_to_rad(proj.circle_turn_angle) / turn_stop_time * (elapsed - delay)
 
 var turn_distance := 0.0
 func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
