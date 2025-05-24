@@ -22,6 +22,21 @@ class ObjectSettings extends Resource:
 			out.set(prop["name"], get(prop["name"]))
 		
 		return out
+	
+	func to_xml() -> String:
+		var out := ""
+		
+		out += "<Position>" + str(position.x) + "," + str(position.y) + "</Position>\n"
+		out += "<Dexterity>" + str(dexterity) + "</Dexterity>\n"
+		
+		if ignore_mouse:
+			out += "<IgnoreMouse />\n"
+		if show_path:
+			out += "<ShowPath />\n"
+		if autofire:
+			out += "<Autofire />\n"
+		
+		return out
 
 class Subattack extends Resource:
 	signal updated()
@@ -70,7 +85,7 @@ class Subattack extends Resource:
 		if !is_equal_approx(arc_gap, 11.25):
 			out += "\t<ArcGap>" + str(arc_gap) + "</ArcGap>\n"
 		if default_angle != 0:
-			out += "\t<DefaultAngle>" + str(arc_gap) + "</DefaultAngle>\n"
+			out += "\t<DefaultAngle>" + str(default_angle) + "</DefaultAngle>\n"
 		if default_angle_incr != 0:
 			out += "\t<DefaultAngleIncr"
 			if default_angle_incr_max != 180 || default_angle_incr_min != -180:

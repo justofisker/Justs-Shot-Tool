@@ -14,6 +14,9 @@ func _notification(what: int) -> void:
 func open(file: String) -> Error:
 	return parser.open(file)
 
+func open_buffer(buffer: PackedByteArray) -> Error:
+	return parser.open_buffer(buffer)
+
 func get_node_name() -> String:
 	return parser.get_node_name()
 
@@ -25,6 +28,9 @@ func skip_section() -> void:
 
 func seek(offset: int) -> void:
 	parser.seek(offset)
+
+func is_empty() -> bool:
+	return parser.is_empty()
 
 # New
 
@@ -53,11 +59,20 @@ func get_node_data_as_float() -> float:
 func get_node_data() -> String:
 	return parser.get_node_data()
 
+func get_node_data_or_null():
+	if parser.get_node_type() == XMLParser.NODE_TEXT:
+		return parser.get_node_data()
+	else:
+		return null
+
 func is_element() -> bool:
 	return parser.get_node_type() == XMLParser.NODE_ELEMENT
 	
 func is_element_end() -> bool:
 	return parser.get_node_type() == XMLParser.NODE_ELEMENT_END
+
+func is_text() -> bool:
+	return parser.get_node_type() == XMLParser.NODE_TEXT
 
 # Reads
 func read() -> void:

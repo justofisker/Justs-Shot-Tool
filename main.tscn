@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://hr2ctob0s43a"]
+[gd_scene load_steps=11 format=3 uid="uid://hr2ctob0s43a"]
 
 [ext_resource type="PackedScene" uid="uid://b75df6uegy10f" path="res://bullet_area/bullet_area.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://bbg4rkpme2pw" path="res://gui/menu_bar.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cs44sby4b57sn" path="res://property_panel/toolbar.tscn" id="1_272bh"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://b1n1kyl8hy66u" path="res://scene_manager.gd" id="2_kek77"]
 [ext_resource type="Script" uid="uid://da6rgx8h2t4b2" path="res://bullet_area/sub_viewport_position.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://cunttn3iful3u" path="res://property_panel/properties_panel.gd" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bajtw35qg8jt4" path="res://property_panel/object_property.tscn" id="4_7mycd"]
@@ -13,32 +15,56 @@ font_size = 24
 
 [node name="Main" type="Node"]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+script = ExtResource("1_5vw27")
+
+[node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
+item_count = 3
+item_0/text = "New Scene"
+item_0/id = 0
+item_1/text = "Save Scene"
+item_1/id = 1
+item_2/text = "Open Scene"
+item_2/id = 2
+
+[node name="SceneManager" type="Node" parent="VBoxContainer/PanelContainer/MenuBar/File"]
+script = ExtResource("2_kek77")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("2_h2yge")
 theme_override_constants/separation = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="Toolbar" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_272bh")]
+[node name="Toolbar" parent="VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("1_272bh")]
 z_index = 1
 layout_mode = 2
 
-[node name="SubViewportPosition" type="Control" parent="HBoxContainer/VBoxContainer" node_paths=PackedStringArray("container", "viewport")]
+[node name="SubViewportPosition" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer" node_paths=PackedStringArray("container", "viewport")]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_5vw27")
 container = NodePath("SubViewportContainer")
 viewport = NodePath("SubViewportContainer/SubViewport")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer/SubViewportPosition"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportPosition"]
 show_behind_parent = true
 top_level = true
 layout_mode = 2
@@ -48,16 +74,16 @@ offset_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
 size = Vector2i(810, 686)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="BulletArea" parent="HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
+[node name="BulletArea" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
 
-[node name="PropertiesPanel" type="PanelContainer" parent="HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attacks_container", "projectiles_container")]
+[node name="PropertiesPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attacks_container", "projectiles_container")]
 custom_minimum_size = Vector2(470, 0)
 layout_mode = 2
 focus_mode = 1
@@ -67,13 +93,13 @@ object_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContaine
 attacks_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Subattacks")
 projectiles_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Projectiles")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/PropertiesPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel"]
 layout_mode = 2
 follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -81,45 +107,46 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="ObjectProperty" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_7mycd")]
+[node name="ObjectProperty" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_7mycd")]
 layout_mode = 2
 
-[node name="SubattacksTitle" type="HBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="SubattacksTitle" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle"]
 layout_mode = 2
 text = "Subattacks"
 label_settings = SubResource("LabelSettings_5vw27")
 
-[node name="AddSubattack" type="TextureButton" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle"]
+[node name="AddSubattack" type="TextureButton" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle"]
 layout_mode = 2
 size_flags_horizontal = 10
 texture_normal = ExtResource("7_kek77")
 stretch_mode = 3
 
-[node name="Subattacks" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Subattacks" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ProjectilesTitle" type="HBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="ProjectilesTitle" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle"]
 layout_mode = 2
 text = "Projectiles"
 label_settings = SubResource("LabelSettings_5vw27")
 
-[node name="AddProjectile" type="TextureButton" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle"]
+[node name="AddProjectile" type="TextureButton" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle"]
 layout_mode = 2
 size_flags_horizontal = 10
 texture_normal = ExtResource("7_kek77")
 stretch_mode = 3
 
-[node name="Projectiles" type="VBoxContainer" parent="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Projectiles" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[connection signal="pressed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle/AddSubattack" to="HBoxContainer/PropertiesPanel" method="_on_add_subattack_pressed"]
-[connection signal="pressed" from="HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle/AddProjectile" to="HBoxContainer/PropertiesPanel" method="_on_add_projectile_pressed"]
+[connection signal="index_pressed" from="VBoxContainer/PanelContainer/MenuBar/File" to="VBoxContainer/PanelContainer/MenuBar" method="_on_file_index_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle/AddSubattack" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_subattack_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle/AddProjectile" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_projectile_pressed"]

@@ -154,7 +154,7 @@ func calculate_position(elapsed: int) -> Vector2:
 		
 		offset = get_offset(angle)
 	
-	return point
+	return point + offset
 
 func calculate_distance(elapsed: int) -> float:
 	var t := elapsed / 1000.0
@@ -213,8 +213,7 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	return point
 
 func get_offset(_ang: float) -> Vector2:
-	return Vector2.ZERO
-	#return Vector2(cos(angle), sin(angle))
+	return Vector2(cos(angle), sin(angle)) * 0.5
 
 func calculate_turn(elapsed: int, ignore_lifetime: bool = false) -> float:
 	var angle_v := 0.0
