@@ -12,10 +12,10 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("scene_new"):
 		_on_file_index_pressed(0)
-	if event.is_action_pressed("scene_save"):
-		_on_file_index_pressed(1)
 	if event.is_action_pressed("scene_save_as"):
 		_on_file_index_pressed(2)
+	elif event.is_action_pressed("scene_save"):
+		_on_file_index_pressed(1)
 	if event.is_action_pressed("scene_load"):
 		_on_file_index_pressed(3)
 
