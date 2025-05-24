@@ -11,3 +11,4 @@ export_presets.cfg
 *.tmp
 
 assets/
+.vscode/

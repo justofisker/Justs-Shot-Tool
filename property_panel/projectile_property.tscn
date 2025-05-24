@@ -96,7 +96,6 @@ texture_normal = ExtResource("2_xats3")
 stretch_mode = 3
 
 [node name="ValueConatainer" type="PanelContainer" parent="."]
-visible = false
 layout_mode = 2
 theme_type_variation = &"PropertyValueContainer"
 
@@ -117,6 +116,22 @@ suffix = "%"
 layout_mode = 2
 text = "LifetimeMS"
 suffix = "ms"
+
+[node name="Damage" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "Damage"
+suffix = "hitpoints"
+tooltip = "If [code]Damage[/code] is non-zero it will be prioitized."
+
+[node name="MinDamage" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "MinDamage"
+suffix = "hitpoints"
+
+[node name="MaxDamage" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
+layout_mode = 2
+text = "MaxDamage"
+suffix = "hitpoints"
 
 [node name="Speed" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2

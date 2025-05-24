@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://hr2ctob0s43a"]
 
 [ext_resource type="PackedScene" uid="uid://b75df6uegy10f" path="res://bullet_area/bullet_area.tscn" id="1_0xm2m"]
-[ext_resource type="Script" uid="uid://bbg4rkpme2pw" path="res://gui/menu_bar.gd" id="1_5vw27"]
+[ext_resource type="Script" uid="uid://bbg4rkpme2pw" path="res://gui/file_menu.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cs44sby4b57sn" path="res://property_panel/toolbar.tscn" id="1_272bh"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://b1n1kyl8hy66u" path="res://scene_manager.gd" id="2_kek77"]
@@ -28,9 +28,9 @@ layout_mode = 2
 
 [node name="MenuBar" type="MenuBar" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
-script = ExtResource("1_5vw27")
 
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
+size = Vector2i(112, 100)
 item_count = 3
 item_0/text = "New Scene"
 item_0/id = 0
@@ -41,6 +41,11 @@ item_2/id = 2
 
 [node name="SceneManager" type="Node" parent="VBoxContainer/PanelContainer/MenuBar/File"]
 script = ExtResource("2_kek77")
+
+[node name="FileMenu" type="Node" parent="VBoxContainer/PanelContainer/MenuBar" node_paths=PackedStringArray("scene_manager", "popup_menu")]
+script = ExtResource("1_5vw27")
+scene_manager = NodePath("../File/SceneManager")
+popup_menu = NodePath("../File")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -147,6 +152,5 @@ stretch_mode = 3
 [node name="Projectiles" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[connection signal="index_pressed" from="VBoxContainer/PanelContainer/MenuBar/File" to="VBoxContainer/PanelContainer/MenuBar" method="_on_file_index_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle/AddSubattack" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_subattack_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle/AddProjectile" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_projectile_pressed"]

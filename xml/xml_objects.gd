@@ -51,8 +51,8 @@ class Subattack extends Resource:
 	var arc_gap: float = 11.25
 	var default_angle: float = 0
 	var default_angle_incr: float = 0
-	var default_angle_incr_max: float = 180
-	var default_angle_incr_min: float = -180
+	var default_angle_incr_max: float = 360
+	var default_angle_incr_min: float = 0
 	
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()
@@ -87,8 +87,8 @@ class Subattack extends Resource:
 			out += "\t<DefaultAngle>" + str(default_angle) + "</DefaultAngle>\n"
 		if default_angle_incr != 0:
 			out += "\t<DefaultAngleIncr"
-			if default_angle_incr_max != 180 || default_angle_incr_min != -180:
-				out += " maxAngle=\"%d\" minAngle=\"%d\"" % [ default_angle_incr_max, default_angle_incr_min ]
+			if !is_equal_approx(default_angle_incr_max, 360) || !is_zero_approx(default_angle_incr_min):
+				out += " maxAngle=\"%f\" minAngle=\"%f\"" % [ default_angle_incr_max, default_angle_incr_min ]
 			out += ">" + str(default_angle_incr) + "</DefaultAngleIncr>\n"
 		
 		out += "</Subattack>\n"
@@ -129,6 +129,7 @@ class Projectile extends Resource:
 	var object_id: String = ""
 	var min_damage: int = 0
 	var max_damage: int = 0
+	var damage: int = 0
 	var lifetime_ms: int = 1000
 	var size: int = 100 # base 100
 	var max_health_damage: float = 0
@@ -191,9 +192,13 @@ class Projectile extends Resource:
 			out += "\t<Size>" + str(size) + "</Size>\n"
 		
 		# Damage
-		#out += "\t<MinDamage>" + str(min_damage) + "</MinDamage>\n"
-		#out += "\t<MaxDamage>" + str(max_damage) + "</MaxDamage>\n"
-		out += "\t<Damage>0</Damage>\n"
+		if damage != 0:
+			out += "\t<Damage>" + str(damage) + "</Damage>\n"
+		elif min_damage == max_damage:
+			out += "\t<Damage>" + str(min_damage) + "</Damage>\n"
+		else:
+			out += "\t<MinDamage>" + str(min_damage) + "</MinDamage>\n"
+			out += "\t<MaxDamage>" + str(max_damage) + "</MaxDamage>\n"
 		if !is_zero_approx(max_health_damage):
 			out += "\t<MaxHealthDamage>" + str(max_health_damage) + "</MaxHealthDamage>\n"
 		if !is_zero_approx(max_health_damage):

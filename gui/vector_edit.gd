@@ -8,12 +8,16 @@ signal toggled(toggled_on: bool)
 @onready var y_edit: HBoxContainer = $VBoxContainer/FloatYEdit
 @onready var label: Label = $Title
 
+var ready_value : Vector2
+
 @export var value : Vector2 :
 	set(value):
 		if x_edit:
 			x_edit.value = snappedf(value.x, step)
 		if y_edit:
 			y_edit.value = snappedf(value.y, step)
+		if !x_edit || !y_edit:
+			ready_value = value
 		value_changed.emit(value)
 	get():
 		if x_edit && y_edit:
@@ -42,10 +46,9 @@ func _ready() -> void:
 	label.text = text
 	x_edit.suffix = suffix
 	y_edit.suffix = suffix
-	x_edit.value = value.x
-	x_edit.value = value.x
 	x_edit.value_changed.connect(_on_value_changed)
 	y_edit.value_changed.connect(_on_value_changed)
+	value = ready_value
 
 func _on_value_changed(_value: float) -> void:
 	value_changed.emit(self.value)
