@@ -7,7 +7,7 @@ func get_scene_xml() -> String:
 	
 	out += "<!---\n"
 	out += "\tThis is NOT the same format as your object file!!!\n"
-	out += "\tThis is a special format for the shot visualizer tool scenes!\n"
+	out += "\tThis is a format for the shot visualizer tool scenes!\n"
 	out += "\tProjectile & Subattack code can be copied from this file.\n"
 	out += "-->\n"
 	out += "<Objects>\n"
