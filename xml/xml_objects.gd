@@ -75,7 +75,6 @@ class Subattack extends Resource:
 		if num_projectiles != 1:
 			out += "\t<NumProjectiles>" + str(num_projectiles) + "</NumProjectiles>\n"
 		out += "\t<RateOfFire>" + str(rate_of_fire) + "</RateOfFire>\n"
-		out += "\t<Damage>0</Damage>\n"
 		if burst_count > 0:
 			out += "\t<BurstCount>" + str(burst_count) + "</BurstCount>\n"
 			out += "\t<BurstDelay>" + str(burst_delay) + "</BurstDelay>\n"
@@ -146,7 +145,7 @@ class Projectile extends Resource:
 	
 	# Circle Turn
 	var circle_turn_delay: int = 0
-	var circle_turn_angle: int = 0
+	var circle_turn_angle: float = 0
 	# Turn
 	var turn_rate: float = 0
 	var turn_rate_delay: int = 0 # ms
@@ -192,8 +191,9 @@ class Projectile extends Resource:
 			out += "\t<Size>" + str(size) + "</Size>\n"
 		
 		# Damage
-		out += "\t<MinDamage>" + str(min_damage) + "</MinDamage>\n"
-		out += "\t<MaxDamage>" + str(max_damage) + "</MaxDamage>\n"
+		#out += "\t<MinDamage>" + str(min_damage) + "</MinDamage>\n"
+		#out += "\t<MaxDamage>" + str(max_damage) + "</MaxDamage>\n"
+		out += "\t<Damage>0</Damage>\n"
 		if !is_zero_approx(max_health_damage):
 			out += "\t<MaxHealthDamage>" + str(max_health_damage) + "</MaxHealthDamage>\n"
 		if !is_zero_approx(max_health_damage):
