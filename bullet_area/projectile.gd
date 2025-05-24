@@ -236,7 +236,7 @@ func add_turn_acceleration(ang: float, t: float) -> float:
 			
 			if proj.turn_acceleration > 0:
 				var max_dv := maxf(deg_to_rad(proj.turn_clamp), turn_factor) - turn_factor
-				var t_max := max_dv * proj.turn_acceleration
+				var t_max := max_dv / proj.turn_acceleration
 				if t > t_max:
 					ang += max_dv * t_max * 0.5
 					ang += max_dv * (t - t_max)
@@ -244,7 +244,7 @@ func add_turn_acceleration(ang: float, t: float) -> float:
 					ang += dv * t * 0.5
 			else:
 				var min_dv := minf(deg_to_rad(proj.turn_clamp), turn_factor) - turn_factor
-				var t_max := min_dv * proj.turn_acceleration
+				var t_max := min_dv / proj.turn_acceleration
 				if t > t_max:
 					ang += min_dv * t_max * 0.5
 					ang += min_dv * (t - t_max)
