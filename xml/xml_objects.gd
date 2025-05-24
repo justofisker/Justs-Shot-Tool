@@ -130,7 +130,7 @@ class Projectile extends Resource:
 	
 	# Circle Turn
 	var circle_turn_delay: int = 0
-	var circle_turn_angle: int = 0
+	var circle_turn_angle: float = 0
 	# Turn
 	var turn_rate: float = 0
 	var turn_rate_delay: int = 0 # ms
