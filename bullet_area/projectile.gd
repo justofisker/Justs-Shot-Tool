@@ -161,11 +161,11 @@ func calculate_distance(elapsed: int) -> float:
 	if is_accelerating:
 		if elapsed >= proj.acceleration_delay:
 			t -= proj.acceleration_delay / 1000.0
-			var dv := proj.acceleration * t
+			var dv := proj.acceleration * t / 10.0
 			
 			if proj.acceleration > 0:
 				var max_dv := maxf(proj.speed_clamp / 10.0, speed_factor) - speed_factor
-				var t_max := max_dv / proj.acceleration
+				var t_max := max_dv / proj.acceleration * 10.0
 				if (t > t_max):
 					dist += max_dv * t_max * 0.5
 					dist += max_dv * (t - t_max)
@@ -173,7 +173,7 @@ func calculate_distance(elapsed: int) -> float:
 					dist += dv * t * 0.5
 			else:
 				var min_dv := minf(proj.speed_clamp / 10.0, speed_factor) - speed_factor
-				var t_max := min_dv / proj.acceleration
+				var t_max := min_dv / proj.acceleration * 10.0
 				if t > t_max:
 					dist += min_dv * t_max * 0.5
 					dist += min_dv * (t - t_max)
