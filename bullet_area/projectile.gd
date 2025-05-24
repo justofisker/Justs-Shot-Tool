@@ -1,7 +1,8 @@
 extends Node2D
 
 var proj: XMLObjects.Projectile
-var angle: float = 0
+var angle: float = 0.0
+var shoot_angle: float = 0.0
 var origin : Vector2
 var bullet_id = 0
 @onready var is_turning : bool = proj.turn_rate != 0
@@ -14,10 +15,9 @@ var circle_turn_stop_time : int = 0
 var time_alive : float = 0
 var rotation_rate : float = 0
 @onready var orig_angle = angle
+var offset := Vector2.ZERO
 
 func _ready() -> void:
-	position = calculate_position(0) * 8.0
-	rotation = get_angle(0)
 	if proj.turn_stop_time != 0:
 		turn_stop_time = proj.turn_stop_time
 	else:
@@ -27,6 +27,8 @@ func _ready() -> void:
 			turn_stop_time = proj.circle_turn_delay
 	
 	turn_rate_phase_available = turn_stop_time < proj.lifetime_ms
+	position = calculate_position(0) * 8.0
+	rotation = get_angle(0)
 
 func _draw() -> void:
 	if get_child_count() == 0:
@@ -207,8 +209,10 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	
 	return point
 
-func get_offset(_ang: float) -> Vector2:
-	return Vector2(cos(angle), sin(angle)) * 0.5
+func get_offset(ang: float) -> Vector2:
+	if offset.is_zero_approx():
+		offset = Vector2(cos(shoot_angle), sin(shoot_angle)) * 0.5
+	return offset
 
 func calculate_turn(elapsed: int, ignore_lifetime: bool = false) -> float:
 	var angle_v := 0.0

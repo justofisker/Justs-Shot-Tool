@@ -82,6 +82,7 @@ func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_
 		var proj = Projectile.new()
 		proj.proj = projectiles[attack.projectile_id]
 		proj.angle = 0.0 if ignore_mouse else get_local_mouse_position().angle()
+		proj.shoot_angle = 0.0 if ignore_mouse else get_local_mouse_position().angle()
 		proj.origin = position / 8.0 + Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.angle)
 		proj.angle += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
 		proj.angle += deg_to_rad(attack.default_angle)
