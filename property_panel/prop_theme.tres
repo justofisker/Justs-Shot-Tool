@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://cv017eo06bbcu"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cv017eo06bbcu"]
 
 [ext_resource type="FontFile" uid="uid://b33u7b5dflnec" path="res://font/Space_Mono/SpaceMono-Regular.ttf" id="1_7g21l"]
 [ext_resource type="Texture2D" uid="uid://xh8qqwwvgyel" path="res://gui/icons/slider_grabber.png" id="1_ffsj7"]
@@ -20,6 +20,15 @@ color = Color(0.25098, 0.266667, 0.294118, 1)
 grow_begin = -8.0
 grow_end = -8.0
 thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ntqc3"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 4.0
+bg_color = Color(0.207843, 0.207843, 0.207843, 1)
+border_width_bottom = 1
+border_color = Color(0.101961, 0.101961, 0.101961, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpl1t"]
 bg_color = Color(0.207843, 0.207843, 0.207843, 1)
@@ -79,6 +88,8 @@ HSlider/styles/grabber_area = SubResource("StyleBoxLine_yl11o")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_ffsj7")
 HSlider/styles/slider = SubResource("StyleBoxLine_7g21l")
 LineEdit/fonts/font = ExtResource("1_7g21l")
+MenuBarContainer/base_type = &"PanelContainer"
+MenuBarContainer/styles/panel = SubResource("StyleBoxFlat_ntqc3")
 PropertyPanel/base_type = &"PanelContainer"
 PropertyPanel/styles/panel = SubResource("StyleBoxFlat_bpl1t")
 PropertyTitleContainer/base_type = &"PanelContainer"

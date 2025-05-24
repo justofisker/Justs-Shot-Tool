@@ -44,8 +44,7 @@ func parse_projectiles() -> void:
 			push_error("Error while trying to open %s: %s" % [file, error_string(err)])
 			continue
 		p.read()
-		assert(p.is_element())
-		if p.get_node_name() != "Objects":
+		if !p.is_element() || p.get_node_name() != "Objects":
 			continue
 		
 		if !p.read_possible_end():

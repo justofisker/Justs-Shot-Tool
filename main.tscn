@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://hr2ctob0s43a"]
+[gd_scene load_steps=13 format=3 uid="uid://hr2ctob0s43a"]
 
 [ext_resource type="PackedScene" uid="uid://b75df6uegy10f" path="res://bullet_area/bullet_area.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://bbg4rkpme2pw" path="res://gui/file_menu.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cs44sby4b57sn" path="res://property_panel/toolbar.tscn" id="1_272bh"]
+[ext_resource type="Script" uid="uid://bkte1010pjkce" path="res://gui/menu_bar_container.gd" id="2_efxa6"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://b1n1kyl8hy66u" path="res://scene_manager.gd" id="2_kek77"]
+[ext_resource type="Script" uid="uid://d2fvagrwmce7r" path="res://gui/file_menu_web.gd" id="3_4c57u"]
 [ext_resource type="Script" uid="uid://da6rgx8h2t4b2" path="res://bullet_area/sub_viewport_position.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://cunttn3iful3u" path="res://property_panel/properties_panel.gd" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bajtw35qg8jt4" path="res://property_panel/object_property.tscn" id="4_7mycd"]
@@ -14,6 +16,7 @@
 font_size = 24
 
 [node name="Main" type="Node"]
+metadata/_edit_vertical_guides_ = [5.0]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -21,29 +24,39 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_h2yge")
 theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="MenuBarContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"MenuBarContainer"
+script = ExtResource("2_efxa6")
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/MenuBarContainer"]
 layout_mode = 2
 
-[node name="MenuBar" type="MenuBar" parent="VBoxContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
+[node name="File" type="PopupMenu" parent="VBoxContainer/MenuBarContainer/MenuBar"]
 size = Vector2i(112, 100)
-item_count = 3
+item_count = 4
 item_0/text = "New Scene"
 item_0/id = 0
 item_1/text = "Save Scene"
 item_1/id = 1
-item_2/text = "Open Scene"
+item_2/text = "Save Scene As"
 item_2/id = 2
+item_3/text = "Open Scene"
+item_3/id = 3
 
-[node name="SceneManager" type="Node" parent="VBoxContainer/PanelContainer/MenuBar/File"]
+[node name="SceneManager" type="Node" parent="VBoxContainer/MenuBarContainer/MenuBar/File"]
 script = ExtResource("2_kek77")
 
-[node name="FileMenu" type="Node" parent="VBoxContainer/PanelContainer/MenuBar" node_paths=PackedStringArray("scene_manager", "popup_menu")]
+[node name="FileMenu" type="Node" parent="VBoxContainer/MenuBarContainer/MenuBar" node_paths=PackedStringArray("scene_manager", "popup_menu")]
 script = ExtResource("1_5vw27")
+scene_manager = NodePath("../File/SceneManager")
+popup_menu = NodePath("../File")
+
+[node name="FileMenuWeb" type="Node" parent="VBoxContainer/MenuBarContainer/MenuBar" node_paths=PackedStringArray("scene_manager", "popup_menu")]
+script = ExtResource("3_4c57u")
 scene_manager = NodePath("../File/SceneManager")
 popup_menu = NodePath("../File")
 
@@ -88,7 +101,7 @@ render_target_update_mode = 4
 
 [node name="BulletArea" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
 
-[node name="PropertiesPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attacks_container", "projectiles_container")]
+[node name="PropertiesPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attacks_container", "projectiles_container", "subattacks_title", "projectiles_title")]
 custom_minimum_size = Vector2(470, 0)
 layout_mode = 2
 focus_mode = 1
@@ -97,6 +110,8 @@ script = ExtResource("3_lquwl")
 object_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContainer/ObjectProperty")
 attacks_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Subattacks")
 projectiles_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Projectiles")
+subattacks_title = NodePath("ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle")
+projectiles_title = NodePath("ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel"]
 layout_mode = 2

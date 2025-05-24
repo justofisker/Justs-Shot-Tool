@@ -26,8 +26,8 @@ func get_scene_xml() -> String:
 	return out
 
 func load_scene_xml(buffer: PackedByteArray) -> void:
-	for child in Bridge.object_container.get_children():
-		Bridge.object_container.remove_child(child)
+	Bridge.clear_objects()
+	Bridge.clear_projectiles()
 	
 	var p := SimpleXmlParser.new()
 	var err := p.open_buffer(buffer)

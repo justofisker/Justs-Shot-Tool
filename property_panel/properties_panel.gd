@@ -3,6 +3,9 @@ extends PanelContainer
 @export var object_properties_panel : Control
 @export var attacks_container : Control
 @export var projectiles_container : Control
+@export var subattacks_title: Control
+@export var projectiles_title: Control
+
 
 const ATTACK_PROPERTY = preload("res://property_panel/attack_property.tscn")
 const PROJECTILE_PROPERTY = preload("res://property_panel/projectile_property.tscn")
@@ -35,6 +38,8 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 		object_properties_panel.visible = true
 		attacks_container.visible = true
 		projectiles_container.visible = true
+		subattacks_title.visible = true
+		projectiles_title.visible = true
 		object_properties_panel.object_settings = object.object_settings
 		
 		attacks_container.set_block_signals(true)
@@ -66,6 +71,8 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 		object_properties_panel.visible = false
 		attacks_container.visible = false
 		projectiles_container.visible = false
+		subattacks_title.visible = false
+		projectiles_title.visible = false
 
 func _on_add_subattack_pressed() -> void:
 	var prop = ATTACK_PROPERTY.instantiate()

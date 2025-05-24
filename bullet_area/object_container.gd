@@ -44,3 +44,4 @@ func add_projectile(proj: Projectile) -> void:
 func _ready() -> void:
 	Bridge.set_deferred("selected_object", $Object)
 	Bridge.object_container = self
+	Bridge.projectile_container = %ProjectileContainer
