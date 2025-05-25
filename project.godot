@@ -13,7 +13,9 @@ config_version=5
 config/name="RotMG Shot Visualizer"
 run/main_scene="uid://hr2ctob0s43a"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/fullsize=false
+boot_splash/image="uid://bysgdygddgt88"
+config/icon="uid://bwa3noeo31xxk"
 
 [autoload]
 
