@@ -3,7 +3,7 @@ extends PopupMenu
 var scripts : Array[Script]
 var submenu : PopupMenu = PopupMenu.new()
 
-const SCRIPTS_FOLDER := "./scripts/"
+const SCRIPTS_FOLDER := "res://scripts/"
 
 func _ready() -> void:
 	scan_script_folder()
@@ -21,12 +21,16 @@ func scan_script_folder() -> void:
 	scripts.clear()
 	var dir = DirAccess.open(SCRIPTS_FOLDER)
 	for script_file in dir.get_files():
-		if !script_file.ends_with(".gd") && !script_file.ends_with(".gdc"):
-			continue
+		var script : GDScript = null
 		
-		var script := GDScript.new()
-		script.source_code = FileAccess.get_file_as_string(SCRIPTS_FOLDER + script_file)
-		script.reload()
+		if script_file.ends_with(".gd"):
+			script = GDScript.new()
+			script.source_code = FileAccess.get_file_as_string(SCRIPTS_FOLDER + script_file)
+			script.reload()
+		elif script_file.ends_with(".gdc"):
+			script = load(SCRIPTS_FOLDER + script_file)
+		else:
+			continue
 		
 		if script.get_base_script() != BaseScript:
 			push_error("Error loading script: %s" % script_file)
