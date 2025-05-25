@@ -11,11 +11,14 @@ signal toggled(toggle_on: bool)
 			color_picker_button.color = value
 		value_changed.emit(value)
 
-@export var text : String = "ColorEdit" :
+@export var label_override : String = "" :
 	set(value):
-		text = value
+		label_override = value
 		if label:
-			label.text = value
+			if label_override == "":
+				label.text = name
+			else:
+				label.text = label_override
 
 @export var enabled : bool = true :
 	set(value):
@@ -24,6 +27,12 @@ signal toggled(toggle_on: bool)
 			color_picker_button.disabled = !enabled
 		toggled.emit(enabled)
 
+@export var toggleable : bool = false :
+	set(value):
+		toggleable = value
+		if check_box:
+			check_box.visible = toggleable
+
 @onready var color_picker_button: ColorPickerButton = $ColorPickerButton
 @onready var label: Label = $HBoxContainer/Label
 @onready var check_box: CheckBox = $HBoxContainer/CheckBox
@@ -31,10 +40,18 @@ signal toggled(toggle_on: bool)
 # TODO: Enabled not working on start and in Engine
 
 func _ready() -> void:
-	label.text = text
+	renamed.connect(_on_renamed)
+	_on_renamed()
 	self.enabled = enabled
 	color_picker_button.color = value
 	color_picker_button.disabled = !enabled
+	check_box.visible = toggleable
+
+func _on_renamed() -> void:
+	if label_override == "":
+		label.text = name
+	else:
+		label.text = label_override
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
 	self.enabled = toggled_on

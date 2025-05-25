@@ -269,7 +269,8 @@ text = "Boomerang"
 [node name="ParticleTrail" parent="ValueConatainer/Properties" instance=ExtResource("6_15ut3")]
 layout_mode = 2
 value = Color(1, 0, 1, 1)
-text = "ParticleTrail"
+label_override = null
+toggleable = null
 
 [node name="ParticleTrailIntensity" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2

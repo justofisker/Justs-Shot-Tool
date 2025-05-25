@@ -24,6 +24,11 @@ func _ready() -> void:
 	position = object_settings.position * 8
 	object_settings.updated.connect(_on_object_settings_updated)
 	reset()
+	Settings.setting_changed.connect(_on_setting_changed)
+
+func _on_setting_changed(property: String) -> void:
+	if property == "object_color" || property == "object_selected_color":
+		queue_redraw()
 
 var timings : Array[AttackTiming] = []
 
@@ -128,7 +133,7 @@ func _process(delta: float) -> void:
 
 var projectile_paths : Array[Curve2D]
 func _draw() -> void:
-	draw_circle(Vector2(), 4, Color.GREEN if selected else Color.WHITE, false)
+	draw_circle(Vector2(), 4, Settings.object_selected_color if selected else Settings.object_color, false)
 	
 	if object_settings.show_path:
 		var rot = 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
@@ -137,4 +142,4 @@ func _draw() -> void:
 		draw_set_transform(Vector2.ZERO, rot, Vector2(8, 8))
 		for path in projectile_paths:
 			if path.point_count > 2:
-				draw_polyline(path.get_baked_points(), Color.BLACK)
+				draw_polyline(path.get_baked_points(), Settings.projectile_path_color)

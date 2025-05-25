@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://btgxkaylyrpyv" path="res://gui/color_edit.gd" id="1_p3vip"]
 
 [node name="ColorEdit" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
 script = ExtResource("1_p3vip")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -15,6 +16,7 @@ size_flags_horizontal = 3
 text = "ColorEdit"
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 

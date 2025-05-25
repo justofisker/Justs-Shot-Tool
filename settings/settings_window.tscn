@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4q763xuknuwl"]
+
+[ext_resource type="Script" uid="uid://c26i0oqxkiwgy" path="res://settings/settings_window.gd" id="1_lyinp"]
+[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_4sfof"]
+[ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/edits/color_edit.tscn" id="3_4sfof"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_4sfof"]
+
+[node name="SettingsWindow" type="Window" node_paths=PackedStringArray("settings_edit_container")]
+title = "Settings"
+initial_position = 4
+size = Vector2i(800, 500)
+transient = true
+exclusive = true
+unresizable = true
+script = ExtResource("1_lyinp")
+settings_edit_container = NodePath("PanelContainer/VBoxContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_4sfof")
+theme_type_variation = &"SettingsPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Background Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
+layout_mode = 2
+
+[node name="Grid Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
+layout_mode = 2
+
+[node name="Grid Enabled" parent="PanelContainer/VBoxContainer" instance=ExtResource("4_4sfof")]
+layout_mode = 2
+text = "Grid Enabled"
+
+[node name="Object Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
+layout_mode = 2
+
+[node name="Object Selected Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
+layout_mode = 2
+
+[node name="Projectile Path Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
+layout_mode = 2
+
+[node name="Projectile Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
+layout_mode = 2

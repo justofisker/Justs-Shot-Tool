@@ -32,7 +32,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	if get_child_count() == 0:
-		draw_circle(Vector2.ZERO, 1, Color.WHITE, false)
+		draw_circle(Vector2.ZERO, 1, Settings.projectile_color, false)
 
 func _process(delta: float) -> void:
 	time_alive += delta

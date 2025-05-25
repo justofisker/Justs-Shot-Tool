@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://c84gkilr8meq"]
+
+[ext_resource type="Script" uid="uid://bkte1010pjkce" path="res://menubar/menu_bar_container.gd" id="1_ergth"]
+[ext_resource type="Script" uid="uid://dx3cb3po4w6us" path="res://menubar/file_menubar.gd" id="2_0oams"]
+[ext_resource type="Script" uid="uid://b1n1kyl8hy66u" path="res://menubar/scene_manager.gd" id="2_83q5j"]
+[ext_resource type="PackedScene" uid="uid://c4q763xuknuwl" path="res://settings/settings_window.tscn" id="2_flk2e"]
+[ext_resource type="Script" uid="uid://bbg4rkpme2pw" path="res://menubar/native_file.gd" id="3_k0e5c"]
+[ext_resource type="Script" uid="uid://d2fvagrwmce7r" path="res://menubar/web_file.gd" id="4_50cg8"]
+[ext_resource type="Script" uid="uid://uxaocf8evc30" path="res://script_internal/scripts.gd" id="5_83q5j"]
+
+[node name="MenuBarContainer" type="PanelContainer"]
+offset_right = 142.0
+offset_bottom = 31.0
+theme_type_variation = &"MenuBarContainer"
+script = ExtResource("1_ergth")
+settings_window_scene = ExtResource("2_flk2e")
+
+[node name="MenuBar" type="MenuBar" parent="."]
+layout_mode = 2
+
+[node name="File" type="PopupMenu" parent="MenuBar"]
+auto_translate_mode = 1
+size = Vector2i(128, 116)
+script = ExtResource("2_0oams")
+
+[node name="Scripts" type="PopupMenu" parent="MenuBar"]
+script = ExtResource("5_83q5j")
+
+[node name="SceneManager" type="Node" parent="MenuBar"]
+unique_name_in_owner = true
+script = ExtResource("2_83q5j")
+
+[node name="NativeFile" type="Node" parent="MenuBar"]
+script = ExtResource("3_k0e5c")
+
+[node name="WebFile" type="Node" parent="MenuBar"]
+script = ExtResource("4_50cg8")
