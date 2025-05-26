@@ -41,33 +41,26 @@ layout_mode = 2
 
 [node name="id" parent="Properties" instance=ExtResource("3_0de27")]
 layout_mode = 2
-title = "id"
 placeholder_text = "Big Dog"
 
 [node name="type" parent="Properties" instance=ExtResource("4_tgbvj")]
 layout_mode = 2
-text = "Type"
 display_as_hex = true
 
 [node name="Position" parent="Properties" instance=ExtResource("3_pr4qe")]
 layout_mode = 2
-text = "Position"
 suffix = "tiles"
 
 [node name="IgnoreMouse" parent="Properties" instance=ExtResource("4_a7n1m")]
 layout_mode = 2
-text = "Ignore Mouse"
 
 [node name="ShowPath" parent="Properties" instance=ExtResource("4_a7n1m")]
 layout_mode = 2
-text = "Show Path"
 
 [node name="Dexterity" parent="Properties" instance=ExtResource("4_tgbvj")]
 layout_mode = 2
-text = "Dexterity"
 
 [node name="Autofire" parent="Properties" instance=ExtResource("4_a7n1m")]
 layout_mode = 2
-text = "Autofire"
 
 [connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]

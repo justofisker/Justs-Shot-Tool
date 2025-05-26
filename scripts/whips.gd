@@ -8,12 +8,15 @@ const info := {
 
 @export var amount : int = 10
 @export var distance : float = 10
-@export var travel_time_ms : int = 100
-@export var lifetime_ms : int = 1000
+@export var travel_time_ms : int = 1000
+@export var lifetime_ms : int = 2000
+@export var turn_amount : float = 0
 @export var object_id : String = "MV Flame Spear"
 
 func run() -> void:
 	var object := ShooterObject.new()
+	
+	object.object_settings.dexterity = 0
 	
 	object.attacks.clear()
 	for idx in amount:
@@ -31,11 +34,15 @@ func run() -> void:
 		proj.speed = proj_distance / (travel_time_ms / 1000.0) * 10.0
 		
 		if travel_time_ms < lifetime_ms:
-			proj.acceleration = -20000000
+			proj.acceleration = -proj.speed * 60
 			proj.acceleration_delay = travel_time_ms
+		
+		if !is_zero_approx(turn_amount):
+			proj.turn_rate = (idx + 1) * turn_amount / amount
+			proj.turn_stop_time = travel_time_ms - 1
 		
 		object.projectiles.push_back(proj)
 	
 	Bridge.object_container.add_child(object)
-	Bridge.selected_object = object
+	#Bridge.selected_object = object
 	

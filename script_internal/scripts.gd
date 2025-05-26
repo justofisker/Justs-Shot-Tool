@@ -12,22 +12,26 @@ func _ready() -> void:
 	submenu.index_pressed.connect(_on_run_index_pressed)
 	
 	add_submenu_node_item("Run", submenu)
-	add_separator()
-	add_item("Rescan Scripts Folder")
-	add_item("Open Scripts Folder")
+	if OS.get_name() != "Web":
+		add_separator()
+		add_item("Rescan Scripts Folder")
+		add_item("Open Scripts Folder")
 	
 	index_pressed.connect(_on_index_pressed)
 
 func scan_script_folder() -> void:
 	submenu.clear()
 	scripts.clear()
-	var dir = DirAccess.open(SCRIPTS_FOLDER)
+	var dir_path = SCRIPTS_FOLDER
+	if OS.get_name() != "Web":
+		dir_path = ProjectSettings.globalize_path(dir_path)
+	var dir = DirAccess.open(dir_path)
 	for script_file in dir.get_files():
 		var script : GDScript = null
 		
 		if script_file.ends_with(".gd"):
 			script = GDScript.new()
-			script.source_code = FileAccess.get_file_as_string(SCRIPTS_FOLDER + script_file)
+			script.source_code = FileAccess.get_file_as_string(dir_path + script_file)
 			script.reload()
 		elif script_file.ends_with(".gdc"):
 			script = load(SCRIPTS_FOLDER + script_file)

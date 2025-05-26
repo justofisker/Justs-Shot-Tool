@@ -105,39 +105,32 @@ layout_mode = 2
 
 [node name="objectId" parent="ValueConatainer/Properties" instance=ExtResource("3_15ut3")]
 layout_mode = 2
-title = "objectId"
 placeholder_text = "Doggy Dart"
 
 [node name="Size" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "Size"
 suffix = "%"
 
 [node name="LifetimeMS" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "LifetimeMS"
 suffix = "ms"
 
 [node name="Damage" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "Damage"
 suffix = "hitpoints"
 tooltip = "If [code]Damage[/code] is non-zero it will be prioitized."
 
 [node name="MinDamage" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "MinDamage"
 suffix = "hitpoints"
 
 [node name="MaxDamage" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "MaxDamage"
 suffix = "hitpoints"
 
 [node name="Speed" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "Speed"
 suffix = "unit/sec"
 tooltip = "1 unit = 0.1 tiles
 10 units = 1 tile"
@@ -145,7 +138,6 @@ tooltip = "1 unit = 0.1 tiles
 [node name="Acceleration" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "Acceleration"
 suffix = "unit/sec^2"
 tooltip = "[b]Make sure to set an appropriate [code]SpeedClamp[/code][/b]
 1 unit = 0.1 tiles
@@ -153,13 +145,11 @@ tooltip = "[b]Make sure to set an appropriate [code]SpeedClamp[/code][/b]
 
 [node name="AccelerationDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "AccelerationDelay"
 suffix = "ms"
 
 [node name="SpeedClamp" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "SpeedClamp"
 suffix = "unit/sec"
 tooltip = "1 unit = 0.1 tiles
 10 units = 1 tile"
@@ -170,73 +160,61 @@ layout_mode = 2
 [node name="Amplitude" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "Amplitude"
 suffix = "tiles"
 
 [node name="Frequency" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "Frequency"
 suffix = "cycles"
 
 [node name="Wavy" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "Wavy"
 
 [node name="Parametric" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "Parametric"
 
 [node name="HSeparator2" type="HSeparator" parent="ValueConatainer/Properties"]
 layout_mode = 2
 
 [node name="CircleTurnDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "CircleTurnDelay"
 suffix = "ms"
 
 [node name="CircleTurnAngle" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "CircleTurnAngle"
 suffix = "°/time"
 tooltip = "Degrees per [code]CircleTurnDelay[/code] or [code]TurnStopTime[/code] if set."
 
 [node name="TurnRate" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "TurnRate"
 suffix = "°"
 tooltip = "Despite being named [code]TurnRate[/code], this actually refers
 to how much the projectile will turn about it's origin over its lifetime."
 
 [node name="TurnRateDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "TurnRateDelay"
 suffix = "ms"
 
 [node name="TurnStopTime" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "TurnStopTime"
 suffix = "ms"
 tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 
 [node name="TurnAcceleration" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "TurnAcceleration"
 suffix = "x"
 tooltip = "Unsure what this specifically does. I'll need to look into the code more"
 
 [node name="TurnAccelerationDelay" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "TurnAccelerationDelay"
 suffix = "ms"
 
 [node name="TurnClamp" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "TurnClamp"
 suffix = "°"
 
 [node name="HSeparator3" type="HSeparator" parent="ValueConatainer/Properties"]
@@ -244,27 +222,21 @@ layout_mode = 2
 
 [node name="MultiHit" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "MultiHit"
 
 [node name="PassesCover" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "PassesCover"
 
 [node name="ArmorPiercing" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "ArmorPiercing"
 
 [node name="ProtectFromSink" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "ProtectFromSink"
 
 [node name="FaceDir" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "FaceDir"
 
 [node name="Boomerang" parent="ValueConatainer/Properties" instance=ExtResource("5_xats3")]
 layout_mode = 2
-text = "Boomerang"
 
 [node name="ParticleTrail" parent="ValueConatainer/Properties" instance=ExtResource("6_15ut3")]
 layout_mode = 2
@@ -273,12 +245,10 @@ value = Color(1, 0, 1, 1)
 [node name="ParticleTrailIntensity" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
 number_type = 1
-text = "- Intensity"
 suffix = "x"
 
 [node name="ParticleTrailLifetimeMS" parent="ValueConatainer/Properties" instance=ExtResource("4_5atu8")]
 layout_mode = 2
-text = "- Lifetime"
 suffix = "ms"
 
 [connection signal="pressed" from="TitleContainer/TitleBar/CopyButton" to="TitleContainer" method="_on_copy_button_pressed"]

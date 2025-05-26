@@ -101,67 +101,55 @@ layout_mode = 2
 
 [node name="ProjectileId" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
-text = "ProjectileId"
 
 [node name="NumProjectiles" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
-text = "NumProjectiles"
 
 [node name="RateOfFire" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "RateOfFire"
 suffix = "x"
 
 [node name="BurstCount" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
-text = "BurstCount"
 
 [node name="BurstDelay" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "BurstDelay"
 suffix = "sec"
 
 [node name="BurstMinDelay" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "BurstMinDelay"
 suffix = "sec"
 
 [node name="PosOffset" parent="ValueContainer/Properties" instance=ExtResource("4_n4pea")]
 layout_mode = 2
-text = "PosOffset"
 suffix = "tiles"
 
 [node name="ArcGap" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "ArcGap"
 suffix = "°"
 
 [node name="DefaultAngle" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "DefaultAngle"
 suffix = "°"
 
 [node name="DefaultAngleIncr" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "DefaultAngleIncr"
 suffix = "°"
 
 [node name="DefaultAngleIncrMax" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "DefaultAngleIncrMax"
 suffix = "°"
 
 [node name="DefaultAngleIncrMin" parent="ValueContainer/Properties" instance=ExtResource("3_uyim1")]
 layout_mode = 2
 number_type = 1
-text = "DefaultAngleIncrMin"
 suffix = "°"
 
 [connection signal="pressed" from="TitleContainer/TitleBar/CopyButton" to="TitleContainer" method="_on_copy_button_pressed"]
