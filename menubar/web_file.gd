@@ -1,6 +1,5 @@
 extends Node
 
-const ShooterObject = preload("res://bullet_area/shooter_object.gd")
 const FileMenubar = preload("res://menubar/file_menubar.gd")
 
 func _ready() -> void:

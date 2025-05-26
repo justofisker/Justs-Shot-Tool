@@ -3,6 +3,8 @@ extends PopupMenu
 var scripts : Array[Script]
 var submenu : PopupMenu = PopupMenu.new()
 
+@export var script_window : PackedScene
+
 const SCRIPTS_FOLDER := "res://scripts/"
 
 func _ready() -> void:
@@ -46,10 +48,10 @@ func _on_index_pressed(index: int) -> void:
 		2: # Reload Script Folder
 			scan_script_folder()
 		3: # Open Script Folder
-			OS.shell_show_in_file_manager(SCRIPTS_FOLDER)
+			OS.shell_show_in_file_manager(ProjectSettings.globalize_path(SCRIPTS_FOLDER))
 
 func _on_run_index_pressed(index: int) -> void:
-	pass
-	#var node := Node.new()
-	#node.set_script(scripts[index])
-	#add_child(node)
+	var window = script_window.instantiate()
+	window.user_script = scripts[index]
+	window.title = submenu.get_item_text(index)
+	get_parent().add_child(window)

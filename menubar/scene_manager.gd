@@ -1,7 +1,5 @@
 extends Node
 
-const ShooterObject = preload("res://bullet_area/shooter_object.gd")
-
 func get_scene_xml() -> String:
 	var out := ""
 	

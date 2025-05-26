@@ -2,8 +2,6 @@ extends Node
 
 @export var popup_menu: PopupMenu
 
-const ShooterObject = preload("res://bullet_area/shooter_object.gd")
-
 var current_file := "" :
 	set(value):
 		current_file = value

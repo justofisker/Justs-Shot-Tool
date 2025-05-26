@@ -1,4 +1,4 @@
-extends Node2D
+class_name ShooterObject extends Node2D
 
 const Projectile = preload("res://bullet_area/projectile.gd")
 

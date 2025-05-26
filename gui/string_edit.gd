@@ -4,11 +4,14 @@ extends HBoxContainer
 signal value_changed(value: String)
 signal toggled(toggle_on: bool)
 
-@export var title: String = "StringEdit" :
+@export var label_override : String = "" :
 	set(value):
-		title = value
+		label_override = value
 		if label:
-			label.text = title
+			if label_override == "":
+				label.text = name
+			else:
+				label.text = label_override
 
 @export var value : String = "" :
 	set(new_value):
@@ -52,15 +55,22 @@ func _on_toggled(toggled_on: bool) -> void:
 	line_edit.editable = enabled
 
 func _ready() -> void:
+	renamed.connect(_on_renamed)
+	_on_renamed()
 	check_box.visible = toggleable
 	check_box.toggled.connect(_on_toggled)
 	if toggleable:
 		line_edit.editable = enabled
 	
-	label.text = title
 	line_edit.text = value
 	line_edit.placeholder_text = placeholder_text
-	
+
+func _on_renamed() -> void:
+	if label_override == "":
+		label.text = name
+	else:
+		label.text = label_override
+
 func _on_line_edit_text_changed(new_text: String) -> void:
 	self.value = new_text
 

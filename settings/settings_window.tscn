@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_4sfof"]
 
 [node name="SettingsWindow" type="Window" node_paths=PackedStringArray("settings_edit_container")]
+disable_3d = true
 title = "Settings"
 initial_position = 4
 size = Vector2i(800, 500)
@@ -35,7 +36,6 @@ layout_mode = 2
 
 [node name="Grid Enabled" parent="PanelContainer/VBoxContainer" instance=ExtResource("4_4sfof")]
 layout_mode = 2
-text = "Grid Enabled"
 
 [node name="Object Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
 layout_mode = 2

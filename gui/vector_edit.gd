@@ -28,11 +28,14 @@ var ready_value : Vector2
 @export var step : float = 0.001
 @export var step_modified: float = 1.0
 
-@export var text : String = "VectorEdit" :
+@export var label_override : String = "" :
 	set(value):
-		text = value
+		label_override = value
 		if label:
-			label.text = text
+			if label_override == "":
+				label.text = name
+			else:
+				label.text = label_override
 
 @export var suffix : String = "" :
 	set(value):
@@ -43,12 +46,19 @@ var ready_value : Vector2
 			y_edit.suffix = suffix
 
 func _ready() -> void:
-	label.text = text
+	renamed.connect(_on_renamed)
+	_on_renamed()
 	x_edit.suffix = suffix
 	y_edit.suffix = suffix
 	x_edit.value_changed.connect(_on_value_changed)
 	y_edit.value_changed.connect(_on_value_changed)
 	value = ready_value
+
+func _on_renamed() -> void:
+	if label_override == "":
+		label.text = name
+	else:
+		label.text = label_override
 
 func _on_value_changed(_value: float) -> void:
 	value_changed.emit(self.value)

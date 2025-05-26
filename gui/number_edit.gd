@@ -13,11 +13,14 @@ signal toggled(enabled: bool)
 enum NumberType {INTEGER, FLOAT}
 @export var number_type: NumberType = NumberType.INTEGER
 
-@export var text : String = "NumberEdit" :
+@export var label_override : String = "" :
 	set(value):
-		text = value
+		label_override = value
 		if label:
-			label.text = value
+			if label_override == "":
+				label.text = name
+			else:
+				label.text = label_override
 
 @export var suffix : String = "" :
 	set(value):
@@ -108,8 +111,8 @@ func _ready() -> void:
 		check_box.toggled.connect(_on_toggled)
 		if toggleable:
 			line_edit.editable = enabled
-	if label:
-		label.text = text
+	renamed.connect(_on_renamed)
+	_on_renamed()
 	if label_suffix:
 		label_suffix.text = suffix
 	enabled = enabled
@@ -119,6 +122,13 @@ func _ready() -> void:
 	line_edit.focus_entered.connect(_on_line_edit_focused_entered)
 	line_edit.focus_exited.connect(_on_line_edit_focus_exited)
 	line_edit.text_submitted.connect(_on_line_edit_text_submitted)
+
+func _on_renamed() -> void:
+	if label:
+		if label_override == "":
+			label.text = name
+		else:
+			label.text = label_override
 
 func _on_toggled(toggled_on: bool) -> void:
 	self.enabled = toggled_on

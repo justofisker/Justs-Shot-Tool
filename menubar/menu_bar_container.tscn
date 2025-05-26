@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c84gkilr8meq"]
+[gd_scene load_steps=9 format=3 uid="uid://c84gkilr8meq"]
 
 [ext_resource type="Script" uid="uid://bkte1010pjkce" path="res://menubar/menu_bar_container.gd" id="1_ergth"]
 [ext_resource type="Script" uid="uid://dx3cb3po4w6us" path="res://menubar/file_menubar.gd" id="2_0oams"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bbg4rkpme2pw" path="res://menubar/native_file.gd" id="3_k0e5c"]
 [ext_resource type="Script" uid="uid://d2fvagrwmce7r" path="res://menubar/web_file.gd" id="4_50cg8"]
 [ext_resource type="Script" uid="uid://uxaocf8evc30" path="res://script_internal/scripts.gd" id="5_83q5j"]
+[ext_resource type="PackedScene" uid="uid://blpv4rl666dpc" path="res://script_internal/script_window.tscn" id="5_euwu1"]
 
 [node name="MenuBarContainer" type="PanelContainer"]
 offset_right = 142.0
@@ -25,6 +26,7 @@ script = ExtResource("2_0oams")
 
 [node name="Scripts" type="PopupMenu" parent="MenuBar"]
 script = ExtResource("5_83q5j")
+script_window = ExtResource("5_euwu1")
 
 [node name="SceneManager" type="Node" parent="MenuBar"]
 unique_name_in_owner = true
