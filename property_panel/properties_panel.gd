@@ -46,28 +46,36 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 		projectiles_container.set_block_signals(true)
 		
 		for child in attacks_container.get_children():
-			attacks_container.remove_child(child)
-			child.queue_free()
+			child.visible = false
 		for child in projectiles_container.get_children():
-			projectiles_container.remove_child(child)
-			child.queue_free()
+			child.visible = false
 		
-		for attack in object.attacks:
-			var prop = ATTACK_PROPERTY.instantiate()
-			prop.attack = attack
-			attacks_container.add_child(prop)
-		for proj in object.projectiles:
-			var prop = PROJECTILE_PROPERTY.instantiate()
-			prop.projectile = proj
-			projectiles_container.add_child(prop)
+		for idx in object.attacks.size():
+			if attacks_container.get_child_count() < idx + 1:
+				var prop = ATTACK_PROPERTY.instantiate()
+				prop.attack = object.attacks[idx]
+				attacks_container.add_child(prop)
+			else:
+				var prop = attacks_container.get_child(idx)
+				prop.attack = object.attacks[idx]
+				prop.visible = true
+		for idx in object.projectiles.size():
+			if projectiles_container.get_child_count() < idx + 1:
+				var prop = PROJECTILE_PROPERTY.instantiate()
+				prop.projectile = object.projectiles[idx]
+				projectiles_container.add_child(prop)
+			else:
+				var prop := projectiles_container.get_child(idx)
+				prop.projectile = object.projectiles[idx]
+				prop.visible = true
 			
 		attacks_container.set_block_signals(false)
 		projectiles_container.set_block_signals(false)
 	else:
 		for child in attacks_container.get_children():
-			child.queue_free()
+			child.visible = false
 		for child in projectiles_container.get_children():
-			child.queue_free()
+			child.visible = false
 		object_properties_panel.visible = false
 		attacks_container.visible = false
 		projectiles_container.visible = false
