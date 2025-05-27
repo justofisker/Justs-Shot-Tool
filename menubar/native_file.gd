@@ -7,9 +7,9 @@ var current_file := "" :
 		current_file = value
 		var window := get_parent().get_parent().get_window()
 		if current_file == "":
-			window.title = "RotMG Shot Visualizer"
+			window.title = ProjectSettings.get_setting("application/config/name")
 		else:
-			window.title = "RotMG Shot Visualizer (%s)" % current_file.get_file()
+			window.title = "%s (%s)" % [ ProjectSettings.get_setting("application/config/name"), current_file.get_file() ]
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("scene_new"):

@@ -1,4 +1,4 @@
-# RotMG Shot Visualizer
+# Just's Shot Tool
 
 This tool is designed to help UGC members visualize how shots will appear and help them tweak it before pushing changes.
 

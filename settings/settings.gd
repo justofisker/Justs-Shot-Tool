@@ -10,7 +10,7 @@ var object_selected_color := Color.GREEN
 var projectile_path_color := Color.BLACK
 var projectile_color := Color.WHITE
 
-const SETTINGS_FILE := "res://settings.json"
+const SETTINGS_FILE := "user://settings.json"
 
 func _ready() -> void:
 	load_settings()
