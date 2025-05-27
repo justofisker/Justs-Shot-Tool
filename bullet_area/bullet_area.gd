@@ -12,3 +12,18 @@ func _ready() -> void:
 func _on_setting_changed(property: String) -> void:
 	if property == "background_color":
 		RenderingServer.set_default_clear_color(Settings.background_color)
+
+var pressed := false
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		if !event.button_mask & MOUSE_BUTTON_MASK_LEFT == MOUSE_BUTTON_MASK_LEFT:
+			pressed = false
+	if event is InputEventMouseButton:
+		if !event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+			pressed = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+			pressed = true
