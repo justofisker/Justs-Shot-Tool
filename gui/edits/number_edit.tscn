@@ -10,6 +10,8 @@
 font_color = Color(0.529067, 0.529067, 0.529067, 1)
 
 [node name="NumberEdit" type="HBoxContainer"]
+offset_right = 166.0
+offset_bottom = 31.0
 script = ExtResource("1_w6xmn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

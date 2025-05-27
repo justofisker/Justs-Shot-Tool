@@ -20,12 +20,12 @@ func save_settings() -> void:
 	var dict := {}
 	for property in get_property_list():
 		if property["usage"] == PROPERTY_USAGE_SCRIPT_VARIABLE:
-			var name : String = property["name"]
-			var value = get(name)
+			var property_name : String = property["name"]
+			var value = get(property_name)
 			if value is Color:
-				dict[name] = value.to_html(false)
+				dict[property_name] = value.to_html(false)
 			else:
-				dict[name] = value
+				dict[property_name] = value
 	var file = FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
 	file.store_string(JSON.stringify(dict, "\t") + "\n")
 

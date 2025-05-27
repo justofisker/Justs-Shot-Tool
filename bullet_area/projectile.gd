@@ -95,7 +95,6 @@ func get_angle(elapsed: int) -> float:
 
 func calculate_position(elapsed: int) -> Vector2:
 	var point := origin
-	var offset := Vector2.ZERO
 	
 	var dist := calculate_distance(elapsed)
 	var phase := PI if bullet_id % 2 == 0 else 0.0
