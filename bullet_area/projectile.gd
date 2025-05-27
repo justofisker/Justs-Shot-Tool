@@ -105,13 +105,11 @@ func calculate_position(elapsed: int) -> Vector2:
 		var amplitude_factor := PI / 64.0
 		var theta := angle + amplitude_factor * sin(phase + period_factor * elapsed / 1000)
 		point += Vector2.from_angle(theta) * dist
-		offset = get_offset(theta)
 	elif proj.parametric:
 		var t := (float(elapsed) / proj.lifetime_ms) * 2 * PI
 		var xt := sin(t) * (1 if bullet_id % 2 > 0 else -1)
 		var yt := sin(2 * t) * (1 if bullet_id % 4 < 2 else -1)
 		point += Vector2(xt * cos(angle) - yt * sin(angle), xt * sin(angle) + yt * cos(angle)) * proj.speed
-		offset = get_offset(angle)
 	elif proj.turn_rate != 0:
 		var angle_v := 0.0
 		if is_turning_circled && elapsed >= proj.circle_turn_delay:
@@ -128,7 +126,6 @@ func calculate_position(elapsed: int) -> Vector2:
 			angle_v = calculate_turn(elapsed)
 		
 		point += Vector2.from_angle(angle + angle_v) * dist
-		offset = get_offset(angle + angle_v)
 	elif is_turning_circled:
 		var angle_v := 0.0
 		if elapsed >= proj.circle_turn_delay:
@@ -136,7 +133,6 @@ func calculate_position(elapsed: int) -> Vector2:
 			angle_v = calculate_circle_turn_angle(elapsed, proj.circle_turn_delay)
 		
 		point += Vector2.from_angle(angle + angle_v) * dist
-		offset = get_offset(angle + angle_v)
 	else:
 		if proj.boomerang:
 			var halfway := proj.lifetime_ms * proj.speed / 10000.0 / 2.0
@@ -149,9 +145,8 @@ func calculate_position(elapsed: int) -> Vector2:
 			var deflection := proj.amplitude * sin(phase + (float(elapsed) / proj.lifetime_ms) * proj.frequency * 2 * PI)
 			point += Vector2(-sin(angle), cos(angle)) * deflection
 		
-		offset = get_offset(angle)
 	
-	return point + offset
+	return point + get_offset()
 
 func calculate_distance(elapsed: int) -> float:
 	var t := elapsed / 1000.0
@@ -209,7 +204,7 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	
 	return point
 
-func get_offset(ang: float) -> Vector2:
+func get_offset() -> Vector2:
 	if offset.is_zero_approx():
 		offset = Vector2(cos(shoot_angle), sin(shoot_angle)) * 0.5
 	return offset

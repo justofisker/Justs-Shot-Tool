@@ -38,7 +38,7 @@ func _ready() -> void:
 				edit.value = script_instance.get(property["name"])
 				properties.add_child(edit)
 	
-	size.y = get_contents_minimum_size().y
+	size.y = int(get_contents_minimum_size().y)
 	
 	show()
 

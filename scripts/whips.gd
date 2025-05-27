@@ -36,17 +36,17 @@ func run() -> void:
 		
 		var proj_distance : float = (idx + 1) * distance / amount
 		if uniform_speed:
-			proj.speed = distance / (travel_time_ms / 1000.0) * 10.0
+			proj.speed = int(distance / (travel_time_ms / 1000.0) * 10.0)
 		else:
-			proj.speed = proj_distance / (travel_time_ms / 1000.0) * 10.0
+			proj.speed = int(proj_distance / (travel_time_ms / 1000.0) * 10.0)
 		
 		if travel_time_ms < lifetime_ms:
 			proj.acceleration = -proj.speed * 60
-			proj.acceleration_delay = proj_distance / proj.speed * 1000 * 10.0
+			proj.acceleration_delay = int(proj_distance / proj.speed * 1000 * 10.0)
 		
 		if !is_zero_approx(turn_amount):
 			proj.turn_rate = (idx + 1) * turn_amount / amount
-			proj.turn_stop_time = proj_distance / proj.speed * 1000 * 10.0
+			proj.turn_stop_time = int(proj_distance / proj.speed * 1000 * 10.0)
 		
 		object.projectiles.push_back(proj)
 	
