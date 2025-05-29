@@ -11,7 +11,7 @@ func get_scene_xml() -> String:
 	out += "<Objects>\n"
 	
 	for object: ShooterObject in Bridge.object_container.get_children():
-		out += "\t<Object id=\"" + object.object_settings.id + "\" type=\"" + str(object.object_settings.type) + "\">\n"
+		out += "\t<Object id=\"" + object.object_settings.id + "\" type=\"" + "0x%x" % object.object_settings.type + "\">\n"
 		out += object.object_settings.to_xml().indent("\t\t")
 		for idx in object.projectiles.size():
 			out += object.projectiles[idx].to_xml(idx).indent("\t\t")
