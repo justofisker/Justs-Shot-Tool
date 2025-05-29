@@ -8,6 +8,8 @@ var ignore_update := false
 
 var value = null :
 	set(new_value):
+		if properties_panel:
+			properties_panel.visible = false
 		value = new_value
 		if value == null:
 			return
