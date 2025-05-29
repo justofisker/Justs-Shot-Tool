@@ -1,5 +1,8 @@
 class_name XMLObjects
 
+static func float_to_string(a: float) -> String:
+	return ("%.3f" % a).trim_suffix("0").trim_suffix("0").trim_suffix(".0")
+
 class ObjectSettings extends Resource:
 	signal updated()
 	
@@ -23,10 +26,13 @@ class ObjectSettings extends Resource:
 		
 		return out
 	
+	func float_to_string(a: float) -> String:
+		return XMLObjects.float_to_string(a)
+	
 	func to_xml() -> String:
 		var out := ""
 		
-		out += "<Position>" + str(position.x) + "," + str(position.y) + "</Position>\n"
+		out += "<Position>" + float_to_string(position.x) + "," + float_to_string(position.y) + "</Position>\n"
 		out += "<Dexterity>" + str(dexterity) + "</Dexterity>\n"
 		
 		if ignore_mouse:
@@ -66,6 +72,9 @@ class Subattack extends Resource:
 		
 		return out
 	
+	func float_to_string(a: float) -> String:
+		return XMLObjects.float_to_string(a)
+	
 	func to_xml(index: int) -> String:
 		
 		var out = "<Subattack "
@@ -74,22 +83,22 @@ class Subattack extends Resource:
 		
 		if num_projectiles != 1:
 			out += "\t<NumProjectiles>" + str(num_projectiles) + "</NumProjectiles>\n"
-		out += "\t<RateOfFire>" + str(rate_of_fire) + "</RateOfFire>\n"
+		out += "\t<RateOfFire>" + float_to_string(rate_of_fire) + "</RateOfFire>\n"
 		if burst_count > 0:
 			out += "\t<BurstCount>" + str(burst_count) + "</BurstCount>\n"
-			out += "\t<BurstDelay>" + str(burst_delay) + "</BurstDelay>\n"
-			out += "\t<BurstDelayMin>" + str(burst_min_delay) + "</BurstDelayMin>\n"
+			out += "\t<BurstDelay>" + float_to_string(burst_delay) + "</BurstDelay>\n"
+			out += "\t<BurstDelayMin>" + float_to_string(burst_min_delay) + "</BurstDelayMin>\n"
 		if !pos_offset.is_zero_approx():
-			out += "\t<PosOffset>" + str(pos_offset.x) + "," + str(pos_offset.y) + "</PosOffset>\n"
+			out += "\t<PosOffset>" + float_to_string(pos_offset.x) + "," + float_to_string(pos_offset.y) + "</PosOffset>\n"
 		if !is_equal_approx(arc_gap, 11.25):
-			out += "\t<ArcGap>" + str(arc_gap) + "</ArcGap>\n"
+			out += "\t<ArcGap>" + float_to_string(arc_gap) + "</ArcGap>\n"
 		if default_angle != 0:
-			out += "\t<DefaultAngle>" + str(default_angle) + "</DefaultAngle>\n"
+			out += "\t<DefaultAngle>" + float_to_string(default_angle) + "</DefaultAngle>\n"
 		if default_angle_incr != 0:
 			out += "\t<DefaultAngleIncr"
 			if !is_equal_approx(default_angle_incr_max, 360) || !is_zero_approx(default_angle_incr_min):
 				out += " maxAngle=\"%f\" minAngle=\"%f\"" % [ default_angle_incr_max, default_angle_incr_min ]
-			out += ">" + str(default_angle_incr) + "</DefaultAngleIncr>\n"
+			out += ">" + float_to_string(default_angle_incr) + "</DefaultAngleIncr>\n"
 		
 		out += "</Subattack>\n"
 		
@@ -184,6 +193,9 @@ class Projectile extends Resource:
 		
 		return out
 	
+	func float_to_string(a: float) -> String:
+		return XMLObjects.float_to_string(a)
+	
 	func to_xml(index: int) -> String:
 		# General
 		var out = "<Projectile id=\"" + str(index) + "\">\n"
@@ -200,24 +212,24 @@ class Projectile extends Resource:
 			out += "\t<MinDamage>" + str(min_damage) + "</MinDamage>\n"
 			out += "\t<MaxDamage>" + str(max_damage) + "</MaxDamage>\n"
 		if !is_zero_approx(max_health_damage):
-			out += "\t<MaxHealthDamage>" + str(max_health_damage) + "</MaxHealthDamage>\n"
+			out += "\t<MaxHealthDamage>" + float_to_string(max_health_damage) + "</MaxHealthDamage>\n"
 		if !is_zero_approx(max_health_damage):
-			out += "\t<CurrentHealthDamage>" + str(current_health_damage) + "</CurrentHealthDamage>\n"
+			out += "\t<CurrentHealthDamage>" + float_to_string(current_health_damage) + "</CurrentHealthDamage>\n"
 		
 		# Distance
 		out += "\t<LifetimeMS>" + str(lifetime_ms) + "</LifetimeMS>\n"
-		out += "\t<Speed>" + str(speed) + "</Speed>\n"
+		out += "\t<Speed>" + float_to_string(speed) + "</Speed>\n"
 		if acceleration != 0:
-			out += "\t<SpeedClamp>" + str(speed_clamp) + "</SpeedClamp>\n"
-			out += "\t<Acceleration>" + str(acceleration) + "</Acceleration>\n"
+			out += "\t<SpeedClamp>" + float_to_string(speed_clamp) + "</SpeedClamp>\n"
+			out += "\t<Acceleration>" + float_to_string(acceleration) + "</Acceleration>\n"
 		if acceleration_delay != 0:
-			out += "\t<AccelerationDelay>" + str(acceleration_delay) + "</AccelerationDelay>\n"
+			out += "\t<AccelerationDelay>" + float_to_string(acceleration_delay) + "</AccelerationDelay>\n"
 		
 		# Sinosoidal
 		if !is_equal_approx(amplitude, 0):
-			out += "\t<Amplitude>" + str(amplitude) + "</Amplitude>\n"
+			out += "\t<Amplitude>" + float_to_string(amplitude) + "</Amplitude>\n"
 		if !is_equal_approx(frequency, 0):
-			out += "\t<Frequency>" + str(frequency) + "</Frequency>\n"
+			out += "\t<Frequency>" + float_to_string(frequency) + "</Frequency>\n"
 		if wavy:
 			out += "\t<Wavy />\n"
 		if parametric:
@@ -227,19 +239,19 @@ class Projectile extends Resource:
 		if circle_turn_delay != 0:
 			out += "\t<CircleTurnDelay>" + str(circle_turn_delay) + "</CircleTurnDelay>\n"
 		if circle_turn_angle != 0:
-			out += "\t<CircleTurnAngle>" + str(circle_turn_angle) + "</CircleTurnAngle>\n"
+			out += "\t<CircleTurnAngle>" + float_to_string(circle_turn_angle) + "</CircleTurnAngle>\n"
 		if turn_rate != 0:
-			out += "\t<TurnRate>" + str(turn_rate) + "</TurnRate>\n"
+			out += "\t<TurnRate>" + float_to_string(turn_rate) + "</TurnRate>\n"
 		if turn_rate_delay != 0:
 			out += "\t<TurnRateDelay>" + str(turn_rate_delay) + "</TurnRateDelay>\n"
 		if turn_stop_time != 0:
 			out += "\t<TurnStopTime>" + str(turn_stop_time) + "</TurnStopTime>\n"
 		if turn_acceleration != 0:
-			out += "\t<TurnAcceleration>" + str(turn_acceleration) + "</TurnAcceleration>\n"
+			out += "\t<TurnAcceleration>" + float_to_string(turn_acceleration) + "</TurnAcceleration>\n"
 		if turn_acceleration_delay != 0:
 			out += "\t<TurnAccelerationDelay>" + str(turn_acceleration_delay) + "</TurnAccelerationDelay>\n"
 		if turn_clamp_enabled:
-			out += "\t<TurnClamp>" + str(turn_clamp) + "</TurnClamp>\n"
+			out += "\t<TurnClamp>" + float_to_string(turn_clamp) + "</TurnClamp>\n"
 		
 		# Flags
 		if multi_hit:
@@ -258,7 +270,7 @@ class Projectile extends Resource:
 			out += "\t<ParticleTrail"
 			if particle_trail != DEFAULT_PARTICLE_TRAIL_COLOR || is_equal_approx(particle_trail_intensity, 1) || particle_trail_lifetime_ms != 500:
 				if !is_equal_approx(particle_trail_intensity, 1):
-					out += " intensity=\"" + str(particle_trail_intensity) + "\""
+					out += " intensity=\"" + float_to_string(particle_trail_intensity) + "\""
 				if particle_trail_lifetime_ms != 500:
 					out += " lifetimeMS=\"" + str(particle_trail_lifetime_ms) + "\""
 				if particle_trail != DEFAULT_PARTICLE_TRAIL_COLOR:
