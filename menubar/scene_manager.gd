@@ -46,7 +46,11 @@ func load_scene_xml(buffer: PackedByteArray) -> void:
 		var projectiles : Array[XMLObjects.Projectile] = []
 		
 		object_settings.id = p.get_attribute_value("id")
-		object_settings.type = p.get_attribute_value("type").to_int()
+		var type : String = p.get_attribute_value("type")
+		if type.begins_with("0x"):
+			object_settings.type = type.hex_to_int()
+		else:
+			object_settings.type = type.to_int()
 		
 		var offset := p.get_node_offset()
 		p.read()
