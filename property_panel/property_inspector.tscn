@@ -12,13 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/icons/Collapse.svg" id="10_k227f"]
 
 [node name="PropertyInspector" type="VBoxContainer"]
-offset_right = 684.0
-offset_bottom = 1019.0
+offset_right = 296.0
+offset_bottom = 29.0
 theme = ExtResource("1_1j15l")
 theme_override_constants/separation = 0
 script = ExtResource("2_k3mye")
-
-[node name="PropertyManager" type="Node" parent="."]
 
 [node name="TitleContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("title")]
 z_index = 1
@@ -39,7 +37,7 @@ stretch_mode = 3
 
 [node name="Label" type="Label" parent="TitleContainer/TitleBar"]
 layout_mode = 2
-text = "Projectile %d"
+text = "%s %d"
 
 [node name="CopyButton" type="TextureButton" parent="TitleContainer/TitleBar"]
 layout_mode = 2

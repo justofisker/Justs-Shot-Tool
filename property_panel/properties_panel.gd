@@ -87,9 +87,11 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 func _on_add_subattack_pressed() -> void:
 	var prop = PROPERTY_INSPECTOR.instantiate()
 	prop.properties_scene = ATTACK_PROPERTIES
+	prop.value = XMLObjects.Subattack.new()
 	attacks_container.add_child(prop)
 
 func _on_add_projectile_pressed() -> void:
 	var prop = PROPERTY_INSPECTOR.instantiate()
 	prop.properties_scene = PROJECTILE_PROPERTIES
+	prop.value = XMLObjects.Projectile.new()
 	projectiles_container.add_child(prop)

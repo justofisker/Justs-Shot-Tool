@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/edits/color_edit.tscn" id="4_qsmer"]
 
 [node name="ProjectileProperties" type="VBoxContainer"]
+offset_right = 252.0
+offset_bottom = 1098.0
 
 [node name="objectId" parent="." instance=ExtResource("1_1k76v")]
 layout_mode = 2

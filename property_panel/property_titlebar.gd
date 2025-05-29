@@ -3,12 +3,21 @@ extends PanelContainer
 @export var title : Label
 @onready var title_format := title.text
 
+func get_value_type_name() -> String:
+	var value = get_parent().value
+	if value is XMLObjects.Projectile:
+		return "Projectile"
+	if value is XMLObjects.Subattack:
+		return "Subattack"
+	push_error("Unknown value type")
+	return ""
+
 func _ready() -> void:
 	get_parent().get_parent().child_order_changed.connect(_on_child_order_changed)
 	_on_child_order_changed()
 
 func _on_child_order_changed() -> void:
-	title.text = title_format % get_parent().get_index()
+	title.text = title_format % [get_value_type_name(), get_parent().get_index()]
 
 func _on_collapse_pressed() -> void:
 	get_parent().toggle_property_visibility()

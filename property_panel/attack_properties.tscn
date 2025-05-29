@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://mj6uop2d0u5m" path="res://gui/edits/vector_edit.tscn" id="2_8xlnq"]
 
 [node name="AttackProperties" type="VBoxContainer"]
+offset_right = 236.0
+offset_bottom = 451.0
 
 [node name="ProjectileId" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
