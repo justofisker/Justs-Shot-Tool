@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://b60arxo3x7qce"]
+
+[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="1_fhlof"]
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="2_2v7nh"]
+[ext_resource type="PackedScene" uid="uid://mj6uop2d0u5m" path="res://gui/edits/vector_edit.tscn" id="3_ft5c1"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_e2buv"]
+
+[node name="ObjectProperties" type="VBoxContainer"]
+
+[node name="id" parent="." instance=ExtResource("1_fhlof")]
+layout_mode = 2
+placeholder_text = "Big Dog"
+
+[node name="type" parent="." instance=ExtResource("2_2v7nh")]
+layout_mode = 2
+display_as_hex = true
+
+[node name="Position" parent="." instance=ExtResource("3_ft5c1")]
+layout_mode = 2
+suffix = "tiles"
+
+[node name="IgnoreMouse" parent="." instance=ExtResource("4_e2buv")]
+layout_mode = 2
+
+[node name="ShowPath" parent="." instance=ExtResource("4_e2buv")]
+layout_mode = 2
+
+[node name="Dexterity" parent="." instance=ExtResource("2_2v7nh")]
+layout_mode = 2
+
+[node name="Autofire" parent="." instance=ExtResource("4_e2buv")]
+layout_mode = 2

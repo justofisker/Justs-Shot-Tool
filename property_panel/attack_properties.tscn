@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpgmmaunpwv46"]
+
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="1_s3ukx"]
+[ext_resource type="PackedScene" uid="uid://mj6uop2d0u5m" path="res://gui/edits/vector_edit.tscn" id="2_8xlnq"]
+
+[node name="AttackProperties" type="VBoxContainer"]
+
+[node name="ProjectileId" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+
+[node name="NumProjectiles" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+
+[node name="RateOfFire" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "x"
+
+[node name="BurstCount" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+
+[node name="BurstDelay" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "sec"
+
+[node name="BurstMinDelay" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "sec"
+
+[node name="PosOffset" parent="." instance=ExtResource("2_8xlnq")]
+layout_mode = 2
+suffix = "tiles"
+
+[node name="ArcGap" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="DefaultAngle" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="DefaultAngleIncr" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="DefaultAngleIncrMax" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="DefaultAngleIncrMin" parent="." instance=ExtResource("1_s3ukx")]
+layout_mode = 2
+number_type = 1
+suffix = "°"

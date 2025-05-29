@@ -11,11 +11,14 @@ const info := {
 @export var travel_time_ms : int = 1000
 @export var lifetime_ms : int = 2000
 @export var turn_amount : float = 0.0
-@export var uniform_speed := false
+@export var boomerang := false
 @export var object_id := "MV Flame Spear"
 
 func run() -> void:
-	if travel_time_ms > lifetime_ms:
+	if boomerang:
+		turn_amount = 0
+		travel_time_ms = lifetime_ms / 2
+	elif travel_time_ms > lifetime_ms:
 		travel_time_ms = lifetime_ms
 	
 	var object := ShooterObject.new()
@@ -35,12 +38,11 @@ func run() -> void:
 		proj.lifetime_ms = lifetime_ms
 		
 		var proj_distance : float = (idx + 1) * distance / amount
-		if uniform_speed:
-			proj.speed = int(distance / (travel_time_ms / 1000.0) * 10.0)
-		else:
-			proj.speed = int(proj_distance / (travel_time_ms / 1000.0) * 10.0)
+		proj.speed = int(proj_distance / (travel_time_ms / 1000.0) * 10.0)
 		
-		if travel_time_ms < lifetime_ms:
+		if boomerang:
+			proj.boomerang = true
+		elif travel_time_ms < lifetime_ms:
 			proj.acceleration = -proj.speed * 60
 			proj.acceleration_delay = int(proj_distance / proj.speed * 1000 * 10.0)
 		
@@ -51,5 +53,5 @@ func run() -> void:
 		object.projectiles.push_back(proj)
 	
 	Bridge.object_container.add_child(object)
-	#Bridge.selected_object = object
+	Bridge.selected_object = object
 	

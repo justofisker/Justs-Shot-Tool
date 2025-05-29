@@ -6,7 +6,7 @@
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://da6rgx8h2t4b2" path="res://bullet_area/sub_viewport_position.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://cunttn3iful3u" path="res://property_panel/properties_panel.gd" id="3_lquwl"]
-[ext_resource type="PackedScene" uid="uid://bajtw35qg8jt4" path="res://property_panel/object_property.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bajtw35qg8jt4" path="res://property_panel/object_inspector.tscn" id="4_7mycd"]
 [ext_resource type="Texture2D" uid="uid://b7lfr6njyegox" path="res://gui/icons/Add.svg" id="7_kek77"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5vw27"]

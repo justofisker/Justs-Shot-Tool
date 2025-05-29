@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://bajtw35qg8jt4"]
 
-[ext_resource type="Script" uid="uid://bswgm3t88n1ri" path="res://property_panel/object_property.gd" id="1_k7ys7"]
+[ext_resource type="Script" uid="uid://bswgm3t88n1ri" path="res://property_panel/object_copy.gd" id="1_k7ys7"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="1_tgbvj"]
+[ext_resource type="Script" uid="uid://b7l6bw04hy35s" path="res://property_panel/property_inspector.gd" id="2_tgbvj"]
 [ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="3_0de27"]
-[ext_resource type="Script" uid="uid://b7l6bw04hy35s" path="res://property_panel/property_manager.gd" id="3_2a2vs"]
 [ext_resource type="PackedScene" uid="uid://mj6uop2d0u5m" path="res://gui/edits/vector_edit.tscn" id="3_pr4qe"]
 [ext_resource type="Texture2D" uid="uid://i647i3fpchqf" path="res://gui/icons/ActionCopy.svg" id="3_tgbvj"]
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_a7n1m"]
@@ -12,14 +12,15 @@
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 font_size = 24
 
-[node name="ObjectProperty" type="VBoxContainer"]
+[node name="ObjectInspector" type="VBoxContainer"]
+offset_right = 146.0
+offset_bottom = 298.0
 theme = ExtResource("1_tgbvj")
 theme_override_constants/separation = 0
-script = ExtResource("1_k7ys7")
+script = ExtResource("2_tgbvj")
 
-[node name="PropertyManager" type="Node" parent="." node_paths=PackedStringArray("properties")]
-script = ExtResource("3_2a2vs")
-properties = NodePath("../Properties")
+[node name="ObjectCopy" type="Node" parent="."]
+script = ExtResource("1_k7ys7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -63,4 +64,4 @@ layout_mode = 2
 [node name="Autofire" parent="Properties" instance=ExtResource("4_a7n1m")]
 layout_mode = 2
 
-[connection signal="pressed" from="HBoxContainer/CopyButton" to="." method="_on_copy_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CopyButton" to="ObjectCopy" method="_on_copy_button_pressed"]

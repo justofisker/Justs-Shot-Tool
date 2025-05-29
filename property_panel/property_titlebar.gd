@@ -2,7 +2,6 @@ extends PanelContainer
 
 @export var title : Label
 @onready var title_format := title.text
-@export var properties_container: Control
 
 func _ready() -> void:
 	get_parent().get_parent().child_order_changed.connect(_on_child_order_changed)
@@ -12,7 +11,7 @@ func _on_child_order_changed() -> void:
 	title.text = title_format % get_parent().get_index()
 
 func _on_collapse_pressed() -> void:
-	properties_container.visible = !properties_container.visible
+	get_parent().toggle_property_visibility()
 
 func _on_copy_button_pressed() -> void:
 	if OS.get_name() == "Web":

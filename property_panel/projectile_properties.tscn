@@ -1,0 +1,156 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfqw66w1jxdci"]
+
+[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="1_1k76v"]
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="2_66dvd"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="3_i5jxw"]
+[ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/edits/color_edit.tscn" id="4_qsmer"]
+
+[node name="ProjectileProperties" type="VBoxContainer"]
+
+[node name="objectId" parent="." instance=ExtResource("1_1k76v")]
+layout_mode = 2
+placeholder_text = "Doggy Dart"
+
+[node name="Size" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "%"
+
+[node name="LifetimeMS" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
+
+[node name="Damage" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "hitpoints"
+tooltip = "If [code]Damage[/code] is non-zero it will be prioitized."
+
+[node name="MinDamage" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "hitpoints"
+
+[node name="MaxDamage" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "hitpoints"
+
+[node name="Speed" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "unit/sec"
+tooltip = "1 unit = 0.1 tiles
+10 units = 1 tile"
+
+[node name="Acceleration" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "unit/sec^2"
+tooltip = "[b]Make sure to set an appropriate [code]SpeedClamp[/code][/b]
+1 unit = 0.1 tiles
+10 units = 1 tile"
+
+[node name="AccelerationDelay" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
+
+[node name="SpeedClamp" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "unit/sec"
+tooltip = "1 unit = 0.1 tiles
+10 units = 1 tile"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="Amplitude" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "tiles"
+
+[node name="Frequency" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "cycles"
+
+[node name="Wavy" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="Parametric" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="CircleTurnDelay" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
+
+[node name="CircleTurnAngle" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "°/time"
+tooltip = "Degrees per [code]CircleTurnDelay[/code] or [code]TurnStopTime[/code] if set."
+
+[node name="TurnRate" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+tooltip = "Despite being named [code]TurnRate[/code], this actually refers
+to how much the projectile will turn about it's origin over its lifetime."
+
+[node name="TurnRateDelay" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
+
+[node name="TurnStopTime" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
+tooltip = "Must be greater than [code]TurnRateDelay[/code]"
+
+[node name="TurnAcceleration" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "x"
+tooltip = "Unsure what this specifically does. I'll need to look into the code more"
+
+[node name="TurnAccelerationDelay" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
+
+[node name="TurnClamp" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="HSeparator3" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="MultiHit" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="PassesCover" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="ArmorPiercing" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="ProtectFromSink" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="FaceDir" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="Boomerang" parent="." instance=ExtResource("3_i5jxw")]
+layout_mode = 2
+
+[node name="ParticleTrail" parent="." instance=ExtResource("4_qsmer")]
+layout_mode = 2
+value = Color(1, 0, 1, 1)
+
+[node name="ParticleTrailIntensity" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+number_type = 1
+suffix = "x"
+
+[node name="ParticleTrailLifetimeMS" parent="." instance=ExtResource("2_66dvd")]
+layout_mode = 2
+suffix = "ms"
