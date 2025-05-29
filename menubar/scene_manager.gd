@@ -11,7 +11,7 @@ func get_scene_xml() -> String:
 	out += "<Objects>\n"
 	
 	for object: ShooterObject in Bridge.object_container.get_children():
-		out += "\t<Object id=\"" + object.object_settings.id + "\">\n"
+		out += "\t<Object id=\"" + object.object_settings.id + "\" type=\"" + str(object.object_settings.type) + "\">\n"
 		out += object.object_settings.to_xml().indent("\t\t")
 		for idx in object.projectiles.size():
 			out += object.projectiles[idx].to_xml(idx).indent("\t\t")
@@ -46,6 +46,7 @@ func load_scene_xml(buffer: PackedByteArray) -> void:
 		var projectiles : Array[XMLObjects.Projectile] = []
 		
 		object_settings.id = p.get_attribute_value("id")
+		object_settings.type = p.get_attribute_value("type").to_int()
 		
 		var offset := p.get_node_offset()
 		p.read()
