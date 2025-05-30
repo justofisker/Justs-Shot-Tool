@@ -8,6 +8,7 @@ func _ready() -> void:
 	get_viewport().get_camera_2d().zoom_mult = content_scale
 	Settings.setting_changed.connect(_on_setting_changed)
 	RenderingServer.set_default_clear_color(Settings.background_color)
+	Bridge.bullet_area = self
 
 func _on_setting_changed(property: String) -> void:
 	if property == "background_color":

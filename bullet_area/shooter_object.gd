@@ -106,7 +106,7 @@ func _process(delta: float) -> void:
 	if object_settings.show_path:
 		queue_redraw()
 	
-	var is_shooting = object_settings.autofire || (owner.pressed && Bridge.tool_mode == Bridge.ToolMode.Aim)
+	var is_shooting = object_settings.autofire || (Bridge.bullet_area.pressed && Bridge.tool_mode == Bridge.ToolMode.Aim)
 	
 	for idx in attacks.size():
 		var timing := timings[idx]

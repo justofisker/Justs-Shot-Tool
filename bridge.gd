@@ -13,6 +13,7 @@ signal object_selected(old_object: Node2D, object: Node2D)
 
 var object_container : Node = null
 var projectile_container : Node = null
+var bullet_area : Node = null
 
 var selected_object : Node = null :
 	set(value):
