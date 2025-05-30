@@ -38,41 +38,17 @@ func parse_projectiles() -> void:
 		xml_dir = "res://assets/xml/"
 	var dir = DirAccess.open(xml_dir)
 	for file in dir.get_files():
-		var p = SimpleXmlParser.new()
-		var err = p.open(xml_dir + file)
-		if err != OK:
-			push_error("Error while trying to open %s: %s" % [file, error_string(err)])
+		var xml = XML.parse_buffer(FileAccess.get_file_as_bytes(xml_dir + file))
+		if !xml.root || xml.root.name != "Objects":
 			continue
-		p.read()
-		if !p.is_element() || p.get_node_name() != "Objects":
-			continue
-		
-		if !p.read_possible_end():
-			continue
-			
-		while !p.is_element_end():
-			if p.has_attribute_value("id"):
-				var id := p.get_attribute_value("id")
-				
-				var offset := p.get_node_offset()
-				p.read()
-				var object_class := ""
-				while !p.is_element_end():
-					if p.get_node_name() == "Class":
-						p.read_whitespace()
-						object_class = p.get_node_data()
-						break
-					p.skip_section()
-					p.read()
-				p.seek(offset)
-				
-				if object_class == "Projectile":
-					var proj = XMLProjectileVisual.parse(p)
-					objects[id] = proj
-			
-			p.skip_section()
-			if !p.read_possible_end():
-				break
+		for object: XMLNode in xml.root.get_children_by_name("Object"):
+			if !object.get_child_by_name("Class"):
+				continue
+			var id : String = object.attributes.get("id", "")
+			var obj_class = object.get_child_by_name("Class").content
+			if obj_class == "Projectile":
+				var proj = XMLProjectileVisual.parse(object)
+				objects[id] = proj
 
 var characters: Texture2D
 var map_objects: Texture2D
