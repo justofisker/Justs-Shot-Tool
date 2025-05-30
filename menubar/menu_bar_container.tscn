@@ -37,3 +37,6 @@ script = ExtResource("3_k0e5c")
 
 [node name="WebFile" type="Node" parent="MenuBar"]
 script = ExtResource("4_50cg8")
+
+[connection signal="id_pressed" from="MenuBar/File" to="MenuBar/NativeFile" method="_on_file_id_pressed"]
+[connection signal="id_pressed" from="MenuBar/File" to="MenuBar/WebFile" method="_on_file_id_pressed"]
