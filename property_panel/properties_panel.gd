@@ -45,10 +45,12 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 		attacks_container.set_block_signals(true)
 		projectiles_container.set_block_signals(true)
 		
-		for child in attacks_container.get_children():
-			child.visible = false
-		for child in projectiles_container.get_children():
-			child.visible = false
+		if attacks_container.get_child_count() != 0:
+			for _i in maxi(attacks_container.get_child_count() - object.attacks.size(), 0):
+				attacks_container.remove_child(attacks_container.get_child(-1))
+		if projectiles_container.get_child_count() != 0:
+			for _i in maxi(projectiles_container.get_child_count() - object.projectiles.size(), 0):
+				projectiles_container.remove_child(projectiles_container.get_child(-1))
 		
 		for idx in object.attacks.size():
 			if attacks_container.get_child_count() < idx + 1:
@@ -85,13 +87,26 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 		projectiles_title.visible = false
 
 func _on_add_subattack_pressed() -> void:
-	var prop = PROPERTY_INSPECTOR.instantiate()
-	prop.properties_scene = ATTACK_PROPERTIES
-	prop.value = XMLObjects.Subattack.new()
-	attacks_container.add_child(prop)
+	var object = Bridge.selected_object
+	if attacks_container.get_child_count() < object.attacks.size() + 1:
+		var prop = PROPERTY_INSPECTOR.instantiate()
+		prop.properties_scene = ATTACK_PROPERTIES
+		prop.value = XMLObjects.Subattack.new()
+		attacks_container.add_child(prop)
+	else:
+		var prop = attacks_container.get_child(object.attacks.size())
+		prop.value = XMLObjects.Subattack.new()
+		prop.visible = true
 
 func _on_add_projectile_pressed() -> void:
-	var prop = PROPERTY_INSPECTOR.instantiate()
-	prop.properties_scene = PROJECTILE_PROPERTIES
-	prop.value = XMLObjects.Projectile.new()
-	projectiles_container.add_child(prop)
+	var object = Bridge.selected_object
+	var projectile = XMLObjects.Projectile.new()
+	if projectiles_container.get_child_count() < object.projectiles.size() + 1:
+		var prop = PROPERTY_INSPECTOR.instantiate()
+		prop.properties_scene = PROJECTILE_PROPERTIES
+		prop.value = projectile
+		projectiles_container.add_child(prop)
+	else:
+		var prop = projectiles_container.get_child(object.projectiles.size())
+		prop.value = projectile
+		prop.visible = true

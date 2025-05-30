@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv6j6x4hou8xl"]
+
+[ext_resource type="Script" uid="uid://cwll3oi8temqj" path="res://import_window/import_window.gd" id="1_e3bwv"]
+[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_u2xdk"]
+[ext_resource type="Script" uid="uid://bo4qon6foixri" path="res://import_window/object_area.gd" id="3_hfv1b"]
+
+[node name="ImportWindow" type="Window" node_paths=PackedStringArray("object_list")]
+title = "Import"
+initial_position = 4
+size = Vector2i(500, 600)
+script = ExtResource("1_e3bwv")
+object_list = NodePath("PanelContainer/ObjectArea/ScrollContainer/ObjectList")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 500.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_u2xdk")
+theme_type_variation = &"SettingsPanel"
+
+[node name="ObjectArea" type="VBoxContainer" parent="PanelContainer" node_paths=PackedStringArray("object_list")]
+layout_mode = 2
+script = ExtResource("3_hfv1b")
+object_list = NodePath("ScrollContainer/ObjectList")
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/ObjectArea"]
+layout_mode = 2
+placeholder_text = "Filter"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/ObjectArea"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 4
+
+[node name="ObjectList" type="VBoxContainer" parent="PanelContainer/ObjectArea/ScrollContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/ObjectArea"]
+layout_mode = 2
+alignment = 1
+
+[node name="SelectNone" type="Button" parent="PanelContainer/ObjectArea/HBoxContainer"]
+layout_mode = 2
+text = "Select None"
+
+[node name="SelectAll" type="Button" parent="PanelContainer/ObjectArea/HBoxContainer"]
+layout_mode = 2
+text = "Select All"
+
+[node name="Submit" type="Button" parent="PanelContainer/ObjectArea"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Submit"
+
+[connection signal="text_changed" from="PanelContainer/ObjectArea/LineEdit" to="PanelContainer/ObjectArea" method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="PanelContainer/ObjectArea/HBoxContainer/SelectNone" to="PanelContainer/ObjectArea" method="_on_select_none_pressed"]
+[connection signal="pressed" from="PanelContainer/ObjectArea/HBoxContainer/SelectAll" to="PanelContainer/ObjectArea" method="_on_select_all_pressed"]
+[connection signal="pressed" from="PanelContainer/ObjectArea/Submit" to="." method="_on_submit_pressed"]

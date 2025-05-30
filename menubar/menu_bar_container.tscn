@@ -25,6 +25,7 @@ script = ExtResource("2_0oams")
 settings_window_scene = ExtResource("2_flk2e")
 
 [node name="Scripts" type="PopupMenu" parent="MenuBar"]
+auto_translate_mode = 1
 script = ExtResource("5_83q5j")
 script_window = ExtResource("5_euwu1")
 

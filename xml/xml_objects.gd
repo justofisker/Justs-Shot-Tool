@@ -103,6 +103,37 @@ class Subattack extends Resource:
 		out += "</Subattack>\n"
 		
 		return out
+		
+	static func parse(node: XMLNode, base: XMLObjects.Subattack = XMLObjects.Subattack.new()) -> XMLObjects.Subattack:
+		var attack = base.copy()
+		
+		attack.projectile_id = node.attributes.get("projectileId", 0)
+		if node.get_child_by_name("NumProjectiles"):
+			attack.num_projectiles = node.get_child_by_name("NumProjectiles").content.to_int()
+		if node.get_child_by_name("RateOfFire"):
+			attack.rate_of_fire = node.get_child_by_name("RateOfFire").content.to_float()
+		var pos_offset_node := node.get_child_by_name("PosOffset")
+		if pos_offset_node:
+			var s := pos_offset_node.content.split(",")
+			if s.size() >= 2:
+				attack.pos_offset = Vector2(s[0].to_float(), s[1].to_float())
+		if node.get_child_by_name("BurstCount"):
+			attack.burst_count = node.get_child_by_name("BurstCount").content.to_int()
+		if node.get_child_by_name("BurstDelay"):
+			attack.burst_delay = node.get_child_by_name("BurstDelay").content.to_float()
+		if node.get_child_by_name("BurstMinDelay"):
+			attack.burst_min_delay = node.get_child_by_name("BurstMinDelay").content.to_float()
+		if node.get_child_by_name("ArcGap"):
+			attack.arc_gap = node.get_child_by_name("ArcGap").content.to_float()
+		if node.get_child_by_name("DefaultAngle"):
+			attack.default_angle = node.get_child_by_name("DefaultAngle").content.to_float()
+		var default_angle_incr_node := node.get_child_by_name("DefaultAngleIncr")
+		if default_angle_incr_node:
+			attack.default_angle_incr = default_angle_incr_node.content.to_float()
+			attack.default_angle_incr_max = default_angle_incr_node.attributes.get("maxAngle", 0)
+			attack.default_angle_incr_min = default_angle_incr_node.attributes.get("minAngle", 360)
+		
+		return attack
 
 class ProjectileDescription extends Resource:
 	var id: String = ""
@@ -146,7 +177,6 @@ class Projectile extends Resource:
 	
 	# Speed
 	var speed: float = 10
-	var speed_clamp_enabled: bool = false
 	var speed_clamp: float = 0
 	var acceleration: float = 0
 	var acceleration_delay: int = 0
@@ -162,7 +192,6 @@ class Projectile extends Resource:
 	var turn_stop_time: int = 0
 	var turn_acceleration: float = 0
 	var turn_acceleration_delay: int = 0 # ms
-	var turn_clamp_enabled: bool = false
 	var turn_clamp: float = 0
 	
 	# Flags
@@ -246,11 +275,9 @@ class Projectile extends Resource:
 			out += "\t<TurnRateDelay>" + str(turn_rate_delay) + "</TurnRateDelay>\n"
 		if turn_stop_time != 0:
 			out += "\t<TurnStopTime>" + str(turn_stop_time) + "</TurnStopTime>\n"
-		if turn_acceleration != 0:
+		if turn_acceleration != 0 || turn_acceleration_delay != 0:
 			out += "\t<TurnAcceleration>" + float_to_string(turn_acceleration) + "</TurnAcceleration>\n"
-		if turn_acceleration_delay != 0:
 			out += "\t<TurnAccelerationDelay>" + str(turn_acceleration_delay) + "</TurnAccelerationDelay>\n"
-		if turn_clamp_enabled:
 			out += "\t<TurnClamp>" + float_to_string(turn_clamp) + "</TurnClamp>\n"
 		
 		# Flags
@@ -283,3 +310,74 @@ class Projectile extends Resource:
 		out += "</Projectile>\n"
 		
 		return out
+	
+	static func parse(node: XMLNode, base: XMLObjects.Projectile = XMLObjects.Projectile.new()) -> XMLObjects.Projectile:
+		var proj = base.copy()
+		
+		if node.get_child_by_name("ObjectId"):
+			proj.object_id = node.get_child_by_name("ObjectId").content
+		if node.get_child_by_name("MinDamage"):
+			proj.min_damage = node.get_child_by_name("MinDamage").content.to_int()
+		if node.get_child_by_name("MaxDamage"):
+			proj.max_damage = node.get_child_by_name("MaxDamage").content.to_int()
+		if node.get_child_by_name("Damage"):
+			proj.damage = node.get_child_by_name("Damage").content.to_int()
+		if node.get_child_by_name("LifetimeMS"):
+			proj.lifetime_ms = node.get_child_by_name("LifetimeMS").content.to_int()
+		if node.get_child_by_name("Size"):
+			proj.size = node.get_child_by_name("Size").content.to_int()
+		if node.get_child_by_name("MaxHealthDamage"):
+			proj.max_health_damage = node.get_child_by_name("MaxHealthDamage").content.to_float()
+		if node.get_child_by_name("CurrentHealthDamage"):
+			proj.current_health_damage = node.get_child_by_name("CurrentHealthDamage").content.to_float()
+		if node.get_child_by_name("Speed"):
+			proj.speed = node.get_child_by_name("Speed").content.to_float()
+		if node.get_child_by_name("SpeedClamp"):
+			proj.speed_clamp = node.get_child_by_name("SpeedClamp").content.to_float()
+		if node.get_child_by_name("Acceleration"):
+			proj.acceleration = node.get_child_by_name("Acceleration").content.to_float()
+		if node.get_child_by_name("AccelerationDelay"):
+			proj.acceleration_delay = node.get_child_by_name("AccelerationDelay").content.to_int()
+		if node.get_child_by_name("Amplitude"):
+			proj.amplitude = node.get_child_by_name("Amplitude").content.to_float()
+		if node.get_child_by_name("Frequency"):
+			proj.frequency = node.get_child_by_name("Frequency").content.to_float()
+		if node.get_child_by_name("CircleTurnDelay"):
+			proj.circle_turn_delay = node.get_child_by_name("CircleTurnDelay").content.to_int()
+		if node.get_child_by_name("CircleTurnAngle"):
+			proj.circle_turn_angle = node.get_child_by_name("CircleTurnAngle").content.to_float()
+		if node.get_child_by_name("TurnRate"):
+			proj.turn_rate = node.get_child_by_name("TurnRate").content.to_float()
+		if node.get_child_by_name("TurnRateDelay"):
+			proj.turn_rate_delay = node.get_child_by_name("TurnRateDelay").content.to_int()
+		if node.get_child_by_name("TurnStopTime"):
+			proj.turn_stop_time = node.get_child_by_name("TurnStopTime").content.to_int()
+		if node.get_child_by_name("TurnAcceleration"):
+			proj.turn_acceleration = node.get_child_by_name("TurnAcceleration").content.to_float()
+		if node.get_child_by_name("TurnAccelerationDelay"):
+			proj.turn_acceleration_delay = node.get_child_by_name("TurnAccelerationDelay").content.to_int()
+		if node.get_child_by_name("TurnClamp"):
+			proj.turn_clamp = node.get_child_by_name("TurnClamp").content.to_float()
+		if node.get_child_by_name("MultiHit"):
+			proj.multi_hit = true
+		if node.get_child_by_name("PassesCover"):
+			proj.passes_cover = true
+		if node.get_child_by_name("ArmorPiercing"):
+			proj.armor_piercing = true
+		if node.get_child_by_name("ProtectFromSink"):
+			proj.protect_from_sink = true
+		if node.get_child_by_name("FaceDir"):
+			proj.face_dir = true
+		if node.get_child_by_name("Wavy"):
+			proj.wavy = true
+		if node.get_child_by_name("Boomerang"):
+			proj.boomerang = true
+		if node.get_child_by_name("Parametric"):
+			proj.parametric = true
+		if node.get_children_by_name("ParticleTrail"):
+			var trail := node.get_child_by_name("ParticleTrail")
+			proj.particle_trail_enabled = true
+			proj.particle_trail_intensity = trail.attributes.get("intensity", "1.0").to_float()
+			proj.particle_trail_lifetime_ms = trail.attributes.get("lifetimeMS", "500").to_int()
+
+		return proj
