@@ -147,6 +147,8 @@ layout_mode = 2
 [node name="ParticleTrail" parent="." instance=ExtResource("4_qsmer")]
 layout_mode = 2
 value = Color(1, 0, 1, 1)
+enabled = false
+toggleable = true
 
 [node name="ParticleTrailIntensity" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2

@@ -25,6 +25,8 @@ signal toggled(toggle_on: bool)
 		enabled = value
 		if color_picker_button:
 			color_picker_button.disabled = !enabled
+		if check_box:
+			check_box.set_pressed_no_signal(enabled)
 		toggled.emit(enabled)
 
 @export var toggleable : bool = false :
@@ -37,14 +39,11 @@ signal toggled(toggle_on: bool)
 @onready var label: Label = $HBoxContainer/Label
 @onready var check_box: CheckBox = $HBoxContainer/CheckBox
 
-# TODO: Enabled not working on start and in Engine
-
 func _ready() -> void:
 	renamed.connect(_on_renamed)
 	_on_renamed()
-	self.enabled = enabled
+	enabled = enabled
 	color_picker_button.color = value
-	color_picker_button.disabled = !enabled
 	check_box.visible = toggleable
 
 func _on_renamed() -> void:
