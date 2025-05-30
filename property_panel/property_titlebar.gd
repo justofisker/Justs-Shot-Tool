@@ -31,6 +31,7 @@ func _on_copy_button_pressed() -> void:
 func _on_duplicate_pressed() -> void:
 	var prop : Node = load(owner.scene_file_path).instantiate()
 	prop.value = owner.value.copy()
+	prop.properties_scene = owner.properties_scene
 	owner.get_parent().add_child(prop)
 	owner.get_parent().move_child(prop, owner.get_index() + 1)
 
