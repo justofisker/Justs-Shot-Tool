@@ -41,7 +41,7 @@ func _on_submit_pressed() -> void:
 			var node := root.get_child_by_idx(object_indices[idx])
 			var subattacks : Array[XMLObjects.Subattack] = []
 			var base_attack := XMLObjects.Subattack.parse(node)
-			if node.get_children_by_name("RateOfFire") || node.get_children_by_name("NumProjectiles"):
+			if (node.get_children_by_name("RateOfFire") && node.get_children_by_name("Projectile").size() == 0) || node.get_children_by_name("NumProjectiles"):
 				subattacks.push_back(base_attack)
 			for attack: XMLNode in node.get_children_by_name("Subattack"):
 				subattacks.push_back(XMLObjects.Subattack.parse(attack, base_attack))
