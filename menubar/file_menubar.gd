@@ -1,5 +1,8 @@
 extends PopupMenu
 
+@export var settings_window_scene : PackedScene
+var settings_window : Node
+
 enum Action { Settings, NewScene, SaveScene, SaveSceneAs, OpenScene, Import }
 
 func _ready() -> void:
@@ -11,6 +14,13 @@ func _ready() -> void:
 	add_action_item("Open Scene", Action.OpenScene, "scene_load")
 	add_separator()
 	add_action_item("Import Objects", Action.Import, "file_import")
+	id_pressed.connect(_on_id_pressed)
+
+func _on_id_pressed(id: int) -> void:
+	if id == Action.Settings:
+		if !is_instance_valid(settings_window):
+			settings_window = settings_window_scene.instantiate()
+			get_parent().add_child(settings_window)
 
 func add_action_item(label: String, id: int, action_name: StringName) -> void:
 	var event := InputEventAction.new()

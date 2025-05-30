@@ -14,7 +14,6 @@ offset_right = 142.0
 offset_bottom = 31.0
 theme_type_variation = &"MenuBarContainer"
 script = ExtResource("1_ergth")
-settings_window_scene = ExtResource("2_flk2e")
 
 [node name="MenuBar" type="MenuBar" parent="."]
 layout_mode = 2
@@ -23,6 +22,7 @@ layout_mode = 2
 auto_translate_mode = 1
 size = Vector2i(128, 116)
 script = ExtResource("2_0oams")
+settings_window_scene = ExtResource("2_flk2e")
 
 [node name="Scripts" type="PopupMenu" parent="MenuBar"]
 script = ExtResource("5_83q5j")
