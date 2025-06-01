@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cs44sby4b57sn"]
+[gd_scene load_steps=17 format=3 uid="uid://cs44sby4b57sn"]
 
 [ext_resource type="Script" uid="uid://cu2hb5jlescib" path="res://property_panel/tools.gd" id="1_cfdxs"]
 [ext_resource type="Texture2D" uid="uid://jslufb22o6qn" path="res://gui/icons/ToolSelect.svg" id="3_otv0s"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://f0fh308pmbjl" path="res://gui/icons/ToolMove.svg" id="4_mvj0t"]
 [ext_resource type="Texture2D" uid="uid://cvrre8immcq80" path="res://gui/icons/Ruler.svg" id="5_4mf1i"]
 [ext_resource type="Texture2D" uid="uid://xar7onvvt08r" path="res://gui/icons/ToolPan.svg" id="5_cfdxs"]
+[ext_resource type="Texture2D" uid="uid://chsjnluqxh5bc" path="res://gui/icons/DistractionFree.svg" id="7_otv0s"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_nd8tn"]
 
@@ -38,6 +39,10 @@ pressed = true
 events = [SubResource("InputEventAction_ikwa3")]
 
 [node name="Toolbar" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 24.0
+grow_horizontal = 2
 theme_type_variation = &"ToolbarPanel"
 script = ExtResource("1_cfdxs")
 
@@ -47,6 +52,8 @@ layout_mode = 2
 [node name="Select" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Select (Q)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
 toggle_mode = true
 button_pressed = true
 button_group = SubResource("ButtonGroup_nd8tn")
@@ -60,6 +67,8 @@ layout_mode = 2
 [node name="Move" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Move (W)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_nd8tn")
 shortcut = SubResource("Shortcut_ikwa3")
@@ -72,6 +81,8 @@ layout_mode = 2
 [node name="Aim" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Aim (A)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_nd8tn")
 shortcut = SubResource("Shortcut_otv0s")
@@ -82,6 +93,8 @@ icon = ExtResource("4_787al")
 visible = false
 layout_mode = 2
 tooltip_text = "Ruler (R)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_nd8tn")
 shortcut = SubResource("Shortcut_r1t2s")
@@ -92,6 +105,8 @@ icon = ExtResource("5_4mf1i")
 visible = false
 layout_mode = 2
 tooltip_text = "Pan (G)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_nd8tn")
 shortcut_in_tooltip = false
@@ -103,8 +118,18 @@ layout_mode = 2
 size_flags_horizontal = 10
 text = "Enemy Mode"
 
+[node name="Expand" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+theme_type_variation = &"GuiButton"
+toggle_mode = true
+icon = ExtResource("7_otv0s")
+flat = true
+
 [connection signal="pressed" from="HBoxContainer/Select" to="." method="_on_select_pressed"]
 [connection signal="pressed" from="HBoxContainer/Move" to="." method="_on_move_pressed"]
 [connection signal="pressed" from="HBoxContainer/Aim" to="." method="_on_aim_pressed"]
 [connection signal="pressed" from="HBoxContainer/Ruler" to="." method="_on_ruler_pressed"]
 [connection signal="pressed" from="HBoxContainer/Pan" to="." method="_on_ruler_pressed"]
+[connection signal="toggled" from="HBoxContainer/Expand" to="." method="_on_expand_toggled"]

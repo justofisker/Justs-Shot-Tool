@@ -19,6 +19,7 @@ text = "ColorEdit"
 visible = false
 layout_mode = 2
 size_flags_horizontal = 8
+button_pressed = true
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]
 custom_minimum_size = Vector2(28, 0)

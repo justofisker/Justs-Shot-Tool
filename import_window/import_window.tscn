@@ -1,19 +1,23 @@
 [gd_scene load_steps=4 format=3 uid="uid://dv6j6x4hou8xl"]
 
 [ext_resource type="Script" uid="uid://cwll3oi8temqj" path="res://import_window/import_window.gd" id="1_e3bwv"]
-[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_u2xdk"]
+[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://theme.tres" id="2_u2xdk"]
 [ext_resource type="Script" uid="uid://bo4qon6foixri" path="res://import_window/object_area.gd" id="3_hfv1b"]
 
 [node name="ImportWindow" type="Window" node_paths=PackedStringArray("object_list")]
 title = "Import"
 initial_position = 4
 size = Vector2i(500, 600)
+min_size = Vector2i(300, 500)
 script = ExtResource("1_e3bwv")
 object_list = NodePath("PanelContainer/ObjectArea/ScrollContainer/ObjectList")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-offset_right = 500.0
-offset_bottom = 600.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("2_u2xdk")

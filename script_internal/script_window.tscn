@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://blpv4rl666dpc"]
 
 [ext_resource type="Script" uid="uid://b3xaiuihmvcrw" path="res://script_internal/script_window.gd" id="1_mbmhd"]
-[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="2_s2ylw"]
+[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://theme.tres" id="2_s2ylw"]
 
 [node name="ScriptWindow" type="Window" node_paths=PackedStringArray("properties")]
 disable_3d = true

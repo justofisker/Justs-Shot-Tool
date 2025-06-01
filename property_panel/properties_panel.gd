@@ -15,6 +15,7 @@ func _input(event: InputEvent) -> void:
 		get_viewport().gui_release_focus()
 
 func _ready() -> void:
+	Bridge.property_inspector = self
 	Bridge.object_selected.connect(_on_object_selected)
 	attacks_container.child_order_changed.connect(_on_reorder_attacks)
 	projectiles_container.child_order_changed.connect(_on_reorder_projectiles)

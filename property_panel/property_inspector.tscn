@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://na5avsr373e0"]
 
-[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://property_panel/prop_theme.tres" id="1_1j15l"]
+[ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://theme.tres" id="1_1j15l"]
 [ext_resource type="Script" uid="uid://b7l6bw04hy35s" path="res://property_panel/property_inspector.gd" id="2_k3mye"]
 [ext_resource type="Script" uid="uid://csatcdq5ap0k3" path="res://property_panel/property_titlebar.gd" id="3_xc7nb"]
 [ext_resource type="Texture2D" uid="uid://b56x7hpdiesci" path="res://gui/icons/TripleBar.svg" id="4_ar0n8"]
@@ -88,6 +88,7 @@ stretch_mode = 3
 [node name="PropertiesPanel" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 2
+mouse_filter = 1
 theme_type_variation = &"PropertyValueContainer"
 
 [connection signal="pressed" from="TitleContainer/TitleBar/CopyButton" to="TitleContainer" method="_on_copy_button_pressed"]

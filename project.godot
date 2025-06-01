@@ -38,6 +38,10 @@ window/size/viewport_height=720
 
 enabled=PackedStringArray("res://addons/html5_file_dialog/plugin.cfg", "res://addons/native_dialogs/plugin.cfg")
 
+[gui]
+
+theme/custom="uid://cv017eo06bbcu"
+
 [input]
 
 tool_select={

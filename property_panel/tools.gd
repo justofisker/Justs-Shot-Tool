@@ -11,3 +11,6 @@ func _on_ruler_pressed() -> void:
 
 func _on_aim_pressed() -> void:
 	Bridge.tool_mode = Bridge.ToolMode.Aim
+
+func _on_expand_toggled(toggled_on: bool) -> void:
+	Bridge.property_inspector.visible = !toggled_on
