@@ -59,8 +59,8 @@ select_all_on_focus = true
 [node name="Suffix" type="Label" parent="VBoxContainer/FloatXEdit/PanelContainer/HBoxContainer2/LineEdit"]
 layout_mode = 0
 offset_left = 40.0
-offset_right = 68.5625
-offset_bottom = 31.0
+offset_right = 47.1875
+offset_bottom = 32.0
 theme_type_variation = &"SuffixLabel"
 label_settings = SubResource("LabelSettings_5vw27")
 vertical_alignment = 1
@@ -106,8 +106,8 @@ select_all_on_focus = true
 [node name="Suffix" type="Label" parent="VBoxContainer/FloatYEdit/PanelContainer/HBoxContainer2/LineEdit"]
 layout_mode = 0
 offset_left = 40.0
-offset_right = 68.5625
-offset_bottom = 31.0
+offset_right = 47.1875
+offset_bottom = 32.0
 theme_type_variation = &"SuffixLabel"
 label_settings = SubResource("LabelSettings_5vw27")
 vertical_alignment = 1

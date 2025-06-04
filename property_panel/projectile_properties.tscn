@@ -16,28 +16,34 @@ placeholder_text = "Doggy Dart"
 [node name="Size" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "%"
+clamp_min = true
 
 [node name="LifetimeMS" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "ms"
+clamp_min = true
 
 [node name="Damage" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "hitpoints"
+clamp_min = true
 tooltip = "If [code]Damage[/code] is non-zero it will be prioitized."
 
 [node name="MinDamage" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "hitpoints"
+clamp_min = true
 
 [node name="MaxDamage" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "hitpoints"
+clamp_min = true
 
 [node name="Speed" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 number_type = 1
 suffix = "unit/sec"
+clamp_min = true
 tooltip = "1 unit = 0.1 tiles
 10 units = 1 tile"
 
@@ -52,6 +58,7 @@ tooltip = "[b]Make sure to set an appropriate [code]SpeedClamp[/code][/b]
 [node name="AccelerationDelay" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "ms"
+clamp_min = true
 
 [node name="SpeedClamp" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
@@ -85,6 +92,7 @@ layout_mode = 2
 [node name="CircleTurnDelay" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "ms"
+clamp_min = true
 
 [node name="CircleTurnAngle" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
@@ -102,10 +110,12 @@ to how much the projectile will turn about it's origin over its lifetime."
 [node name="TurnRateDelay" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "ms"
+clamp_min = true
 
 [node name="TurnStopTime" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "ms"
+clamp_min = true
 tooltip = "Must be greater than [code]TurnRateDelay[/code]"
 
 [node name="TurnAcceleration" parent="." instance=ExtResource("2_66dvd")]
@@ -117,6 +127,7 @@ tooltip = "Unsure what this specifically does. I'll need to look into the code m
 [node name="TurnAccelerationDelay" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2
 suffix = "ms"
+clamp_min = true
 
 [node name="TurnClamp" parent="." instance=ExtResource("2_66dvd")]
 layout_mode = 2

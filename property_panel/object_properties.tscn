@@ -13,6 +13,7 @@ placeholder_text = "Big Dog"
 
 [node name="type" parent="." instance=ExtResource("2_2v7nh")]
 layout_mode = 2
+clamp_min = true
 display_as_hex = true
 
 [node name="Position" parent="." instance=ExtResource("3_ft5c1")]
@@ -27,6 +28,7 @@ layout_mode = 2
 
 [node name="Dexterity" parent="." instance=ExtResource("2_2v7nh")]
 layout_mode = 2
+clamp_min = true
 
 [node name="Autofire" parent="." instance=ExtResource("4_e2buv")]
 layout_mode = 2

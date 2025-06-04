@@ -31,8 +31,17 @@ enum NumberType {INTEGER, FLOAT}
 @export var value_int : int = 0
 @export var value_float : float = 0.0
 
+@export var max_value : float = 100.0
+@export var clamp_max : bool = false
+@export var min_value : float = 0.0
+@export var clamp_min : bool = false
+
 var value :
 	set(new_value):
+		if clamp_max:
+			new_value = min(new_value, max_value)
+		if clamp_min:
+			new_value = max(new_value, min_value)
 		if number_type == NumberType.INTEGER:
 			value_int = snapped(new_value, step_int)
 		else:

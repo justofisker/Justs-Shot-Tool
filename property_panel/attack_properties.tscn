@@ -9,27 +9,33 @@ offset_bottom = 451.0
 
 [node name="ProjectileId" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
+clamp_min = true
 
 [node name="NumProjectiles" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
+clamp_min = true
 
 [node name="RateOfFire" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
 number_type = 1
 suffix = "x"
+clamp_min = true
 
 [node name="BurstCount" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
+clamp_min = true
 
 [node name="BurstDelay" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
 number_type = 1
 suffix = "sec"
+clamp_min = true
 
 [node name="BurstMinDelay" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
 number_type = 1
 suffix = "sec"
+clamp_min = true
 
 [node name="PosOffset" parent="." instance=ExtResource("2_8xlnq")]
 layout_mode = 2
@@ -39,6 +45,7 @@ suffix = "tiles"
 layout_mode = 2
 number_type = 1
 suffix = "°"
+clamp_min = true
 
 [node name="DefaultAngle" parent="." instance=ExtResource("1_s3ukx")]
 layout_mode = 2
