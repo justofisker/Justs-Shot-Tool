@@ -5,6 +5,10 @@ const IMPORT_WINDOW = preload("res://import_window/import_window.tscn")
 
 var import_window : Node
 
+func _ready() -> void:
+	if OS.get_name() == "Web":
+		queue_free()
+
 var current_file := "" :
 	set(value):
 		current_file = value
@@ -32,29 +36,30 @@ func _on_file_id_pressed(id: int) -> void:
 			else:
 				_on_save_file_selected(current_file)
 		FileMenubar.Action.OpenScene:
-			var dialog = NativeFileDialog.new()
-			dialog.clear_filters()
+			var dialog := FileDialog.new()
 			dialog.add_filter("*.xml", "XML File")
-			dialog.file_mode = NativeFileDialog.FILE_MODE_OPEN_FILE
+			dialog.use_native_dialog = true
+			dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 			add_child(dialog)
 			dialog.show()
 			dialog.file_selected.connect(_on_load_file_selected)
 			dialog.file_selected.connect(func(_path: String): dialog.queue_free())
 			dialog.canceled.connect(dialog.queue_free)
 		FileMenubar.Action.Import:
-			var dialog = NativeFileDialog.new()
-			dialog.clear_filters()
+			var dialog = FileDialog.new()
 			dialog.add_filter("*.xml", "XML File")
-			dialog.file_mode = NativeFileDialog.FILE_MODE_OPEN_FILE
+			dialog.use_native_dialog = true
+			dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 			add_child(dialog)
 			dialog.show()
 			dialog.file_selected.connect(_on_import_file_selected)
 			dialog.file_selected.connect(func(_path: String): dialog.queue_free())
 
 func save_as() -> void:
-	var dialog = NativeFileDialog.new()
-	dialog.clear_filters()
+	var dialog = FileDialog.new()
 	dialog.add_filter("*.xml", "XML File")
+	dialog.current_file = "scene.xml"
+	dialog.use_native_dialog = true
 	add_child(dialog)
 	dialog.show()
 	dialog.file_selected.connect(_on_save_file_selected)
