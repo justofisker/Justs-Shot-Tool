@@ -36,7 +36,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/html5_file_dialog/plugin.cfg", "res://addons/native_dialogs/plugin.cfg")
+enabled=PackedStringArray("res://addons/html5_file_dialog/plugin.cfg")
 
 [gui]
 
