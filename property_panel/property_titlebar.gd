@@ -9,6 +9,8 @@ func get_value_type_name() -> String:
 		return "Projectile"
 	if value is XMLObjects.Subattack:
 		return "Subattack"
+	if value is XMLObjects.BulletCreate:
+		return "BulletCreate"
 	push_error("Unknown value type")
 	return ""
 

@@ -68,7 +68,7 @@ render_target_update_mode = 4
 
 [node name="BulletArea" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportPosition/SubViewportContainer/SubViewport" instance=ExtResource("1_0xm2m")]
 
-[node name="PropertiesPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attacks_container", "projectiles_container", "subattacks_title", "projectiles_title")]
+[node name="PropertiesPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("object_properties_panel", "attacks_container", "projectiles_container", "bulletcreate_container", "subattacks_title", "projectiles_title", "bulletcreate_title")]
 custom_minimum_size = Vector2(470, 0)
 layout_mode = 2
 focus_mode = 1
@@ -77,8 +77,10 @@ script = ExtResource("3_lquwl")
 object_properties_panel = NodePath("ScrollContainer/MarginContainer/VBoxContainer/ObjectProperty")
 attacks_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Subattacks")
 projectiles_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Projectiles")
+bulletcreate_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer/BulletCreates")
 subattacks_title = NodePath("ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle")
 projectiles_title = NodePath("ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle")
+bulletcreate_title = NodePath("ScrollContainer/MarginContainer/VBoxContainer/BulletCreateTitle")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel"]
 layout_mode = 2
@@ -134,5 +136,23 @@ stretch_mode = 3
 [node name="Projectiles" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="BulletCreateTitle" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/BulletCreateTitle"]
+layout_mode = 2
+text = "BulletCreate"
+label_settings = SubResource("LabelSettings_5vw27")
+
+[node name="AddBulletCreate" type="TextureButton" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/BulletCreateTitle"]
+layout_mode = 2
+size_flags_horizontal = 10
+texture_normal = ExtResource("7_kek77")
+stretch_mode = 3
+
+[node name="BulletCreates" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/SubattacksTitle/AddSubattack" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_subattack_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/ProjectilesTitle/AddProjectile" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_projectile_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/BulletCreateTitle/AddBulletCreate" to="VBoxContainer/HBoxContainer/PropertiesPanel" method="_on_add_bullet_create_pressed"]

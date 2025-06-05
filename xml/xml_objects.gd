@@ -381,3 +381,52 @@ class Projectile extends Resource:
 			proj.particle_trail_lifetime_ms = trail.attributes.get("lifetimeMS", "500").to_int()
 
 		return proj
+
+class BulletCreate extends Resource:
+	signal updated()
+	
+	# Tool specific
+	var enabled: bool = true
+	# Generic Activate
+	var cooldown: float = 0.0
+	var proc: float = 1.0
+	var target_mouse: bool = true
+	var target_mouse_range: float = 3.0
+	# BulletCreate specific
+	var type: int = 0
+	var min_distance: float = 0
+	var max_distance: float = 4.4
+	var offset_angle: float = 90.0
+	var num_shots: int = 3
+	var gap_angle: float = 45.0
+	var gap_tiles: float = 0.5
+	var arc_gap: float = 0.0
+	var scailing_stat: String = ""
+	var stat_mod_scaling_min: int = 0
+	var stat_mod_damage: float = 0.0
+	var stat_mod_num_shots: float = 0.0
+	var origin: String = "target"
+	
+	func _set(_property: StringName, _value: Variant) -> bool:
+		updated.emit()
+		return false
+	
+	func copy() -> BulletCreate:
+		var out = BulletCreate.new()
+		
+		for prop in out.get_property_list():
+			out.set(prop["name"], get(prop["name"]))
+		
+		return out
+	
+	func float_to_string(a: float) -> String:
+		return XMLObjects.float_to_string(a)
+		
+	func to_xml(_index: int) -> String:
+		push_error("TOOD: Implement BulletCreate.to_xml()")
+		return ""
+	
+	static func parse(node: XMLNode, base: XMLObjects.BulletCreate = XMLObjects.BulletCreate.new()) -> XMLObjects.BulletCreate:
+		var bc = base.copy()
+		push_error("TOOD: Implement BulletCreate.parse()")
+		return bc

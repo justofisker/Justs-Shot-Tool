@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxknql0d7eujx"]
+
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="1_s7cmn"]
+[ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="2_fud38"]
+[ext_resource type="PackedScene" uid="uid://0c2d251kgqay" path="res://gui/edits/string_edit.tscn" id="3_qh52m"]
+
+[node name="BulletCreateProperties" type="VBoxContainer"]
+offset_right = 288.0
+offset_bottom = 135.0
+
+[node name="Enabled" parent="." instance=ExtResource("2_fud38")]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="Cooldown" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "sec"
+
+[node name="Proc" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "%"
+max_value = 1.0
+clamp_max = true
+clamp_min = true
+
+[node name="targetMouse" parent="." instance=ExtResource("2_fud38")]
+layout_mode = 2
+
+[node name="targetMouseRange" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "tiles"
+clamp_min = true
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="minDistance" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "tiles"
+
+[node name="maxDistance" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "tiles"
+
+[node name="numShots" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+suffix = "shots"
+clamp_min = true
+
+[node name="gapAngle" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="gapTiles" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "tiles"
+
+[node name="arcGap" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
+[node name="scailingStat" parent="." instance=ExtResource("3_qh52m")]
+layout_mode = 2
+placeholder_text = "eg. ATT or WIS"
+
+[node name="statModScalingMin" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+suffix = "stat"
+clamp_min = true
+
+[node name="statModDamage" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "hp/stat"
+clamp_min = true
+
+[node name="statModNumShots" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "shots/stat"
+clamp_min = true
+
+[node name="origin" parent="." instance=ExtResource("3_qh52m")]
+layout_mode = 2

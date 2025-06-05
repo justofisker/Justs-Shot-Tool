@@ -11,6 +11,11 @@ var projectiles : Array[XMLObjects.Projectile] = [ XMLObjects.Projectile.new() ]
 	set(value):
 		projectiles = value
 		reset()
+var bulletcreates: Array[XMLObjects.BulletCreate] = [] :
+	set(value):
+		bulletcreates = value
+		reset()
+
 var object_settings := XMLObjects.ObjectSettings.new()
 
 var bullet_id : int = 0
