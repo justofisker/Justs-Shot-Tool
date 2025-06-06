@@ -89,16 +89,18 @@ func calculate_object_path() -> void:
 	
 	for idx in projs.size():
 		var proj = projs[idx]
+		proj.offset = Vector2.ZERO
 		proj._ready()
 		var offset := attacks[indices[idx]].pos_offset
 		offset = Vector2(offset.y, offset.x)
 		for t in proj.proj.lifetime_ms * Settings.path_simulation_rate / 1000 + 1:
-			paths[idx].add_point(proj.calculate_position(t * 1000 / Settings.path_simulation_rate, false) - offset)
+			paths[idx].add_point(proj.calculate_position(t * 1000 / Settings.path_simulation_rate) - offset)
 	
 	projectile_paths = paths
 	projectile_path_attack_index = indices
 
 func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_incr : bool = true) -> Array[Projectile]:
+	var angle := 0.0 if ignore_mouse else get_local_mouse_position().angle()
 	var projs : Array[Projectile]
 	if attack.projectile_id < 0 || attack.projectile_id >= projectiles.size():
 		return projs
@@ -107,11 +109,41 @@ func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_
 	for i in attack.num_projectiles:
 		var proj = Projectile.new()
 		proj.proj = projectiles[attack.projectile_id]
-		proj.angle = 0.0 if ignore_mouse else get_local_mouse_position().angle()
-		proj.shoot_angle = 0.0 if ignore_mouse else get_local_mouse_position().angle()
+		proj.angle = angle
+		proj.offset = Vector2.from_angle(angle) * 0.5
 		proj.origin = position / 8.0 + Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.angle)
 		proj.angle += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
 		proj.angle += deg_to_rad(attack.default_angle)
+		proj.bullet_id = bullet_id
+		bullet_id += 1
+		projs.push_back(proj)
+	return projs
+
+func create_projectiles_bulletcreate(bc: XMLObjects.BulletCreate, angle: float, use_proc: bool = true) -> Array[Projectile]:
+	var projs : Array[Projectile]
+	var proc := Bridge.get_object(bc.type)
+	if proc == null || proc.projectiles.size() < 1 || (use_proc && randf() > bc.proc) || !bc.enabled:
+		return []
+	var distance := clampf(get_local_mouse_position().length() / 8.0, bc.min_distance, bc.max_distance)
+	
+	for i in bc.num_shots:
+		var pos = Vector2.from_angle(deg_to_rad(bc.gap_angle))
+		if bc.num_shots > 1:
+			pos = Vector2.from_angle(deg_to_rad(bc.gap_angle)) * (bc.gap_tiles * (i - (bc.num_shots - 1) / 2.0))
+		
+		var proj = Projectile.new()
+		proj.proj = proc.projectiles[0].copy()
+		# Unsure about this but Visage seems unaffected by size
+		proj.proj.size = max(100, proj.proj.size)
+		
+		var offset_angle := 0.0
+		if bc.origin == "target":
+			offset_angle = deg_to_rad(bc.offset_angle)
+			pos += Vector2(-proj.proj.speed * proj.proj.lifetime_ms / 20000.0, 0).rotated(offset_angle)
+		pos.x += distance
+		
+		proj.angle = angle + offset_angle + deg_to_rad(bc.arc_gap * (i - (bc.num_shots - 1) / 2.0))
+		proj.origin = position / 8.0 + pos.rotated(angle)
 		proj.bullet_id = bullet_id
 		bullet_id += 1
 		projs.push_back(proj)
@@ -134,6 +166,8 @@ func _process(delta: float) -> void:
 		timing.burst_period += delta
 		timing.last_attack += delta
 	
+	var shot_this_frame := false
+	
 	if is_shooting:
 		for idx in attacks.size():
 			var attack := attacks[idx]
@@ -150,11 +184,19 @@ func _process(delta: float) -> void:
 				timing.last_attack = 0
 				timing.burst_count += 1
 				
+				shot_this_frame = true
+				
 				for proj in create_projectiles(attack, object_settings.ignore_mouse):
 					get_parent().add_projectile(proj)
 				
 				if !is_zero_approx(attack.default_angle_incr):
 					timing.default_angle_incr = wrapf(timing.default_angle_incr + attack.default_angle_incr, attack.default_angle_incr_min, attack.default_angle_incr_max)
+	
+	if shot_this_frame:
+		var angle := 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
+		for bc in bulletcreates:
+			for proj in create_projectiles_bulletcreate(bc, angle):
+				get_parent().add_projectile(proj)
 
 var projectile_paths: Array[Curve2D]
 var projectile_path_attack_index: PackedInt32Array

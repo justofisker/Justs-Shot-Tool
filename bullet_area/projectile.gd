@@ -2,7 +2,7 @@ extends Node2D
 
 var proj: XMLObjects.Projectile
 var angle: float = 0.0
-var shoot_angle: float = 0.0
+var offset: Vector2
 var origin : Vector2
 var bullet_id = 0
 @onready var is_turning : bool = proj.turn_rate != 0
@@ -15,7 +15,6 @@ var circle_turn_stop_time : int = 0
 var time_alive : float = 0
 var rotation_rate : float = 0
 @onready var orig_angle = angle
-var offset := Vector2.ZERO
 
 func _ready() -> void:
 	if proj.turn_stop_time != 0:
@@ -93,7 +92,7 @@ func get_angle(elapsed: int) -> float:
 		return angle + angle_v
 	return angle
 
-func calculate_position(elapsed: int, include_offset: bool = true) -> Vector2:
+func calculate_position(elapsed: int) -> Vector2:
 	var point := origin
 	
 	var dist := calculate_distance(elapsed)
@@ -144,10 +143,7 @@ func calculate_position(elapsed: int, include_offset: bool = true) -> Vector2:
 			var deflection := proj.amplitude * sin(phase + (float(elapsed) / proj.lifetime_ms) * proj.frequency * 2 * PI)
 			point += Vector2(-sin(angle), cos(angle)) * deflection
 	
-	if include_offset:
-		point += get_offset()
-	
-	return point
+	return point + offset
 
 func calculate_distance(elapsed: int) -> float:
 	var t := elapsed / 1000.0
@@ -204,11 +200,6 @@ func apply_new_turn_rate_parameters(point: Vector2) -> Vector2:
 	is_turning = false
 	
 	return point
-
-func get_offset() -> Vector2:
-	if offset.is_zero_approx():
-		offset = Vector2(cos(shoot_angle), sin(shoot_angle)) * 0.5
-	return offset
 
 func calculate_turn(elapsed: int, ignore_lifetime: bool = false) -> float:
 	var angle_v := 0.0

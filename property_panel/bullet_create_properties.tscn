@@ -48,6 +48,11 @@ layout_mode = 2
 number_type = 1
 suffix = "tiles"
 
+[node name="offsetAngle" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+number_type = 1
+suffix = "°"
+
 [node name="numShots" parent="." instance=ExtResource("1_s7cmn")]
 layout_mode = 2
 suffix = "shots"
