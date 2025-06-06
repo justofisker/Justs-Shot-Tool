@@ -29,61 +29,42 @@ func load_scene_xml(buffer: PackedByteArray) -> void:
 	Bridge.clear_objects()
 	Bridge.clear_projectiles()
 	
-	var p := SimpleXmlParser.new()
-	var err := p.open_buffer(buffer)
-	if err != OK:
-		push_error("Error while trying to open scene: %s" % error_string(err))
-		return
-	p.read()
-	assert(p.is_element())
-	if p.get_node_name() != "Objects":
-		return
+	var xml := XML.parse_buffer(buffer)
 	
-	if !p.read_possible_end():
-		return
-	
-	while !p.is_element_end():
+	for object in xml.root.get_children_by_name("Object"):
+		var projectiles: Array[XMLObjects.Projectile] = []
+		var subattacks: Array[XMLObjects.Subattack] = []
+		var bulletcreates: Array[XMLObjects.BulletCreate] = []
+		
+		for projectile: XMLNode in object.get_children_by_name("Projectile"):
+			projectiles.push_back(XMLObjects.Projectile.parse(projectile))
+		for subattack: XMLNode in object.get_children_by_name("Subattack"):
+			subattacks.push_back(XMLObjects.Subattack.parse(subattack))
+		var activates : Array[XMLNode]
+		activates.append_array(object.get_children_by_name("OnPlayerShootActivate"))
+		activates.append_array(object.get_children_by_name("OnPlayerHitActivate"))
+		activates.append_array(object.get_children_by_name("OnPlayerAbilityActivate"))
+		activates.append_array(object.get_children_by_name("Activate"))
+		for activate in activates:
+			bulletcreates.push_back(XMLObjects.BulletCreate.parse(activate))
+		
 		var object_settings := XMLObjects.ObjectSettings.new()
-		var attacks : Array[XMLObjects.Subattack] = []
-		var projectiles : Array[XMLObjects.Projectile] = []
+		object_settings.id = object.attributes.get("id", "")
+		object_settings.type = object.attributes.get("type", "0x0").hex_to_int()
+		for child: XMLNode in object.children:
+			var property = child.name.to_snake_case()
+			if property in object_settings:
+				if child.content == "":
+					set_flag(object_settings, property)
+				else:
+					set_property(object_settings, property, child.content)
 		
-		object_settings.id = p.get_attribute_value("id")
-		var type : String = p.get_attribute_value("type")
-		if type.begins_with("0x"):
-			object_settings.type = type.hex_to_int()
-		else:
-			object_settings.type = type.to_int()
-		
-		var offset := p.get_node_offset()
-		p.read()
-		while !p.is_element_end():
-			match p.get_node_name():
-				"Projectile":
-					projectiles.push_back(parse_projectile(p))
-				"Subattack":
-					attacks.push_back(parse_attack(p))
-				_:
-					var property = p.get_node_name().to_snake_case()
-					if property in object_settings:
-						if p.is_empty():
-							set_flag(object_settings, property)
-						else:
-							p.read_whitespace()
-							set_property(object_settings, property, p.get_node_data())
-			p.skip_section()
-			p.read()
-
-		var shooter = Node2D.new()
-		shooter.set_script(ShooterObject)
+		var shooter := ShooterObject.new()
 		shooter.object_settings = object_settings
-		shooter.attacks = attacks
 		shooter.projectiles = projectiles
+		shooter.attacks = subattacks
+		shooter.bulletcreates = bulletcreates
 		Bridge.object_container.add_child(shooter)
-
-		p.seek(offset)
-		p.skip_section()
-		if !p.read_possible_end():
-			break
 	
 	Bridge.selected_object = Bridge.object_container.get_child(0)
 
