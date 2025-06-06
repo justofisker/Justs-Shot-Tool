@@ -52,7 +52,7 @@ viewport = NodePath("SubViewportContainer/SubViewport")
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportPosition"]
 show_behind_parent = true
 top_level = true
-layout_mode = 2
+layout_mode = 0
 offset_top = 34.0
 offset_right = 810.0
 offset_bottom = 720.0
