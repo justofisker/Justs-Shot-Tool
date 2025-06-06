@@ -48,7 +48,7 @@ func reset() -> void:
 		if !projectile.updated.is_connected(reset):
 			projectile.updated.connect(reset)
 	if object_settings.show_path:
-		projectile_paths = calculate_object_path()
+		calculate_object_path()
 	else:
 		projectile_paths = []
 	bullet_id = 0
@@ -58,15 +58,24 @@ func _on_object_settings_updated():
 	reset()
 
 const SIMULATION_RATE = 60
-func calculate_object_path() -> Array[Curve2D]:
+func calculate_object_path() -> void:
+	bullet_id = 0
 	var projs : Array[Projectile]
-	for attack in attacks:
+	var indices : PackedInt32Array
+	for idx in attacks.size():
+		var attack := attacks[idx]
 		if attack.projectile_id < 0 || attack.projectile_id >= projectiles.size():
 			continue
 		var projectile := projectiles[attack.projectile_id]
 		projs.append_array(create_projectiles(attack, true, false))
-		if attack.num_projectiles % 2 == 1 && (!is_zero_approx(projectile.amplitude) || projectile.wavy):
+		for _idx in attack.num_projectiles:
+			indices.push_back(idx)
+		if ((attack.num_projectiles % 2 == 1 || attacks.size() > 1) && (!is_zero_approx(projectile.amplitude) || projectile.wavy)):
+			if attack.num_projectiles % 2 == 0:
+				bullet_id += 1
 			projs.append_array(create_projectiles(attack, true, false))
+			for _idx in attack.num_projectiles:
+				indices.push_back(idx)
 	
 	var paths : Array[Curve2D]
 	paths.resize(projs.size())
@@ -77,16 +86,19 @@ func calculate_object_path() -> Array[Curve2D]:
 	for idx in projs.size():
 		var proj = projs[idx]
 		proj._ready()
+		var offset := attacks[indices[idx]].pos_offset
+		offset = Vector2(offset.y, offset.x)
 		for t in proj.proj.lifetime_ms * SIMULATION_RATE / 1000 + 1:
-			paths[idx].add_point(proj.calculate_position(t * 1000 / SIMULATION_RATE))
+			paths[idx].add_point(proj.calculate_position(t * 1000 / SIMULATION_RATE, false) - offset)
 	
-	return paths
+	projectile_paths = paths
+	projectile_path_attack_index = indices
 
 func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_incr : bool = true) -> Array[Projectile]:
 	var projs : Array[Projectile]
 	if attack.projectile_id < 0 || attack.projectile_id >= projectiles.size():
 		return projs
-	var default_angle_incr = 0.0
+	var default_angle_incr = timings[attacks.find(attack)].default_angle_incr
 	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0 + (default_angle_incr if angle_incr else 0.0))
 	for i in attack.num_projectiles:
 		var proj = Projectile.new()
@@ -136,16 +148,23 @@ func _process(delta: float) -> void:
 				
 				for proj in create_projectiles(attack, object_settings.ignore_mouse):
 					get_parent().add_projectile(proj)
+				
+				if !is_zero_approx(attack.default_angle_incr):
+					timing.default_angle_incr = wrapf(timing.default_angle_incr + attack.default_angle_incr, attack.default_angle_incr_min, attack.default_angle_incr_max)
 
-var projectile_paths : Array[Curve2D]
+var projectile_paths: Array[Curve2D]
+var projectile_path_attack_index: PackedInt32Array
 func _draw() -> void:
 	draw_circle(Vector2(), 4, Settings.object_selected_color if selected else Settings.object_color, false)
 	
 	if object_settings.show_path:
 		var rot = 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
-		var default_angle_incr := 0.0
-		rot += deg_to_rad(default_angle_incr)
-		draw_set_transform(Vector2.ZERO, rot, Vector2(8, 8))
-		for path in projectile_paths:
-			if path.point_count > 2:
-				draw_polyline(path.get_baked_points(), Settings.projectile_path_color)
+		for idx in projectile_paths.size():
+			var path := projectile_paths[idx]
+			if path.point_count < 2:
+				continue
+			var attack_idx := projectile_path_attack_index[idx]
+			var attack = attacks[attack_idx]
+			var default_angle_incr = timings[attack_idx].default_angle_incr
+			draw_set_transform_matrix(Transform2D.IDENTITY.translated(Vector2(attack.pos_offset.y + 0.5, attack.pos_offset.x)).scaled(Vector2.ONE * 8).rotated(rot).rotated_local(deg_to_rad(default_angle_incr)))
+			draw_polyline(path.get_baked_points(), Settings.projectile_path_color)

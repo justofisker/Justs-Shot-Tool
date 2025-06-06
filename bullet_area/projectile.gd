@@ -93,7 +93,7 @@ func get_angle(elapsed: int) -> float:
 		return angle + angle_v
 	return angle
 
-func calculate_position(elapsed: int) -> Vector2:
+func calculate_position(elapsed: int, include_offset: bool = true) -> Vector2:
 	var point := origin
 	
 	var dist := calculate_distance(elapsed)
@@ -143,9 +143,11 @@ func calculate_position(elapsed: int) -> Vector2:
 		if !is_zero_approx(proj.amplitude):
 			var deflection := proj.amplitude * sin(phase + (float(elapsed) / proj.lifetime_ms) * proj.frequency * 2 * PI)
 			point += Vector2(-sin(angle), cos(angle)) * deflection
-		
 	
-	return point + get_offset()
+	if include_offset:
+		point += get_offset()
+	
+	return point
 
 func calculate_distance(elapsed: int) -> float:
 	var t := elapsed / 1000.0

@@ -57,8 +57,8 @@ class Subattack extends Resource:
 	var arc_gap: float = 11.25
 	var default_angle: float = 0
 	var default_angle_incr: float = 0
-	var default_angle_incr_max: float = 360
-	var default_angle_incr_min: float = 0
+	var default_angle_incr_max: float = 180
+	var default_angle_incr_min: float = -180
 	
 	func _set(_property: StringName, _value: Variant) -> bool:
 		updated.emit()
@@ -96,8 +96,7 @@ class Subattack extends Resource:
 			out += "\t<DefaultAngle>" + float_to_string(default_angle) + "</DefaultAngle>\n"
 		if default_angle_incr != 0:
 			out += "\t<DefaultAngleIncr"
-			if !is_equal_approx(default_angle_incr_max, 360) || !is_zero_approx(default_angle_incr_min):
-				out += " maxAngle=\"%f\" minAngle=\"%f\"" % [ default_angle_incr_max, default_angle_incr_min ]
+			out += " maxAngle=\"%f\" minAngle=\"%f\"" % [ default_angle_incr_max, default_angle_incr_min ]
 			out += ">" + float_to_string(default_angle_incr) + "</DefaultAngleIncr>\n"
 		
 		out += "</Subattack>\n"
