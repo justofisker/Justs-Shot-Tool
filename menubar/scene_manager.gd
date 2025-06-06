@@ -17,6 +17,8 @@ func get_scene_xml() -> String:
 			out += object.projectiles[idx].to_xml(idx).indent("\t\t")
 		for idx in object.attacks.size():
 			out += object.attacks[idx].to_xml(idx).indent("\t\t")
+		for bulltcreate in object.bulletcreates:
+			out += bulltcreate.to_xml(0).indent("\t\t")
 		out += "\t</Object>\n"
 	
 	out += "</Objects>\n"

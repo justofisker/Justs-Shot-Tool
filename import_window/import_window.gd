@@ -48,10 +48,23 @@ func _on_submit_pressed() -> void:
 			var projectiles : Array[XMLObjects.Projectile] = []
 			for projectile: XMLNode in node.get_children_by_name("Projectile"):
 				projectiles.push_back(XMLObjects.Projectile.parse(projectile))
+			var bulletcreates : Array[XMLObjects.BulletCreate] = []
+			var activates : Array[XMLNode]
+			activates.append_array(node.get_children_by_name("OnPlayerShootActivate"))
+			activates.append_array(node.get_children_by_name("OnPlayerHitActivate"))
+			activates.append_array(node.get_children_by_name("OnPlayerAbilityActivate"))
+			activates.append_array(node.get_children_by_name("Activate"))
 			var shooter = ShooterObject.new()
 			shooter.object_settings.id = node.attributes.get("id")
 			shooter.object_settings.type = node.attributes.get("type", "0x0").hex_to_int()
 			shooter.attacks = subattacks
 			shooter.projectiles = projectiles
+			shooter.bulletcreates = bulletcreates
+			
+			var bcbase := XMLObjects.BulletCreate.new()
+			bcbase.type = shooter.object_settings.type
+			for activate: XMLNode in activates:
+				if activate.content == "BulletCreate":
+					bulletcreates.push_back(XMLObjects.BulletCreate.parse(activate, bcbase))
 			Bridge.object_container.add_child(shooter)
 	queue_free()

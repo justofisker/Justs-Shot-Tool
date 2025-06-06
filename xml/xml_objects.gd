@@ -391,11 +391,12 @@ class BulletCreate extends Resource:
 	
 	# Tool specific
 	var enabled: bool = true
+	var activate: String = "OnPlayerShootActivate"
 	# Generic Activate
 	var cooldown: float = 0.0
 	var proc: float = 1.0
 	var target_mouse: bool = true
-	var target_mouse_range: float = 3.0
+	#var target_mouse_range: float = 3.0
 	# BulletCreate specific
 	var type: int = 0
 	var min_distance: float = 0
@@ -427,10 +428,36 @@ class BulletCreate extends Resource:
 		return XMLObjects.float_to_string(a)
 		
 	func to_xml(_index: int) -> String:
-		push_error("TOOD: Implement BulletCreate.to_xml()")
-		return ""
+		var out = "<" + activate
+		out += " arcGap=\"%s\"" % float_to_string(arc_gap)
+		out += " cooldown=\"%s\"" % float_to_string(cooldown)
+		out += " gapAngle=\"%s\"" % float_to_string(gap_angle)
+		out += " gapTiles=\"%s\"" % float_to_string(gap_tiles)
+		out += " maxDistance=\"%s\"" % float_to_string(max_distance)
+		out += " minDistance=\"%s\"" % float_to_string(min_distance)
+		out += " numShots=\"%d\"" % num_shots
+		out += " offsetAngle=\"%s\"" % float_to_string(offset_angle)
+		out += " targetMouse=\"%s\"" % str(target_mouse).to_lower()
+		out += " proc=\"%s\"" % float_to_string(proc)
+		out += " type=\"0x%x\"" % type
+		out += ">BulletCreate</%s>\n" % activate
+		
+		return out
 	
 	static func parse(node: XMLNode, base: XMLObjects.BulletCreate = XMLObjects.BulletCreate.new()) -> XMLObjects.BulletCreate:
 		var bc = base.copy()
-		push_error("TOOD: Implement BulletCreate.parse()")
+		
+		bc.activate = node.name
+		bc.arc_gap = node.attributes.get("arcGap", bc.arc_gap)
+		bc.cooldown = node.attributes.get("cooldown", bc.cooldown)
+		bc.gap_angle = node.attributes.get("gapAngle", bc.gap_angle)
+		bc.gap_tiles = node.attributes.get("gapTiles", bc.gap_tiles)
+		bc.max_distance = node.attributes.get("maxDistance", bc.max_distance)
+		bc.min_distance = node.attributes.get("minDistance", bc.min_distance)
+		bc.num_shots = node.attributes.get("numShots", bc.num_shots)
+		bc.offset_angle = node.attributes.get("offsetAngle", bc.offset_angle)
+		bc.target_mouse = node.attributes.get("targetMouse", str(bc.target_mouse)).nocasecmp_to("true") == 0
+		bc.proc = node.attributes.get("proc", bc.proc)
+		bc.type = node.attributes.get("type", "0x%x" % bc.type).hex_to_int()
+		
 		return bc

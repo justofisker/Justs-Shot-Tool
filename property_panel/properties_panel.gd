@@ -147,6 +147,7 @@ func _on_add_projectile_pressed() -> void:
 func _on_add_bullet_create_pressed() -> void:
 	var object = Bridge.selected_object
 	var bc = XMLObjects.BulletCreate.new()
+	bc.type = object.object_settings.type
 	if bulletcreate_container.get_child_count() < object.bulletcreates.size() + 1:
 		var prop = PROPERTY_INSPECTOR.instantiate()
 		prop.properties_scene = BULLET_CREATE_PROPERTIES

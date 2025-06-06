@@ -22,7 +22,6 @@ suffix = "sec"
 [node name="Proc" parent="." instance=ExtResource("1_s7cmn")]
 layout_mode = 2
 number_type = 1
-suffix = "%"
 max_value = 1.0
 clamp_max = true
 clamp_min = true
@@ -30,14 +29,14 @@ clamp_min = true
 [node name="targetMouse" parent="." instance=ExtResource("2_fud38")]
 layout_mode = 2
 
-[node name="targetMouseRange" parent="." instance=ExtResource("1_s7cmn")]
-layout_mode = 2
-number_type = 1
-suffix = "tiles"
-clamp_min = true
-
 [node name="HSeparator2" type="HSeparator" parent="."]
 layout_mode = 2
+
+[node name="type" parent="." instance=ExtResource("1_s7cmn")]
+layout_mode = 2
+display_as_hex = true
+tooltip = "Type of object to select the projectile from.
+It will always choose the first projectile"
 
 [node name="minDistance" parent="." instance=ExtResource("1_s7cmn")]
 layout_mode = 2

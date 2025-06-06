@@ -140,7 +140,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/BulletCreateTitle"]
 layout_mode = 2
-text = "BulletCreate"
+text = "BulletCreates"
 label_settings = SubResource("LabelSettings_5vw27")
 
 [node name="AddBulletCreate" type="TextureButton" parent="VBoxContainer/HBoxContainer/PropertiesPanel/ScrollContainer/MarginContainer/VBoxContainer/BulletCreateTitle"]
