@@ -2,6 +2,8 @@ class_name ShooterObject extends Node2D
 
 const Projectile = preload("res://bullet_area/projectile.gd")
 
+signal updated()
+
 # User defined
 var attacks : Array[XMLObjects.Subattack] = [ XMLObjects.Subattack.new() ] :
 	set(value):
@@ -38,24 +40,33 @@ func _on_setting_changed(property: String) -> void:
 var timings : Array[AttackTiming] = []
 var timing_bulletcreate: PackedFloat32Array = []
 
-func reset() -> void:
+func reset(supress_emit: bool = false) -> void:
 	queue_redraw()
 	timings = []
 	timing_bulletcreate = []
 	for attack in attacks:
 		timings.push_back(AttackTiming.new())
-		if !attack.updated.is_connected(reset):
-			attack.updated.connect(reset)
+		if !attack.updated.is_connected(reset.bind(true)):
+			attack.updated.connect(reset.bind(true))
 	for projectile in projectiles:
 		if !projectile.updated.is_connected(reset):
 			projectile.updated.connect(reset)
-	for _bc in bulletcreates:
+	for bc in bulletcreates:
 		timing_bulletcreate.push_back(0.0)
+		if !bc.updated.is_connected(reset.bind(true)):
+			bc.updated.connect(reset.bind(true))
+		var proc := Bridge.get_object(bc.type)
+		if proc:
+			if !proc.updated.is_connected(reset.bind(true)):
+				proc.updated.connect(reset.bind(true))
 	if object_settings.show_path:
-		calculate_object_path()
+		calculate_object_path.call_deferred()
 	else:
 		projectile_paths = []
+		bulletcreate_paths = []
 	bullet_id = 0
+	if !supress_emit:
+		updated.emit()
 
 func _on_object_settings_updated():
 	position = object_settings.position * 8
@@ -97,11 +108,40 @@ func calculate_object_path() -> void:
 		proj._ready()
 		var offset := attacks[indices[idx]].pos_offset
 		offset = Vector2(offset.y, offset.x)
-		for t in proj.proj.lifetime_ms * Settings.path_simulation_rate / 1000 + 1:
-			paths[idx].add_point(proj.calculate_position(t * 1000 / Settings.path_simulation_rate) - offset)
+		for t in range(0, proj.proj.lifetime_ms, 1000 / Settings.path_simulation_rate):
+			paths[idx].add_point(proj.calculate_position(t))
+		paths[idx].add_point(proj.calculate_position(proj.proj.lifetime_ms))
+	
+	var bc_projs: Array[Projectile] = []
+	var bc_indices: PackedInt32Array = []
+	for idx in bulletcreates.size():
+		var bc := bulletcreates[idx]
+		var proc := Bridge.get_object(bc.type)
+		if !proc || proc.projectiles.size() == 0:
+			continue
+		var proj := proc.projectiles[0]
+		bc_projs.append_array(create_projectiles_bulletcreate(bc, 0.0, false))
+		for _i in bc.num_shots:
+			bc_indices.push_back(idx)
+		if (is_zero_approx(proj.amplitude) || is_zero_approx(proj.frequency)) && !proj.wavy:
+			continue
+		bc_projs.append_array(create_projectiles_bulletcreate(bc, 0.0, false))
+		for _i in bc.num_shots:
+			bc_indices.push_back(idx)
+	
+	var bc_curves: Array[Curve2D] = []
+	for proj in bc_projs:
+		var path := Curve2D.new()
+		proj.origin -= position / 8.0
+		for t in range(0, proj.proj.lifetime_ms, 1000 / Settings.path_simulation_rate):
+			path.add_point(proj.calculate_position(t))
+		path.add_point(proj.calculate_position(proj.proj.lifetime_ms))
+		bc_curves.push_back(path)
 	
 	projectile_paths = paths
-	projectile_path_attack_index = indices
+	projectile_path_attack_indices = indices
+	bulletcreate_paths = bc_curves
+	bulletcreate_paths_indices = bc_indices
 
 func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_incr : bool = true) -> Array[Projectile]:
 	var angle := 0.0 if ignore_mouse else get_local_mouse_position().angle()
@@ -128,7 +168,9 @@ func create_projectiles_bulletcreate(bc: XMLObjects.BulletCreate, angle: float, 
 	var proc := Bridge.get_object(bc.type)
 	if proc == null || proc.projectiles.size() < 1 || (use_proc && randf() > bc.proc) || !bc.enabled:
 		return []
-	var distance := clampf(get_local_mouse_position().length() / 8.0, bc.min_distance, bc.max_distance)
+	var distance := clampf(get_local_mouse_position().length() / 8.0 if use_proc && !object_settings.ignore_mouse else INF, bc.min_distance, bc.max_distance)
+	if !bc.target_mouse:
+		distance = 0.0
 	
 	for i in bc.num_shots:
 		var pos = Vector2.from_angle(deg_to_rad(bc.gap_angle))
@@ -209,7 +251,10 @@ func _process(delta: float) -> void:
 				get_parent().add_projectile(proj)
 
 var projectile_paths: Array[Curve2D]
-var projectile_path_attack_index: PackedInt32Array
+var projectile_path_attack_indices: PackedInt32Array
+var bulletcreate_paths: Array[Curve2D]
+var bulletcreate_paths_indices: PackedInt32Array
+
 func _draw() -> void:
 	draw_circle(Vector2(), 4, Settings.object_selected_color if selected else Settings.object_color, false)
 	
@@ -219,8 +264,16 @@ func _draw() -> void:
 			var path := projectile_paths[idx]
 			if path.point_count < 2:
 				continue
-			var attack_idx := projectile_path_attack_index[idx]
+			var attack_idx := projectile_path_attack_indices[idx]
 			var attack = attacks[attack_idx]
 			var default_angle_incr = timings[attack_idx].default_angle_incr
 			draw_set_transform_matrix(Transform2D.IDENTITY.translated(Vector2(attack.pos_offset.y + 0.5, attack.pos_offset.x)).scaled(Vector2.ONE * 8).rotated(rot).rotated_local(deg_to_rad(default_angle_incr)))
+			draw_polyline(path.get_baked_points(), Settings.projectile_path_color)
+		var mouse_distance := INF if object_settings.ignore_mouse else (get_local_mouse_position() / 8.0).length()
+		for idx in bulletcreate_paths.size():
+			var path := bulletcreate_paths[idx]
+			var bc := bulletcreates[bulletcreate_paths_indices[idx]]
+			if path.point_count < 2:
+				continue
+			draw_set_transform_matrix(Transform2D.IDENTITY.scaled(Vector2.ONE * 8.0).rotated(rot).translated_local(Vector2(clampf(mouse_distance, bc.min_distance, bc.max_distance) - bc.max_distance, 0.0)))
 			draw_polyline(path.get_baked_points(), Settings.projectile_path_color)

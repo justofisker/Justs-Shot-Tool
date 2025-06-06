@@ -180,7 +180,7 @@ class Projectile extends Resource:
 	var acceleration: float = 0
 	var acceleration_delay: int = 0
 	var amplitude: float = 0
-	var frequency: float = 0
+	var frequency: float = 1.0
 	
 	# Circle Turn
 	var circle_turn_delay: int = 0

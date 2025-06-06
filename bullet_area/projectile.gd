@@ -80,7 +80,7 @@ func get_angle(elapsed: int) -> float:
 			return angle
 		
 		var angle_v := 0.0
-		if !is_zero_approx(proj.amplitude):
+		if !is_zero_approx(proj.amplitude) && !is_zero_approx(proj.frequency):
 			var deflection := proj.amplitude * proj.frequency * cos(phase + (float(elapsed) / proj.lifetime_ms) * proj.frequency * 2 * PI)
 			angle_v += atan(deflection)
 		if proj.boomerang:
