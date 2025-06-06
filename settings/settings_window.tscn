@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="5_pkhu0"]
 
 [node name="SettingsWindow" type="Window" node_paths=PackedStringArray("settings_edit_container")]
+auto_translate_mode = 2
 disable_3d = true
 oversampling_override = 1.0
 title = "Settings"
@@ -55,3 +56,6 @@ layout_mode = 2
 [node name="Path Simulation Rate" parent="PanelContainer/VBoxContainer" instance=ExtResource("5_pkhu0")]
 layout_mode = 2
 suffix = "points/sec"
+value_int = 20
+min_value = 20.0
+clamp_min = true
