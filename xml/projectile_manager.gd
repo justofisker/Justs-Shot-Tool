@@ -1,7 +1,7 @@
 extends Node
 
-var objects := Dictionary({}, TYPE_STRING, "", null, TYPE_OBJECT, "Resource", XMLProjectileVisual)
-var texture_cache := Dictionary({}, TYPE_OBJECT, "Resource", XMLTexture, TYPE_OBJECT, "AtlasTexture", null)
+var objects : Dictionary[String, XMLProjectileVisual] = {}
+var texture_cache : Dictionary[XMLTexture, AtlasTexture] = {}
 
 var sheets : Array
 var animated_sprites : Array
