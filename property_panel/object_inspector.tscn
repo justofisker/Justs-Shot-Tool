@@ -46,6 +46,7 @@ placeholder_text = "Big Dog"
 
 [node name="type" parent="Properties" instance=ExtResource("4_tgbvj")]
 layout_mode = 2
+clamp_min = true
 display_as_hex = true
 
 [node name="Position" parent="Properties" instance=ExtResource("3_pr4qe")]
@@ -60,6 +61,7 @@ layout_mode = 2
 
 [node name="Dexterity" parent="Properties" instance=ExtResource("4_tgbvj")]
 layout_mode = 2
+clamp_min = true
 
 [node name="Autofire" parent="Properties" instance=ExtResource("4_a7n1m")]
 layout_mode = 2
