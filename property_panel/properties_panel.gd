@@ -117,7 +117,7 @@ func _on_object_selected(_old_object: Node2D, object: Node2D) -> void:
 		bulletcreate_container.visible = false
 		subattacks_title.visible = false
 		projectiles_title.visible = false
-		bulletcreate_container.visible = false
+		bulletcreate_title.visible = false
 
 func _on_add_subattack_pressed() -> void:
 	var object = Bridge.selected_object
