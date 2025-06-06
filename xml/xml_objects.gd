@@ -246,7 +246,10 @@ class Projectile extends Resource:
 		
 		# Distance
 		out += "\t<LifetimeMS>" + str(lifetime_ms) + "</LifetimeMS>\n"
-		out += "\t<Speed>" + float_to_string(speed) + "</Speed>\n"
+		if parametric:
+			out += "\t<Magnitude>" + float_to_string(speed) + "</Magnitude>\n"
+		else:
+			out += "\t<Speed>" + float_to_string(speed) + "</Speed>\n"
 		if acceleration != 0:
 			out += "\t<SpeedClamp>" + float_to_string(speed_clamp) + "</SpeedClamp>\n"
 			out += "\t<Acceleration>" + float_to_string(acceleration) + "</Acceleration>\n"
@@ -331,6 +334,8 @@ class Projectile extends Resource:
 			proj.current_health_damage = node.get_child_by_name("CurrentHealthDamage").content.to_float()
 		if node.get_child_by_name("Speed"):
 			proj.speed = node.get_child_by_name("Speed").content.to_float()
+		if node.get_child_by_name("Magnitude"):
+			proj.speed = node.get_child_by_name("Magnitude").content.to_float()
 		if node.get_child_by_name("SpeedClamp"):
 			proj.speed_clamp = node.get_child_by_name("SpeedClamp").content.to_float()
 		if node.get_child_by_name("Acceleration"):
