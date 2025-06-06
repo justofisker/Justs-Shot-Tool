@@ -69,12 +69,17 @@ func calculate_object_path() -> void:
 		projs.append_array(create_projectiles(attack, true, false))
 		for _idx in attack.num_projectiles:
 			indices.push_back(idx)
-		if ((attack.num_projectiles % 2 == 1 || attacks.size() > 1) && (!is_zero_approx(projectile.amplitude) || projectile.wavy)):
-			if attack.num_projectiles % 2 == 0:
-				bullet_id += 1
-			projs.append_array(create_projectiles(attack, true, false))
-			for _idx in attack.num_projectiles:
-				indices.push_back(idx)
+		if (is_zero_approx(projectile.amplitude) || is_zero_approx(projectile.frequency)) && !projectile.wavy:
+			continue
+		if (attack.num_projectiles % 2 == 0):
+			if attacks.size() == 1:
+				continue
+			# TODO: Figure out if phase can be flipped
+		if attack.num_projectiles % 2 == 0:
+			bullet_id += 1
+		projs.append_array(create_projectiles(attack, true, false))
+		for _idx in attack.num_projectiles:
+			indices.push_back(idx)
 	
 	var paths : Array[Curve2D]
 	paths.resize(projs.size())
