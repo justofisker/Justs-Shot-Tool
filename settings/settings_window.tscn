@@ -1,18 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4q763xuknuwl"]
+[gd_scene load_steps=6 format=3 uid="uid://c4q763xuknuwl"]
 
 [ext_resource type="Script" uid="uid://c26i0oqxkiwgy" path="res://settings/settings_window.gd" id="1_lyinp"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://theme.tres" id="2_4sfof"]
 [ext_resource type="PackedScene" uid="uid://pipc3lr7swkx" path="res://gui/edits/color_edit.tscn" id="3_4sfof"]
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_4sfof"]
+[ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="5_pkhu0"]
 
 [node name="SettingsWindow" type="Window" node_paths=PackedStringArray("settings_edit_container")]
 disable_3d = true
+oversampling_override = 1.0
 title = "Settings"
 initial_position = 4
 size = Vector2i(800, 500)
 transient = true
 exclusive = true
 unresizable = true
+auto_translate = false
 script = ExtResource("1_lyinp")
 settings_edit_container = NodePath("PanelContainer/VBoxContainer")
 
@@ -48,3 +51,7 @@ layout_mode = 2
 
 [node name="Projectile Color" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_4sfof")]
 layout_mode = 2
+
+[node name="Path Simulation Rate" parent="PanelContainer/VBoxContainer" instance=ExtResource("5_pkhu0")]
+layout_mode = 2
+suffix = "points/sec"

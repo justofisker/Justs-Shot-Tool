@@ -9,6 +9,7 @@ var object_color := Color.WHITE
 var object_selected_color := Color.GREEN
 var projectile_path_color := Color.BLACK
 var projectile_color := Color.WHITE
+var path_simulation_rate : int = 60
 
 const SETTINGS_FILE := "user://settings.json"
 

@@ -57,7 +57,6 @@ func _on_object_settings_updated():
 	position = object_settings.position * 8
 	reset()
 
-const SIMULATION_RATE = 60
 func calculate_object_path() -> void:
 	bullet_id = 0
 	var projs : Array[Projectile]
@@ -88,8 +87,8 @@ func calculate_object_path() -> void:
 		proj._ready()
 		var offset := attacks[indices[idx]].pos_offset
 		offset = Vector2(offset.y, offset.x)
-		for t in proj.proj.lifetime_ms * SIMULATION_RATE / 1000 + 1:
-			paths[idx].add_point(proj.calculate_position(t * 1000 / SIMULATION_RATE, false) - offset)
+		for t in proj.proj.lifetime_ms * Settings.path_simulation_rate / 1000 + 1:
+			paths[idx].add_point(proj.calculate_position(t * 1000 / Settings.path_simulation_rate, false) - offset)
 	
 	projectile_paths = paths
 	projectile_path_attack_index = indices
