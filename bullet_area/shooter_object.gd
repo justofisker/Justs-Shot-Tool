@@ -36,10 +36,12 @@ func _on_setting_changed(property: String) -> void:
 		queue_redraw()
 
 var timings : Array[AttackTiming] = []
+var timing_bulletcreate: PackedFloat32Array = []
 
 func reset() -> void:
 	queue_redraw()
 	timings = []
+	timing_bulletcreate = []
 	for attack in attacks:
 		timings.push_back(AttackTiming.new())
 		if !attack.updated.is_connected(reset):
@@ -47,6 +49,8 @@ func reset() -> void:
 	for projectile in projectiles:
 		if !projectile.updated.is_connected(reset):
 			projectile.updated.connect(reset)
+	for _bc in bulletcreates:
+		timing_bulletcreate.push_back(0.0)
 	if object_settings.show_path:
 		calculate_object_path()
 	else:
@@ -165,6 +169,8 @@ func _process(delta: float) -> void:
 		var timing := timings[idx]
 		timing.burst_period += delta
 		timing.last_attack += delta
+	for idx in bulletcreates.size():
+		timing_bulletcreate[idx] = timing_bulletcreate[idx] + delta
 	
 	var shot_this_frame := false
 	
@@ -194,7 +200,11 @@ func _process(delta: float) -> void:
 	
 	if shot_this_frame:
 		var angle := 0.0 if object_settings.ignore_mouse else get_local_mouse_position().angle()
-		for bc in bulletcreates:
+		for idx in bulletcreates.size():
+			var bc := bulletcreates[idx]
+			if !is_zero_approx(bc.cooldown) && bc.cooldown > timing_bulletcreate[idx]:
+				continue
+			timing_bulletcreate[idx] = 0.0
 			for proj in create_projectiles_bulletcreate(bc, angle):
 				get_parent().add_projectile(proj)
 
