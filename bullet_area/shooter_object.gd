@@ -131,6 +131,7 @@ func calculate_object_path() -> void:
 	
 	var bc_curves: Array[Curve2D] = []
 	for proj in bc_projs:
+		proj._ready()
 		var path := Curve2D.new()
 		proj.origin -= position / 8.0
 		for t in range(0, proj.proj.lifetime_ms, 1000 / Settings.path_simulation_rate):
