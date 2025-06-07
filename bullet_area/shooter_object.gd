@@ -150,14 +150,13 @@ func create_projectiles(attack: XMLObjects.Subattack, ignore_mouse: bool, angle_
 	if attack.projectile_id < 0 || attack.projectile_id >= projectiles.size():
 		return projs
 	var default_angle_incr = timings[attacks.find(attack)].default_angle_incr
-	var angle_offset = deg_to_rad(attack.arc_gap * attack.num_projectiles / 2.0 + (default_angle_incr if angle_incr else 0.0))
 	for i in attack.num_projectiles:
 		var proj = Projectile.new()
 		proj.proj = projectiles[attack.projectile_id]
 		proj.angle = angle
 		proj.offset = Vector2.from_angle(angle) * 0.5
 		proj.origin = position / 8.0 + Vector2(attack.pos_offset.y, attack.pos_offset.x).rotated(proj.angle)
-		proj.angle += angle_offset - deg_to_rad((i + 0.5) * attack.arc_gap)
+		proj.angle += deg_to_rad(attack.arc_gap * (i - (attack.num_projectiles - 1) / 2.0) + (default_angle_incr if angle_incr else 0.0))
 		proj.angle += deg_to_rad(attack.default_angle)
 		proj.bullet_id = bullet_id
 		bullet_id += 1

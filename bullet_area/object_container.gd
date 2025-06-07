@@ -14,7 +14,7 @@ func add_projectile(proj: Projectile) -> void:
 		proj.rotation_rate = object.rotation
 		var sprite := Sprite2D.new()
 		if object.random_textures.size() != 0:
-			sprite.texture = ProjectileManager.get_texture(object.random_textures.pick_random())
+			sprite.texture = ProjectileManager.get_texture(object.random_textures[proj.bullet_id % object.random_textures.size()])
 		elif object.texture:
 			sprite.texture = ProjectileManager.get_texture(object.texture)
 		sprite.scale = Vector2.ONE * 0.5
