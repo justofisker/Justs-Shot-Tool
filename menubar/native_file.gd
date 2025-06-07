@@ -3,7 +3,12 @@ extends Node
 const FileMenubar = preload("res://menubar/file_menubar.gd")
 const IMPORT_WINDOW = preload("res://import_window/import_window.tscn")
 
+const FILE_FILTERS : PackedStringArray = [ "*.xml;XML Files;application/xml" ]
+
 var import_window : Node
+
+@onready var base_dir := ProjectSettings.globalize_path("res://") if OS.has_feature("editor") else OS.get_executable_path().get_base_dir()
+@onready var scenes_dir := base_dir + "/scenes"
 
 func _ready() -> void:
 	if OS.get_name() == "Web":
@@ -36,12 +41,14 @@ func _on_file_id_pressed(id: int) -> void:
 			else:
 				_on_save_file_selected(true, [current_file], 0)
 		FileMenubar.Action.OpenScene:
-			DisplayServer.file_dialog_show("Load Scene", "", "", false, DisplayServer.FILE_DIALOG_MODE_OPEN_FILE, ["*.xml"], _on_load_file_selected)
+			DisplayServer.file_dialog_show("Open Scene", scenes_dir, "", false, DisplayServer.FILE_DIALOG_MODE_OPEN_FILE, FILE_FILTERS, _on_open_scene_file_selected)
 		FileMenubar.Action.Import:
-			DisplayServer.file_dialog_show("Import Objects", "", "", false, DisplayServer.FILE_DIALOG_MODE_OPEN_FILE, ["*.xml"], _on_import_file_selected)
+			DisplayServer.file_dialog_show("Import Objects", base_dir + "/assets/xml", "", false, DisplayServer.FILE_DIALOG_MODE_OPEN_FILE, FILE_FILTERS, _on_import_file_selected)
 
 func save_as() -> void:
-	DisplayServer.file_dialog_show("Save Scene", "", "scene.xml", false, DisplayServer.FILE_DIALOG_MODE_SAVE_FILE, ["*.xml"], _on_save_file_selected)
+	if DirAccess.dir_exists_absolute(scenes_dir):
+		DirAccess.make_dir_absolute(scenes_dir)
+	DisplayServer.file_dialog_show("Save Scene", scenes_dir, "scene.xml" if current_file == "" else current_file.get_file(), false, DisplayServer.FILE_DIALOG_MODE_SAVE_FILE, FILE_FILTERS, _on_save_file_selected)
 
 func _on_save_file_selected(status: bool, selected_paths: PackedStringArray, _selected_filter_index: int) -> void:
 	if status:
@@ -50,9 +57,9 @@ func _on_save_file_selected(status: bool, selected_paths: PackedStringArray, _se
 		file.store_string(%SceneManager.get_scene_xml())
 		current_file = path
 
-func _on_load_file_selected(status: bool, selected_paths: PackedStringArray, _selected_filter_index: int) -> void:
+func _on_open_scene_file_selected(status: bool, selected_paths: PackedStringArray, _selected_filter_index: int) -> void:
 	if status:
-		var path = selected_paths[0]
+		var path := selected_paths[0]
 		var file := FileAccess.open(path, FileAccess.READ)
 		%SceneManager.load_scene_xml(file.get_buffer(file.get_length()))
 		current_file = path

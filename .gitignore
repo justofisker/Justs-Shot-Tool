@@ -1,15 +1,16 @@
 # MacOS
 .DS_Store
 
-# Godot 4+ specific ignores
-.godot/
-
 # Godot-specific ignores
-.import/
+.godot/
 export.cfg
 export_presets.cfg
 *.tmp
 
+# Tool specific ignores
 assets/
-.vscode/
+scenes/
 settings.json
+
+# 
+.vscode/
