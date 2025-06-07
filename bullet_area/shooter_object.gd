@@ -189,7 +189,7 @@ func create_projectiles_bulletcreate(bc: XMLObjects.BulletCreate, angle: float, 
 			pos += Vector2(-proj.proj.speed * proj.proj.lifetime_ms / 20000.0, 0).rotated(offset_angle)
 		pos.x += distance
 		
-		proj.angle = angle + offset_angle + deg_to_rad(bc.arc_gap * (i - (bc.num_shots - 1) / 2.0))
+		proj.angle = angle + offset_angle - deg_to_rad(bc.arc_gap * (i - (bc.num_shots - 1) / 2.0))
 		proj.origin = position / 8.0 + pos.rotated(angle)
 		proj.bullet_id = bullet_id
 		bullet_id += 1
