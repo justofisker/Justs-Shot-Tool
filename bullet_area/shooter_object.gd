@@ -174,13 +174,13 @@ func create_projectiles_bulletcreate(bc: XMLObjects.BulletCreate, angle: float, 
 		distance = 0.0
 	
 	for i in bc.num_shots:
-		var pos = Vector2.from_angle(deg_to_rad(bc.gap_angle))
+		var pos = Vector2.ZERO
 		if bc.num_shots > 1:
-			pos = Vector2.from_angle(deg_to_rad(bc.gap_angle)) * (bc.gap_tiles * (i - (bc.num_shots - 1) / 2.0))
+			pos = Vector2(0, bc.gap_tiles * (i - (bc.num_shots - 1) / 2.0)).rotated(deg_to_rad(bc.gap_angle + 90))
 		
 		var proj = Projectile.new()
 		proj.proj = proc.projectiles[0].copy()
-		# Unsure about this but Visage seems unaffected by size
+		proj.offset = Vector2.ZERO
 		proj.proj.size = max(100, proj.proj.size)
 		
 		var offset_angle := 0.0
