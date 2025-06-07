@@ -105,6 +105,7 @@ func calculate_object_path() -> void:
 	for idx in projs.size():
 		var proj = projs[idx]
 		proj.offset = Vector2.ZERO
+		proj.origin = Vector2.ZERO
 		proj._ready()
 		var offset := attacks[indices[idx]].pos_offset
 		offset = Vector2(offset.y, offset.x)
