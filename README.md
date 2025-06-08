@@ -7,6 +7,9 @@ This tool is designed to help UGC members visualize how shots will appear and he
 | Pan              | Right Click          |
 | Select Tool      | Q                    |
 | Move Tool        | W                    |
+| Add Tool         | T                    |
+| Pan Tool         | G                    |
+| Ruler Tool       | R                    |
 | Aim Tool         | A                    |
 | Focus Object     | F                    |
 | Add Object       | Ctrl/Cmd + A         |
@@ -15,4 +18,5 @@ This tool is designed to help UGC members visualize how shots will appear and he
 | New Scene        | Ctrl/Cmd + N         |
 | Save Scene       | Ctrl/Cmd + S         |
 | Save Scene As    | Shift + Ctrl/Cmd + S |
-| Load Scene       | Ctrl/Cmd + L         |
+| Open Scene       | Ctrl/Cmd + L         |
+| Import Scene     | Ctrl/Cmd + I         |
