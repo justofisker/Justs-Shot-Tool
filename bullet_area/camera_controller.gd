@@ -2,6 +2,7 @@ extends Camera2D
 
 var zoom_level := 10.0
 var pressed := false
+var button_started : MouseButton
 var zoom_mult = 1 :
 	set(value):
 		zoom_mult = value
@@ -18,12 +19,21 @@ func _ready() -> void:
 	_update_zoom_text()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if pressed && button_started == MOUSE_BUTTON_LEFT && Bridge.tool_mode != Bridge.ToolMode.Pan:
+		pressed = false
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:
 				MOUSE_BUTTON_RIGHT:
 					pressed = true
+					button_started = MOUSE_BUTTON_RIGHT
 					Input.set_default_cursor_shape(Input.CURSOR_DRAG)
+				MOUSE_BUTTON_LEFT:
+					if Bridge.tool_mode == Bridge.ToolMode.Pan:
+						pressed = true
+						button_started = MOUSE_BUTTON_LEFT
+						Input.set_default_cursor_shape(Input.CURSOR_DRAG)
 				MOUSE_BUTTON_WHEEL_DOWN:
 					zoom_towards_cursor(zoom_level - ZOOM_STEP * zoom_level)
 				MOUSE_BUTTON_WHEEL_UP:
@@ -49,9 +59,8 @@ func _input(event: InputEvent) -> void:
 				mouse_position.y = posmod(int(mouse_position.y), viewport_size.y)
 				get_viewport().warp_mouse(mouse_position)
 				ignore_next_mouse = true
-		elif event is InputEventMouseButton && !event.pressed && event.button_index == MOUSE_BUTTON_RIGHT:
+		elif event is InputEventMouseButton && !event.pressed && event.button_index == button_started:
 			pressed = false
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
 func zoom_towards_cursor(level: float) -> void:

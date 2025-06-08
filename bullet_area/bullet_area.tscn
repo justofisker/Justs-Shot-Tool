@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b75df6uegy10f"]
+[gd_scene load_steps=22 format=3 uid="uid://b75df6uegy10f"]
 
 [ext_resource type="Script" uid="uid://bcemk5gvnahqm" path="res://bullet_area/grid.gd" id="1_al8gc"]
 [ext_resource type="Script" uid="uid://bg11enmtw15o4" path="res://bullet_area/bullet_area.gd" id="1_ikwa3"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bbcr7otblq70k" path="res://bullet_area/move_gizmo.gd" id="9_jfmib"]
 [ext_resource type="Script" uid="uid://dagwgmmbe13sy" path="res://bullet_area/ruler_tool.gd" id="11_li1xl"]
 [ext_resource type="Script" uid="uid://fe1rsha0i1w8" path="res://bullet_area/shortcuts.gd" id="11_nd8tn"]
+[ext_resource type="Script" uid="uid://d1fbyrpiugcc3" path="res://bullet_area/add_tool.gd" id="15_d73re"]
 
 [sub_resource type="FontVariation" id="FontVariation_7mycd"]
 variation_embolden = -0.25
@@ -116,10 +117,11 @@ script = ExtResource("8_15s0m")
 [node name="Ruler" type="Node2D" parent="Tools"]
 script = ExtResource("11_li1xl")
 
-[node name="Shortcuts" type="Node" parent="Tools" node_paths=PackedStringArray("camera")]
+[node name="Shortcuts" type="Node" parent="Tools"]
 script = ExtResource("11_nd8tn")
-object_script = ExtResource("2_vbgui")
-camera = NodePath("../../Camera")
+
+[node name="Add" type="Node" parent="Tools"]
+script = ExtResource("15_d73re")
 
 [connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/CenterView" to="Camera" method="_on_center_view_pressed"]
 [connection signal="pressed" from="CanvasLayer/ViewControlls/HBoxContainer/ZoomOut" to="Camera" method="_on_zoom_out_pressed"]

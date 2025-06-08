@@ -67,3 +67,12 @@ func _set_enabled(toggled_on: bool, property: String) -> void:
 	value.set(property + "_enabled", toggled_on)
 	value.updated.emit()
 	ignore_update = false
+
+func _on_duplicate_button_pressed() -> void:
+	var dupe = Bridge.selected_object.copy()
+	Bridge.object_container.add_child(dupe)
+	Bridge.selected_object = dupe
+
+func _on_delete_button_pressed() -> void:
+	Bridge.selected_object.queue_free()
+	Bridge.selected_object = null

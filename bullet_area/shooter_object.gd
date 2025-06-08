@@ -37,6 +37,23 @@ func _on_setting_changed(property: String) -> void:
 	if property == "object_color" || property == "object_selected_color":
 		queue_redraw()
 
+func copy() -> ShooterObject:
+	var dupe = ShooterObject.new()
+	var dupe_attacks : Array[XMLObjects.Subattack] = []
+	for attack in Bridge.selected_object.attacks:
+		dupe_attacks.push_back(attack.copy())
+	dupe.attacks = dupe_attacks
+	var dupe_projectiles : Array[XMLObjects.Projectile] = []
+	for projectile in Bridge.selected_object.projectiles:
+		dupe_projectiles.push_back(projectile.copy())
+	dupe.projectiles = dupe_projectiles
+	var dupe_bulletcreates : Array[XMLObjects.BulletCreate] = []
+	for bulletcreate in Bridge.selected_object.bulletcreates:
+		dupe_bulletcreates.push_back(bulletcreate.copy())
+	dupe.bulletcreates = dupe_bulletcreates
+	dupe.object_settings = Bridge.selected_object.object_settings.copy()
+	return dupe
+
 var timings : Array[AttackTiming] = []
 var timing_bulletcreate: PackedFloat32Array = []
 

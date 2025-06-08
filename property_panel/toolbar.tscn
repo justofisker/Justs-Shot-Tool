@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cs44sby4b57sn"]
+[gd_scene load_steps=22 format=3 uid="uid://cs44sby4b57sn"]
 
 [ext_resource type="Script" uid="uid://cu2hb5jlescib" path="res://property_panel/tools.gd" id="1_cfdxs"]
 [ext_resource type="Texture2D" uid="uid://jslufb22o6qn" path="res://gui/icons/ToolSelect.svg" id="3_otv0s"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://f0fh308pmbjl" path="res://gui/icons/ToolMove.svg" id="4_mvj0t"]
 [ext_resource type="Texture2D" uid="uid://cvrre8immcq80" path="res://gui/icons/Ruler.svg" id="5_4mf1i"]
 [ext_resource type="Texture2D" uid="uid://xar7onvvt08r" path="res://gui/icons/ToolPan.svg" id="5_cfdxs"]
+[ext_resource type="Texture2D" uid="uid://b7lfr6njyegox" path="res://gui/icons/Add.svg" id="7_mvj0t"]
 [ext_resource type="Texture2D" uid="uid://chsjnluqxh5bc" path="res://gui/icons/DistractionFree.svg" id="7_otv0s"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_nd8tn"]
@@ -24,12 +25,19 @@ pressed = true
 [sub_resource type="Shortcut" id="Shortcut_ikwa3"]
 events = [SubResource("InputEventAction_li1xl")]
 
-[sub_resource type="InputEventAction" id="InputEventAction_787al"]
-action = &"tool_aim"
+[sub_resource type="InputEventAction" id="InputEventAction_mvj0t"]
+action = &"tool_add"
 pressed = true
 
-[sub_resource type="Shortcut" id="Shortcut_otv0s"]
-events = [SubResource("InputEventAction_787al")]
+[sub_resource type="Shortcut" id="Shortcut_4mf1i"]
+events = [SubResource("InputEventAction_mvj0t")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_4mf1i"]
+action = &"tool_pan"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_7s4cd"]
+events = [SubResource("InputEventAction_4mf1i")]
 
 [sub_resource type="InputEventAction" id="InputEventAction_ikwa3"]
 action = &"tool_ruler"
@@ -37,6 +45,13 @@ pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_r1t2s"]
 events = [SubResource("InputEventAction_ikwa3")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_787al"]
+action = &"tool_aim"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_otv0s"]
+events = [SubResource("InputEventAction_787al")]
 
 [node name="Toolbar" type="PanelContainer"]
 anchors_preset = 10
@@ -75,8 +90,41 @@ shortcut = SubResource("Shortcut_ikwa3")
 shortcut_in_tooltip = false
 icon = ExtResource("4_mvj0t")
 
+[node name="Add" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Add (T)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_4mf1i")
+shortcut_in_tooltip = false
+icon = ExtResource("7_mvj0t")
+
 [node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
+
+[node name="Pan" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Pan (G)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_7s4cd")
+shortcut_in_tooltip = false
+icon = ExtResource("5_cfdxs")
+
+[node name="Ruler" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Ruler (R)"
+focus_mode = 0
+theme_type_variation = &"GuiButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nd8tn")
+shortcut = SubResource("Shortcut_r1t2s")
+shortcut_in_tooltip = false
+icon = ExtResource("5_4mf1i")
 
 [node name="Aim" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -88,29 +136,6 @@ button_group = SubResource("ButtonGroup_nd8tn")
 shortcut = SubResource("Shortcut_otv0s")
 shortcut_in_tooltip = false
 icon = ExtResource("4_787al")
-
-[node name="Ruler" type="Button" parent="HBoxContainer"]
-visible = false
-layout_mode = 2
-tooltip_text = "Ruler (R)"
-focus_mode = 0
-theme_type_variation = &"GuiButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nd8tn")
-shortcut = SubResource("Shortcut_r1t2s")
-shortcut_in_tooltip = false
-icon = ExtResource("5_4mf1i")
-
-[node name="Pan" type="Button" parent="HBoxContainer"]
-visible = false
-layout_mode = 2
-tooltip_text = "Pan (G)"
-focus_mode = 0
-theme_type_variation = &"GuiButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nd8tn")
-shortcut_in_tooltip = false
-icon = ExtResource("5_cfdxs")
 
 [node name="CheckButton" type="CheckButton" parent="HBoxContainer"]
 visible = false
@@ -129,7 +154,8 @@ flat = true
 
 [connection signal="pressed" from="HBoxContainer/Select" to="." method="_on_select_pressed"]
 [connection signal="pressed" from="HBoxContainer/Move" to="." method="_on_move_pressed"]
-[connection signal="pressed" from="HBoxContainer/Aim" to="." method="_on_aim_pressed"]
+[connection signal="pressed" from="HBoxContainer/Add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="HBoxContainer/Pan" to="." method="_on_pan_pressed"]
 [connection signal="pressed" from="HBoxContainer/Ruler" to="." method="_on_ruler_pressed"]
-[connection signal="pressed" from="HBoxContainer/Pan" to="." method="_on_ruler_pressed"]
+[connection signal="pressed" from="HBoxContainer/Aim" to="." method="_on_aim_pressed"]
 [connection signal="toggled" from="HBoxContainer/Expand" to="." method="_on_expand_toggled"]

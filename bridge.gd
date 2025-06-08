@@ -2,7 +2,7 @@ extends Node
 
 signal tool_mode_changed(mode: ToolMode)
 
-enum ToolMode { Select, Move, Ruler, Aim }
+enum ToolMode { Select, Move, Ruler, Aim, Add, Pan }
 
 var tool_mode : ToolMode  = ToolMode.Select :
 	set(value):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bajtw35qg8jt4"]
+[gd_scene load_steps=12 format=3 uid="uid://bajtw35qg8jt4"]
 
 [ext_resource type="Script" uid="uid://bswgm3t88n1ri" path="res://property_panel/object_copy.gd" id="1_k7ys7"]
 [ext_resource type="Theme" uid="uid://cv017eo06bbcu" path="res://theme.tres" id="1_tgbvj"]
@@ -8,13 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://i647i3fpchqf" path="res://gui/icons/ActionCopy.svg" id="3_tgbvj"]
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_a7n1m"]
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="4_tgbvj"]
+[ext_resource type="Texture2D" uid="uid://li32t4aji72h" path="res://gui/icons/Duplicate.svg" id="5_3tcls"]
+[ext_resource type="Texture2D" uid="uid://dqeun4g6xfevj" path="res://gui/icons/Close.svg" id="6_wxfem"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 font_size = 24
 
 [node name="ObjectInspector" type="VBoxContainer"]
-offset_right = 146.0
-offset_bottom = 298.0
+offset_right = 469.0
+offset_bottom = 334.0
 theme = ExtResource("1_tgbvj")
 theme_override_constants/separation = 0
 script = ExtResource("2_tgbvj")
@@ -24,18 +26,34 @@ script = ExtResource("1_k7ys7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 text = "Object"
 label_settings = SubResource("LabelSettings_1bvp3")
 
-[node name="CopyButton" type="TextureButton" parent="HBoxContainer"]
+[node name="CopyButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Copy XML"
-texture_normal = ExtResource("3_tgbvj")
-stretch_mode = 3
+focus_mode = 0
+icon = ExtResource("3_tgbvj")
+flat = true
+
+[node name="DuplicateButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Duplicate"
+focus_mode = 0
+icon = ExtResource("5_3tcls")
+flat = true
+
+[node name="DeleteButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Delete"
+focus_mode = 0
+icon = ExtResource("6_wxfem")
+flat = true
 
 [node name="Properties" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -67,3 +85,5 @@ clamp_min = true
 layout_mode = 2
 
 [connection signal="pressed" from="HBoxContainer/CopyButton" to="ObjectCopy" method="_on_copy_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/DuplicateButton" to="." method="_on_duplicate_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
