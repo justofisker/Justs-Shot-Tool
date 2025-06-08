@@ -1,13 +1,13 @@
 $ErrorActionPreference = "Stop"
 
-$TARGET_WEB = "justofisker/rotmg-shot-tool:html5"
-$TARGET_WINDOWS = "justofisker/rotmg-shot-tool:windows"
-
 function New-TemporaryDirectory {
     $tmp = [System.IO.Path]::GetTempPath() # Not $env:TEMP, see https://stackoverflow.com/a/946017
     $name = (New-Guid).ToString("N")
     New-Item -ItemType Directory -Path (Join-Path $tmp $name)
 }
+
+$TARGET_WEB = "justofisker/rotmg-shot-tool:html5"
+$TARGET_WINDOWS = "justofisker/rotmg-shot-tool:windows"
 
 # Web Build
 $WEB_BUILD_DIR = New-TemporaryDirectory
@@ -15,7 +15,7 @@ $WEB_BUILD_DIR = New-TemporaryDirectory
 butler push "$($WEB_BUILD_DIR.FullName)" "$TARGET_WEB"
 Remove-Item -Recurse -Force $WEB_BUILD_DIR
 
-# # Windows Build
+# Windows Build
 $WINDOWS_BUILD_DIR = New-TemporaryDirectory
 & $env:GODOT_BIN --headless --export-release "Windows Desktop" "$($WINDOWS_BUILD_DIR.FullName)\Just's Shot Tool.exe" | Out-Host
 Copy-Item -Recurse -Force assets "$($WINDOWS_BUILD_DIR.FullName)\assets"
