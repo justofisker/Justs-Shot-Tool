@@ -37,6 +37,9 @@ func parse_projectiles() -> void:
 	if OS.get_name() == "macOS" || OS.get_name() == "Web":
 		xml_dir = "res://assets/xml/"
 	var dir = DirAccess.open(xml_dir)
+	if !dir:
+		push_error("No assets/xml folder!")
+		return
 	for file in dir.get_files():
 		var p = SimpleXmlParser.new()
 		var err = p.open(xml_dir + file)
