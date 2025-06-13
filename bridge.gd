@@ -4,7 +4,7 @@ signal tool_mode_changed(mode: ToolMode)
 
 enum ToolMode { Select, Move, Ruler, Aim, Add, Pan }
 
-var tool_mode : ToolMode  = ToolMode.Select :
+var tool_mode : ToolMode  = ToolMode.Aim :
 	set(value):
 		tool_mode = value
 		tool_mode_changed.emit(tool_mode)

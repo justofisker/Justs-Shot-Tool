@@ -8,8 +8,9 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Bridge.tool_mode != Bridge.ToolMode.Select:
-		pressed = false
-		queue_redraw()
+		if pressed:
+			pressed = false
+			queue_redraw()
 		return
 	
 	if event is InputEventMouseButton:
@@ -26,7 +27,8 @@ func _unhandled_input(event: InputEvent) -> void:
 					if area.has_point(object.position):
 						selected = object
 						break
-				Bridge.selected_object = selected
+				if selected:
+					Bridge.selected_object = selected
 				
 				queue_redraw()
 

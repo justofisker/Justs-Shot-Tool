@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b56x7hpdiesci" path="res://gui/icons/TripleBar.svg" id="4_ar0n8"]
 [ext_resource type="Texture2D" uid="uid://i647i3fpchqf" path="res://gui/icons/ActionCopy.svg" id="5_3v76a"]
 [ext_resource type="Texture2D" uid="uid://li32t4aji72h" path="res://gui/icons/Duplicate.svg" id="6_umido"]
-[ext_resource type="Texture2D" uid="uid://dqeun4g6xfevj" path="res://gui/icons/Close.svg" id="7_etdec"]
+[ext_resource type="Texture2D" uid="uid://dou6gxoah2heo" path="res://gui/icons/Remove.svg" id="7_1j15l"]
 [ext_resource type="Texture2D" uid="uid://b1vbt16mpkxcl" path="res://gui/icons/MoveDown.svg" id="8_7i5mj"]
 [ext_resource type="Texture2D" uid="uid://u4ts7mfiq77b" path="res://gui/icons/MoveUp.svg" id="9_k4l20"]
 [ext_resource type="Texture2D" uid="uid://bjnwa212567hj" path="res://gui/icons/Collapse.svg" id="10_k227f"]
@@ -56,7 +56,7 @@ stretch_mode = 3
 layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Delete"
-texture_normal = ExtResource("7_etdec")
+texture_normal = ExtResource("7_1j15l")
 stretch_mode = 3
 
 [node name="VSeparator" type="VSeparator" parent="TitleContainer/TitleBar"]

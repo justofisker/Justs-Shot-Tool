@@ -18,5 +18,5 @@ This tool is designed to help UGC members visualize how shots will appear and he
 | New Scene        | Ctrl/Cmd + N         |
 | Save Scene       | Ctrl/Cmd + S         |
 | Save Scene As    | Shift + Ctrl/Cmd + S |
-| Open Scene       | Ctrl/Cmd + L         |
+| Open Scene       | Ctrl/Cmd + O         |
 | Import Scene     | Ctrl/Cmd + I         |

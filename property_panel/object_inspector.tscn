@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cl1n0wsvye08g" path="res://gui/edits/bool_edit.tscn" id="4_a7n1m"]
 [ext_resource type="PackedScene" uid="uid://b6y7xrt1ccj0g" path="res://gui/edits/number_edit.tscn" id="4_tgbvj"]
 [ext_resource type="Texture2D" uid="uid://li32t4aji72h" path="res://gui/icons/Duplicate.svg" id="5_3tcls"]
-[ext_resource type="Texture2D" uid="uid://dqeun4g6xfevj" path="res://gui/icons/Close.svg" id="6_wxfem"]
+[ext_resource type="Texture2D" uid="uid://dou6gxoah2heo" path="res://gui/icons/Remove.svg" id="6_wxfem"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 font_size = 24
